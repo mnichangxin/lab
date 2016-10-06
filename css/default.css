@@ -96,9 +96,9 @@ a:hover,a:focus{color:#74777b;}
 	background: #66677c;
 }
 .htmleaf-header p {
-	color: #fff;
+	color: #ccc;
 	font-weight: 500;
-	font-size: 2em;
+	font-size: 1.2em;
 	line-height: 1;
 	font-family: "Microsoft YaHei","宋体","Segoe UI", "Lucida Grande", Helvetica, Arial,sans-serif, FreeSans, Arimo;
 }
@@ -170,7 +170,7 @@ a:hover,a:focus{color:#74777b;}
 	color: #fff;
 	background: #31323d;
 	text-align: center;
-	font-size: 1.25em;
+	font-size: .9em;
 	padding: 0.5em 0;
 	overflow: hidden;
 }
