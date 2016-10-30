@@ -1,0 +1,81 @@
+@charset utf8;
+
+/* basic*/
+html,body {
+	margin: 0;
+	padding: 0;
+}
+.container {
+	width: 200px;
+	margin: 100px auto;
+	text-align: center;
+}
+.percent {
+	position: relative;
+	height: 200px;
+	width:200px;
+	/*border: 1px solid #ccc;*/
+}
+.left, .right{
+	position: absolute;
+	height: 200px;
+	width: 100px;
+	overflow: hidden;
+}
+.left {
+	top: 50%;
+	left: 50%;
+	-webkit-transform: translate(-100%, -50%);
+	        transform: translate(-100%, -50%);
+}
+.right {
+	top: 50%;
+	left: 50%;	
+	-webkit-transform: translate(0, -50%);
+	        transform: translate(0, -50%);
+}
+.circleLeft {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 160px;
+	width: 160px;
+	-webkit-transform: rotate(-135deg);
+	        transform: rotate(-135deg);
+	border: 20px solid transparent;
+	border-radius: 50%;
+}
+
+.circleRight {
+	position: absolute;
+	top: 0;
+	right: 0;
+	height: 160px;
+	width: 160px;
+	-webkit-transform: rotate(-135deg);
+	        transform: rotate(-135deg);
+	border: 20px solid transparent;
+	border-radius: 50%;
+}
+.circleMiddle {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	-webkit-transform: translate(-50%, -50%);
+	        transform: translate(-50%, -50%);
+	height: 160px;
+	width: 160px;
+	border-radius: 50%;
+	text-align: center;
+	line-height: 160px;
+	font-size: 50px;
+	color: #fff;
+
+}
+
+#val {
+	height: 30px;
+	width: 200px;
+	margin-top: 50px;
+}
+
