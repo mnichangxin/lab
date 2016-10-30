@@ -1,0 +1,39 @@
+@charset utf-8;
+
+html, body {
+	margin: 0;
+	padding: 0;
+}
+
+img {
+	height: 100%;
+	width: 100%;
+}
+
+.waterfall {
+	overflow: hidden;
+}
+.box{
+	float: left;
+	cursor: pointer;
+}
+.wrap {
+	padding: 10px;
+	border: 1px solid #ccc;
+	box-shadow: 0 0 8px #494849 inset;
+}
+
+.mask{
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 1111;
+	height: 100%;
+	width: 100%;
+	background: #201c1c;
+	opacity: .8;
+}
+.modal {
+	position: fixed;
+	z-index: 2222;
+}
