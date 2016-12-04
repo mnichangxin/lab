@@ -16,7 +16,6 @@ window.onload = function() {
     initGrids();
     if(deBug) ; else { randomNewNum(); randomNewNum(); randomNewNum();}
     loadAction();
-    loadTouch();
     F5();
 }
 
