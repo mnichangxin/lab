@@ -1,4 +1,6 @@
-/* 2048.css */
+/* 
+ * 2048.css 
+ */
 
 * { 
     margin: 0px; 
@@ -145,12 +147,4 @@ div#score-borad {
     font-size: 40px;
     font-weight: 600;
     color: #636163;
-}
-div#touchArea {
-    position: fixed;
-    left: 0px;
-    height: 0px;
-    width: 100%;
-    background-color: rgba(0,0,0,.1);
-    z-index: 9999;
 }
