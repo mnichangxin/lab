@@ -239,7 +239,7 @@
         if (needScale) {
             scoreBorad.className = 'scale';
             // document.getElementById('gameView').className = 'scale';
-            qs('#'gameView).className = 'scale';
+            qs('#' + gameView).className = 'scale';
         }
 
         initGrids();
