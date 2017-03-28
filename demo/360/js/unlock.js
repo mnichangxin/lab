@@ -3,7 +3,7 @@
  * 2017/03/27 Create by mnichangxin
  */
 
-var Unlock = (function() {
+var unlock = (function() {
 	var
 	    // 选择器封装
 		$ = function(selector) {
@@ -126,7 +126,8 @@ var Unlock = (function() {
 		arcIn = function(pos) {
 			for (var i = 0, len = queue.length; i < len; i++) {
 				if (Math.abs(pos.x - queue[i].x) < para_init.r && Math.abs(pos.y - queue[i].y) < para_init.r) {
-					return i; //返回匹配点的队列位置
+					//返回匹配点的队列位置
+					return i; 
 				}
 			}
 
@@ -218,7 +219,8 @@ var Unlock = (function() {
                       i = arcIn(pos);
 				
 				if (i != -1) {
-					updateCircle(queue[i]) // 重绘当前圆
+					// 重绘当前圆
+					updateCircle(queue[i]) 
 
 					if (save.indexOf(i) == -1) {
 						save.push(i);
@@ -284,10 +286,12 @@ var Unlock = (function() {
 				drawCircle();
 
 				// 设置密码或验证密码
-				if (set.checked) {
-					setPwd();
-				} else {
-					validatePwd();
+				if (save.length != 0) {
+					if (set.checked) {
+						setPwd();
+					} else {
+						validatePwd();
+					}
 				}
 
 				// 清除队列
@@ -308,7 +312,10 @@ var Unlock = (function() {
 
 		// 初始化
 		init = function() {
+			// 初始化Circle
 			drawCircle();
+			
+			// 绑定事件
 			bindCanvas();
 			bindInput();
 		};
@@ -316,9 +323,8 @@ var Unlock = (function() {
 	return {
 		init: init
 	};
-
 })();
 
-Unlock.init();
+unlock.init();
 
 
