@@ -89,14 +89,27 @@ body {
   min-height: 50px;
 }
 
+.comment-delete {
+  display: none;
+}
+
+.comment:hover .comment-delete {
+  display: block;
+  margin-left: 20px;
+  color: #00a3cf;
+  font-style: italic;
+  cursor: pointer;
+}
+
 .comment .comment-user {
   flex-shrink: 0;
 }
 
-.comment span {
+ .comment span {
+  margin-left: 20px;
   color: #00a3cf;
   font-style: italic;
-}
+} 
 
 .comment p {
   margin: 0;
