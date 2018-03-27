@@ -1,6 +1,6 @@
 # Lab
 
-小项目和演示仓库
+* 小项目和演示仓库
 
 1. [JavaScript 版 2048 小游戏](https://github.com/mnichangxin/lab/tree/master/2048)
 
