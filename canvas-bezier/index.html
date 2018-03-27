@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>bezier</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+            }
+            html, body {
+                height: 100%;
+            }
+            .title {
+                padding-top: 20px;
+                text-align: center;
+                color: #0090d2;
+            }
+            .canvas {
+                float: left;
+                margin-top: 50px;
+                margin-left: 50px;
+                border: 1px solid #ccc;
+                border-radius: 10px;
+                cursor: pointer;
+            }
+            .data {
+                float: left;
+                display: block;
+                margin-top: 50px;
+                margin-left: 50px;
+                padding: 20px;
+                width: 600px;
+                height: 600px;
+                box-sizing: border-box;
+                border: 1px solid #ddd;
+                border-radius: 10px;
+                color: #333;
+                background-color: #F7F7F7;
+                font-family: monospace;
+                font-size: 20px;
+                white-space: pre-wrap;
+                word-wrap: break-word;
+            }
+        </style>
+    </head>
+    <body>
+        <h2 class="title">n阶贝塞尔曲线工具</h2>
+        <div class="container">
+            <canvas width="600" height="600" class="canvas" id="canvas"></canvas>
+            <pre class="data" id="data"></pre>           
+        </div>
+        <script type="text/javascript" src="./index.js"></script>
+    </body>
+</html>

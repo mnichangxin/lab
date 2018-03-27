@@ -15,3 +15,5 @@
 6. [ThinkPHP 博客系统](https://github.com/mnichangxin/lab/tree/master/thinkphp-cms)
 
 7. [瀑布流布局简单实现](https://github.com/mnichangxin/lab/tree/master/waterfall)
+
+8. [N 阶贝塞尔曲线工具](https://github.com/mnichangxin/lab/tree/master/canvas-bezier)
