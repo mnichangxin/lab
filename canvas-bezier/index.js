@@ -9,12 +9,16 @@ var beginPos = {},
 var queue = []
 // 贝塞尔点数组
 var bezierNodes = []
+// 用于绘制动画的贝塞尔点数组
+var animationNodes = []
 // 点的个数
 var n = 0
 // 等分点
 var t = 0
 // 被移动的点
 var index = 0
+// 按钮切换标志
+var flag = false
 
 /* 绘制圆形 */
 function drawArc(x, y) {
@@ -125,16 +129,14 @@ function createNode(nodes) {
 /* 绘制贝塞尔曲线上的点 */
 function drawNodes() {
     bezierNodes.forEach(function(item) {
-        setTimeout(function() {
-            ctx.beginPath()
-            ctx.lineWidth = 1
-            ctx.strokeStyle = '#0090d2'
-            ctx.fillStyle = '#0090d2'
-            ctx.arc(item.x, item.y, 1, 0, Math.PI * 2)
-            ctx.fill()
-            ctx.stroke()
-            ctx.closePath()
-        }, 100)
+        ctx.beginPath()
+        ctx.lineWidth = 1
+        ctx.strokeStyle = '#0090d2'
+        ctx.fillStyle = '#0090d2'
+        ctx.arc(item.x, item.y, 1, 0, Math.PI * 2)
+        ctx.fill()
+        ctx.stroke()
+        ctx.closePath()
     })  
 }
 
@@ -179,6 +181,10 @@ function repaint() {
     drawBezier()
     drawNodes()
     showData()
+
+    bezierNodes.forEach(function(item) {
+        animationNodes.push(item)
+    })
 
     t = 0
     bezierNodes = []
@@ -285,6 +291,38 @@ function upEve(e) {
     canvas.removeEventListener('mouseup', upEve)
 }
 
+/* 按钮切换事件 */
+function switchEve() {
+    if (!flag) {
+        canvasAni.style.display = 'block'
+        dataPanel.style.display = 'none'
+        button.innerHTML = '切换数据'
+
+        ctxAni.clearRect(0, 0, 600, 600)
+
+        animationNodes.forEach(function(item) {
+            setTimeout(function() {
+                ctxAni.beginPath()
+                ctxAni.lineWidth = 1
+                ctxAni.strokeStyle = '#0090d2'
+                ctxAni.fillStyle = '#0090d2'
+                ctxAni.arc(item.x, item.y, 1, 0, Math.PI * 2)
+                ctxAni.fill()
+                ctxAni.stroke()
+                ctxAni.closePath()
+            }, 100)
+        })
+
+        animationNodes = []
+    } else {
+        canvasAni.style.display = 'none'
+        dataPanel.style.display = 'block'
+        button.innerHTML = '切换动画'
+    }
+
+    flag = !flag
+}
+
 /* 数据呈现 */
 function showData() {
     var cp = ''
@@ -301,8 +339,6 @@ function showData() {
                 + 'ctx.moveTo(' + beginPos.x + ', ' + beginPos.y + ')' + '\n' 
                 + 'ctx.drawBezier('+ cp + endPos.x + ', ' + endPos.y +')' + '\n'
                 + 'ctx.stroke()'
-    
-    var dataPanel = document.getElementById('data')
 
     dataPanel.innerHTML = data
 }
@@ -310,4 +346,11 @@ function showData() {
 var canvas = document.getElementById('canvas')
 var ctx = canvas.getContext('2d')
 
+var canvasAni = document.getElementById('canvas-ani')
+var ctxAni = canvasAni.getContext('2d')
+
+var dataPanel = document.getElementById('data')
+var button = document.getElementById('button')
+
 canvas.addEventListener('mousedown', downEve)
+button.addEventListener('click', switchEve)

@@ -15,6 +15,9 @@
                 text-align: center;
                 color: #0090d2;
             }
+            .container {
+                overflow: hidden;
+            }
             .canvas {
                 float: left;
                 margin-top: 50px;
@@ -41,14 +44,27 @@
                 white-space: pre-wrap;
                 word-wrap: break-word;
             }
+            .button {
+                margin: 20px 955px;
+                width: 90px;
+                height: 40px;
+                line-height: 40px;
+                border-radius: 3px;
+                background-color: #0090d2;
+                color: #fff;
+                text-align: center;
+                cursor: pointer;
+            }
         </style>
     </head>
     <body>
         <h2 class="title">n阶贝塞尔曲线工具</h2>
         <div class="container">
             <canvas width="600" height="600" class="canvas" id="canvas"></canvas>
-            <pre class="data" id="data"></pre>           
+            <pre class="data" id="data"></pre>
+            <canvas width="600" height="600" class="canvas" id="canvas-ani" style="display:none;"></canvas>           
         </div>
+        <div class="button" id="button">切换动画</div>
         <script type="text/javascript" src="./index.js"></script>
     </body>
 </html>
