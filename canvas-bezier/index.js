@@ -295,7 +295,7 @@ function showData() {
 
     var data = 'canvas = document.getElementById("canvas")' + '\n'
                 + 'ctx = canvas.getContext("2d")' + '\n'
-                + 'ctx.lineWidth = 5' + '\n'
+                + 'ctx.lineWidth = 1' + '\n'
                 + 'ctx.strokeStyle = "#0090d2"' + '\n'
                 + 'ctx.beginPath()' + '\n'
                 + 'ctx.moveTo(' + beginPos.x + ', ' + beginPos.y + ')' + '\n' 
@@ -311,6 +311,3 @@ var canvas = document.getElementById('canvas')
 var ctx = canvas.getContext('2d')
 
 canvas.addEventListener('mousedown', downEve)
-
-// var dataPanel = document.getElementById('data')
-// var ctxx = dataPanel.getContext('2d')
