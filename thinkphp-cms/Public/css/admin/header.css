@@ -1,0 +1,20 @@
+@charset utf-8;
+
+nav div{
+
+	margin-left:100px;
+}
+
+#user{
+
+	position:absolute;
+	right:50px;
+}
+
+#user:nth-child(2){
+
+	font-weight:bold;
+	color:#201B35;
+}
+
+

@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Socket.IO chat</title>
+        <style>
+            * { 
+                margin: 0; 
+                padding: 0; 
+                box-sizing: border-box;
+            }
+            html, body {
+                height: 100%;
+            }
+            body { 
+                position: relative;
+                font: 13px 'Microsoft YaHei';
+            }
+            #loginbox {
+                width: 300px;
+                margin: 100px auto;
+            }
+            #username {
+
+            }
+            .btn-wrap {
+                padding-top: 20px;
+                text-align: center;
+            }
+            #btn {
+                height: 30px;
+                width: 80px;
+                outline: 0;
+                border: 1px solid #3e4ab4;
+                border-radius: 3px;
+                background: #3e4ab4;
+                font-size: 14px;
+                color: #fff;
+                cursor: pointer;
+            }
+            .error {
+                padding-top: 20px;
+                color: #a12525;
+                text-align: center;
+            }
+            nav {
+                display: none;
+                position: fixed;
+                width: 100%;
+                padding: 5px 10px;
+                background: #403838;
+                z-index: 9999;                
+                color: #fff;
+                font-size: 14px;
+            }
+            form { 
+                display: none;
+                background: #000; 
+                padding: 3px; 
+                position: fixed; 
+                bottom: 0; 
+                width: 100%;
+            }
+            form input { 
+                border: 0;
+                padding: 10px; 
+                width: 80%; 
+                margin-right: .5%;
+            }
+            form button {
+                width: 15%; 
+                background: #316096; 
+                border: none; 
+                padding: 10px; 
+                border-radius: 3px;
+                color: #fff;
+                cursor: pointer;
+            }
+            #messages {
+                display: none;
+                list-style-type: none;
+                margin: 0; 
+                padding: 50px;
+                overflow: auto;
+            }
+            #messages li { 
+                padding: 10px 10px;
+                overflow: hidden;
+            }
+            #messages li:nth-child(odd) .name {
+                float: left;
+            }
+            #messages li:nth-child(even) .name {
+                float: right;
+            }
+            .msg {
+                position: relative;
+                padding: 10px;
+                border-radius: 3px;
+                max-width: 500px;
+                color: #fff; 
+                background:#F8C301;
+            }
+            #messages li:nth-child(odd) .msg { 
+                float: left;
+                position: relative;
+                margin-left: 20px;    
+            }
+            #messages li:nth-child(even) .msg {
+                float: right;
+                margin-right: 20px;
+            }
+            .arrow {
+                position: absolute;
+                height: 0;
+                width: 0;
+                font-size: 0;
+                border: 8px solid;
+            }
+            #messages li:nth-child(odd) .msg .arrow {
+                top: 5px;
+                left: -16px;
+                border-right-color: #F8C301;
+            }
+            #messages li:nth-child(even) .msg .arrow {
+                top: 5px;
+                right: -16px;
+                border-left-color: #F8C301;
+            }
+            .login {
+                margin: 0 auto;
+                max-width: 200px;
+                padding: 5px;
+                border-radius: 10px;
+                background: #838383;
+                color: #fff;
+                text-align: center;
+            }
+            .count {
+                margin-left: 10px;
+            }
+            #line-list {
+                margin-left: 10px;
+                cursor: pointer;
+            }
+            #line-list:hover {
+                color: #1e67a4;
+            }
+            .modal {
+                position: fixed;
+                padding: 10px;
+                height: 200px;
+                width: 500px;
+                z-index: 99999;
+                border: 1px solid #d8d2d2;
+                box-shadow: 0 0 8px #ccc inset;
+                background: #fff;
+            }
+            .mask {
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 100%;
+                background: #1c1919;
+                opacity: .8;
+                z-index: 9999;
+            }
+            .users {
+                float: left;
+                margin-left: 2px;
+                margin-top: 2px;
+                height: 90px;
+                width: 90px;
+                border-radius: 50%;
+                background: #ed6c29;
+                color: #fff;
+                line-height: 98px;
+                text-align: center;
+                cursor: pointer;
+            }
+            .users:hover {
+                background: #d8812f;
+                -webkit-animation: ro .2s linear;
+                        animation: ro .2s linear;
+            }
+            @-webkit-keyframes ro {
+                100% {
+                    -webkit-transform: rotate(360deg);
+                            transform: rotate(360deg);
+                }
+            }
+            @keyframes ro {
+                100% {
+                    -webkit-transform: rotate(360deg);
+                            transform: rotate(360deg);
+                }
+            }
+        </style>
+    </head>
+  <body>
+    <div id="loginbox">
+        <p><label>输入用户名：</label><input type="text" id="username"></p>
+        <p class="btn-wrap"><button id="btn">进入群聊</button></p>
+    </div>
+    <nav id="nav">
+        <span>群聊<span>
+        <span class="count">当前在线人数：<span id="line-count">0</span></span>
+        <a id="line-list">查看在线用户</a>
+    </nav>
+    <ul id="messages"></ul>
+    <form action="">
+      <input id="m" autocomplete="off" />
+      <button class="send">发送</button>
+    </form>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        (function() {
+            var loginbox = document.getElementById('loginbox'), 
+                username = document.getElementById('username'),
+                     btn = document.getElementById('btn'),
+                     nav = document.getElementById('nav'),
+                    form = document.forms[0],
+                 message = document.getElementById('messages'),
+                       m = document.getElementById('m'),
+                   value = '';
+
+            var online = {
+                onlineUsers: [],
+                onlineCount: 0
+            };
+
+            var flag; //消息计数器
+
+            btn.onclick = function() {
+                if (username.value != '') {
+                    value = username.value;
+                    nav.style.display = 'block';
+                    message.style.display = 'block';
+                    form.style.display = 'block';
+                    loginbox.style.display = 'none';
+                    //登录信息传给服务端
+                    socket.emit('login', value);
+                } else {
+                    var error;
+
+                    document.getElementsByClassName('error')[0] ? error = null : error = document.createElement('p');
+                    error.setAttribute('class', 'error');
+                    error.innerHTML = '用户名不能为空！';
+                    loginbox.insertBefore(error, btn.parentNode);
+                }
+            }
+
+            //连接服务端
+            var socket = io();
+
+            //聊天消息传给服务端
+            form.onsubmit = function() {
+                socket.emit('chat message', m.value);
+                m.value = '';
+                return false;
+            }
+
+            //加入消息广播
+            socket.on('login', function(obj) {
+                var li = document.createElement('p');
+                var div = document.createElement('div');
+
+                div.setAttribute('class', 'login');
+                div.innerHTML = obj.name + '加入了群聊';
+                li.appendChild(div);
+                message.appendChild(li);
+
+                //设置标识
+                socket.name = obj.name;
+
+                update(obj.onlineUsers, obj.onlineCount);
+            });
+
+            //消息广播
+            socket.on('chat message', function(msg) {
+                var li = document.createElement('li');
+                var div1 = document.createElement('div');
+                var div2 = document.createElement('div');
+                var div3 = document.createElement('div');
+
+                div1.setAttribute('class', 'arrow');
+                div2.setAttribute('class', 'msg');
+                div3.setAttribute('class', 'name');
+                div2.innerHTML = msg;
+                div2.appendChild(div1);
+                div3.innerHTML = socket.name;
+
+                if (flag % 2 == 0) {
+                    li.appendChild(div2);
+                    li.appendChild(div3);
+                } else {
+                    li.appendChild(div3);
+                    li.appendChild(div2);
+                }
+
+                message.appendChild(li);
+            });
+
+            //退出消息广播
+            socket.on('logout', function(obj) {
+                var li = document.createElement('p');
+                var div = document.createElement('div');
+
+                div.setAttribute('class', 'login');
+                div.innerHTML = obj.name + '退出了群聊';
+                li.appendChild(div);
+                message.appendChild(li);
+
+                //删除标识
+                delete socket.name;
+
+                update(obj.onlineUsers, obj.onlineCount);
+            });
+
+            //更新在线人数和列表
+            function update(onlineUsers, onlineCount) {
+                var count = document.getElementById('line-count');
+                count.innerHTML = onlineCount;
+
+                //存储以备使用
+                online.onlineUsers = onlineUsers;
+                online.onlineCount = onlineCount;
+            }
+
+            //模态弹框和遮罩
+            var list = document.getElementById('line-list');
+               
+            list.onclick = function() {
+                var modal = document.createElement('div'),
+                     mask = document.createElement('div'), 
+                     form = document.forms[0],
+                    users = '';
+
+                var arr = online.onlineUsers;
+                for (var i = 0, len = arr.length; i < len; ++i) {
+                    users += '<div class="users">' + arr[i] + '</div>'
+                }
+
+                modal.setAttribute('class', 'modal');
+                mask.setAttribute('class', 'mask');
+                modal.innerHTML = users;
+
+                document.body.style.overflow = 'hidden';
+
+                document.body.insertBefore(mask, form.nextElementSibling);
+                document.body.insertBefore(modal, form.nextElementSibling);
+
+                var scWidth = document.documentElement.clientWidth || document.body.clientWidth,
+                   scHeight = document.documentElement.clientHeight || document.clientHeight,
+                    mWidth = modal.offsetWidth,
+                    mHeight = modal.offsetHeight;
+
+                modal.style.left = (scWidth - mWidth) / 2 + 'px';
+                modal.style.top = (scHeight - mHeight) / 2 + 'px';
+
+                mask.onclick = function() {
+                    document.body.removeChild(mask);
+                    document.body.removeChild(modal);
+                    document.body.style.overflow = 'auto';
+                }
+            }
+        })();
+    </script>
+  </body>
+</html>

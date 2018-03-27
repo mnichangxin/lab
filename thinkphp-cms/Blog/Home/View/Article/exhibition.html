@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, initial-scale=1">
+	    <title>浮生若梦的博客</title>
+
+	    <!-- Bootstrap -->
+	    <link rel="stylesheet" href="__PUBLIC__/bootstrap/dist/css/bootstrap.css"/>
+	    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+	    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	    <!--[if lt IE 9]>
+	      <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	      <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+	    <![endif]-->
+		<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/blog/exhibition.css"/>
+	</head>
+
+	<body>
+		<div class="container-fluid">
+			<div class="row">
+				<!--aside-left-->
+				<div class="col-lg-2 aside-left">
+					<div class="row header">
+						<img src="__PUBLIC__/images/blog/header.png" class="img-circle img-responsive" alt="无法显示图片"/>
+						<p class="oname">浮生若梦</p>
+						<p class="iname">刚入坑不久的程序猿</p>
+					</div>
+
+					<div class="row bar1">
+						<div class="col-lg-12">
+							<p><span class="glyphicon glyphicon-home"></span><a href="{:U('Home/Index/index')}"> 首页</a></p>
+						</div>	
+					</div>
+					
+					<div class="row bar2">
+						<div class="col-lg-12">
+							<p><span class="glyphicon glyphicon-th-list"></span> 分类</p>
+						</div>
+					</div>
+
+					<div class="row bar3">
+						<div class="col-lg-12">
+							<p><span class="glyphicon glyphicon-search"></span> 搜索</p>
+						</div>
+					</div>
+
+					<div class="row search">
+						<form action="{:U('Home/Article/search')}" method="POST">
+							<input type="text" name="search"/>
+						</form>
+					</div>
+
+					<div class="row about">
+						<p><span class="glyphicon glyphicon-user"></span>关于我</p>
+					</div>
+
+					<div class="row contact">
+						<div class="col-lg-4">
+							<a href="http://wpa.qq.com/msgrd?v=3&uin=768348335&site=qq&menu=yes" target="_blank"><img src="__PUBLIC__/images/blog/qq.png" class="img-circle img-responsive" alt="无法显示图片"/></a>
+						</div>
+						<div class="col-lg-4">
+							<img src="__PUBLIC__/images/blog/weixin.png" class="img-circle img-responsive" alt="无法显示图片"/>
+						</div>
+						<div class="col-lg-4">
+							<a href="http://weibo.com/123happylife" target="_blank"><img src="__PUBLIC__/images/blog/weibo.png" class="img-circle img-responsive" alt="无法显示图片"/></a>
+						</div>
+					</div>
+				</div>
+
+				<!--main-->
+				<div class="col-lg-7 col-lg-offset-2 col-md-8 ">				 
+					<div class="row article">
+						<div class="col-lg-10 col-lg-offset-1">
+							<div class="panel panel-warning panelset">
+							   <div class="panel-heading">
+							       <h3 class="panel-title">{$title}</h3>
+							   </div>
+							   <div class="panel-body">	 
+							   		<div class="content-title">
+							   			<span>{$author}</span>
+							   			<span class="glyphicon glyphicon-tag"></span> {$classify} 
+							   			<span class="fav">
+							   				<span class="glyphicon glyphicon-heart"></span> {$fav}
+							   			</span>
+							   		</div>
+							   		<div id="img-set">  
+								  		{$content}
+								  	</div>
+							   </div>
+
+							   <div class="panel-heading">
+							       <h3 class="panel-title">评论</h3>
+							   </div>
+							   <div class="panel-body pend">	 
+						   			<volist name="comment" id="vo">
+						   				<div class="comment">
+						   					<p>{$vo.name}:</p>
+						   					<p>{$vo.comment}</p>
+						   				</div>
+						   			</volist>
+						   			<div class="hr"></div>	
+							   		<form role="form">
+							   			<div class="form-group">
+							   				<label for="name"><span class="glyphicon glyphicon-user"></span> 昵称</label>
+							   				<input type="text" class="form-control" id="name" name="name" placeholder="您的昵称">
+							   				<label for="homepage"><span class="glyphicon glyphicon-globe"></span> 网站</label>
+							   				<input type="text" class="form-control" id="homepage" name="homepage" placeholder="您的主页,方便我们交流，可选填">
+							   				<label for="comment"><span class="glyphicon glyphicon-edit"></span> 评论</label>
+							   				<textarea rows="6" cols="5" class="form-control" id="comment"></textarea>
+							   			</div>
+							   		</form>
+							   		<p id="err" style="display:none;color:red">昵称或评论为空</p>
+							   		<button id="submit" class="btn btn-default">提交</button>
+							   </div>
+							</div>
+							<p id="footer">&copy;2015 李昶昕.All rights reserved.</p>
+						</div>
+					</div>
+				</div>
+				
+				<!--aside-right-->
+				<div class="col-lg-2 col-lg-offset-10 col-md-4">
+					<div class="row weather">
+						<div class="col-lg-12">
+							<p id="weather-loc"><span class="glyphicon glyphicon-map-marker"></span> 自动定位:{$area}</p><br/>
+							<p id="weather-img"><img src="__PUBLIC__/{$img_name}"></span>
+							<p id="weather-info">{$info},{$temperature}&#176;C</p>
+							<iframe width="100%" height="550" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=550&fansRow=2&ptype=1&speed=0&skin=4&isTitle=1&noborder=1&isWeibo=1&isFans=0&uid=3642531674&verifier=8fb64f91&colors=FCF8E3,EAE0E2,666666,0082cb,E6E1C6&dpc=1"></iframe>
+							<div class="panel panel-warning panelset">
+							   <div class="panel-heading">
+							       <h3 class="panel-title">友情连接</h3>
+							   </div>
+							   <div class="panel-body">
+								    <ul>
+								    	
+								    </ul>
+							   </div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!--aside-hidden-->
+				<div class="classify">
+					<ul>
+						<li><a href="{:U('Home/Article/sea_class',array('classify'=>'PHP'))}">PHP</a></li>
+						<li><a href="{:U('Home/Article/sea_class',array('classify'=>'Java'))}">Java</a></li>
+						<li><a href="{:U('Home/Article/sea_class',array('classify'=>'Mysql'))}">MySql</a></li>
+						<li><a href="{:U('Home/Article/sea_class',array('classify'=>'JavaScritpt'))}">JavaScritpt</a></li>
+						<li><a href="{:U('Home/Article/sea_class',array('classify'=>'Node.js'))}">Node.js</a></li>
+						<li><a href="{:U('Home/Article/sea_class',array('classify'=>'Linux'))}">Linux</a></li>
+						<li><a href="{:U('Home/Article/sea_class',array('classify'=>'Html'))}">Html</a></li>
+						<li><a href="{:U('Home/Article/sea_class',array('classify'=>'Css'))}">Css</a></li>
+						<li><a href="{:U('Home/Article/sea_class',array('classify'=>'Others'))}">Others</a></li>
+					</ul>
+				</div>
+
+				<!--weixin-hidden-->
+				<div class="contact-weixin">
+					<img src="__PUBLIC__/images/blog/wx.png"/>
+				</div>
+			</div>
+		</div>
+
+	    <!--Bootstrap and Jquery-->
+	    <script src="__PUBLIC__/jquery/jquery.js"></script>
+	    <scritp src="__PUBLIC__/bootstrap/dist/js/bootstrap.js"></scritp>
+	    <script src="__PUBLIC__/js/blog/exhibition.js"></script>
+	    <script type="text/javascript">
+	  		$(document).ready(function(){
+
+	  			$('.fav').one('click',function(){
+
+	  				var url="{:U('Home/Article/fav')}";
+	    			var id={$id};
+	    			var fav={$fav};
+
+	    			$.post(url,{id:id,fav:fav},function(data){
+
+	    				$('.fav').html('<span class="glyphicon glyphicon-heart"></span> '+data);
+	    			});			
+	    		});
+
+	    		$('#submit').click(function(){
+
+	    			var id={$id};
+	    			var name=$("#name").val();
+	    			var homepage=$("#homepage").val();
+	    			var comment=$("#comment").val();
+
+	    			if((name.length==0)||(comment.length==0)){
+
+	    				$("#err").css("display","block");
+
+	    			}else{
+
+	    				$("#err").css("display","none");
+
+	    				var url="{:U('Home/Article/comment')}";
+
+	    				$.post(url,{id:id,name:name,homepage:homepage,comment:comment},function(data){
+
+	    					$(".pend").prepend('<div class="comment"><p>'+name+':</p><p>'+comment+'</p></div>');
+	    	    				
+	    				});
+	    			}
+	    		});
+
+	    		$('.oname').click(function(){
+
+	    			window.location.href="{:U('Home/Index/index')}";
+
+	    		});
+
+	    		$('.about').click(function(){
+
+	    			window.location.href="{:U('Home/Article/about')}";
+	    		});
+
+			});
+	    </script>	  
+	</body>
+
+</html>

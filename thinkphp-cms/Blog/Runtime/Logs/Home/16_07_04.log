@@ -1,0 +1,26 @@
+[ 2016-07-04T00:28:16+08:00 ] ::1 /mnichangxin/
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000041s ]
+INFO: [ app_init ] --END-- [ RunTime:0.039884s ]
+NOTIC: [8] Use of undefined constant SAE_MYSQL_HOST_M - assumed 'SAE_MYSQL_HOST_M' E:\Wampserver64\www\mnichangxin\Blog\Home\Conf\config.php ç¬¬ 7 è¡Œ.
+NOTIC: [8] Use of undefined constant SAE_MYSQL_USER - assumed 'SAE_MYSQL_USER' E:\Wampserver64\www\mnichangxin\Blog\Home\Conf\config.php ç¬¬ 9 è¡Œ.
+NOTIC: [8] Use of undefined constant SAE_MYSQL_PASS - assumed 'SAE_MYSQL_PASS' E:\Wampserver64\www\mnichangxin\Blog\Home\Conf\config.php ç¬¬ 10 è¡Œ.
+NOTIC: [8] Use of undefined constant SAE_MYSQL_PORT - assumed 'SAE_MYSQL_PORT' E:\Wampserver64\www\mnichangxin\Blog\Home\Conf\config.php ç¬¬ 11 è¡Œ.
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000443s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000512s ]
+ERR: SQLSTATE[HY000] [2002] php_network_getaddresses: getaddrinfo failed: ²»ÖªµÀÕâÑùµÄÖ÷»ú¡£ 
+
+[ 2016-07-04T00:28:33+08:00 ] ::1 /mnichangxin/index.php
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000015s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000335s ]
+NOTIC: [8] Use of undefined constant SAE_MYSQL_HOST_M - assumed 'SAE_MYSQL_HOST_M' E:\Wampserver64\www\mnichangxin\Blog\Home\Conf\config.php ç¬¬ 7 è¡Œ.
+NOTIC: [8] Use of undefined constant SAE_MYSQL_USER - assumed 'SAE_MYSQL_USER' E:\Wampserver64\www\mnichangxin\Blog\Home\Conf\config.php ç¬¬ 9 è¡Œ.
+NOTIC: [8] Use of undefined constant SAE_MYSQL_PASS - assumed 'SAE_MYSQL_PASS' E:\Wampserver64\www\mnichangxin\Blog\Home\Conf\config.php ç¬¬ 10 è¡Œ.
+NOTIC: [8] Use of undefined constant SAE_MYSQL_PORT - assumed 'SAE_MYSQL_PORT' E:\Wampserver64\www\mnichangxin\Blog\Home\Conf\config.php ç¬¬ 11 è¡Œ.
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000414s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000473s ]
+ERR: SQLSTATE[HY000] [2002] php_network_getaddresses: getaddrinfo failed: ²»ÖªµÀÕâÑùµÄÖ÷»ú¡£ 
+

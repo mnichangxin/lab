@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="utf-8">
+    	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    	<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>博客后台管理</title>
+		<!--Bootstrap css-->
+		<link rel="stylesheet" href="__PUBLIC__/bootstrap/dist/css/bootstrap.css">
+		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    	<!--[if lt IE 9]>
+      		<script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+     	 	<script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    	<![endif]-->
+		<link rel="stylesheet" href="__PUBLIC__/css/admin/publish.css">
+		<style>
+			.send{
+
+				padding-top: 50px;
+				padding-bottom:20px;
+			}
+		</style>
+	</head>
+
+	<body>
+		
+		<!--Fixed navbar-->
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+						<span class="sr-only">Toggle navgation</span>
+						<span class="icon-bar"></span>
+            			<span class="icon-bar"></span>
+            			<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="{:U('Home/Index/publish')}">Blog管理系统</a>
+				</div>
+				<div id="navbar" class="navbar-collapse collapse">
+					<ul class="nav navbar-nav">
+						<li class="active"><a href="{:U('Home/Index/publish')}">首页</a></li>
+						<li class="dropdown">
+							<a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">管理<span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a href="{:U('Home/Index/publish')}">博客管理</a></li>
+								<li><a href="{:U('Home/Text/send')}">博客发布</a></li>
+								<li><a href="{:U('Home/Text/other')}">其他功能</a></li>
+							</ul>
+						</li>
+						<li><a href="about.html">关于</a></li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<p class="navbar-text">欢迎你，管理员<b>{$_SESSION['sessionname']}</b></p>
+						<li><a href="{:U('Home/Index/logout')}">退出</a></li>
+					</ul>
+					<form class="navbar-form navbar-right" role="search">
+						<div class="form-group">
+    						<input type="text" class="form-control" placeholder="想搜索的博客">
+  				    	</div>
+  						<button type="submit" class="btn btn-default">搜索</button>
+					</form>
+				</div>
+			</div>
+		</nav>
+
+		<!--navbar-aside and main-->
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-sm-3 col-md-2 sidebar">
+					<ul class="nav nav-sidebar">
+						<li class="active"><a href="{:U('Home/Index/publish')}">博客管理</a></li>
+						<li><a href="{:U('Home/Text/send')}">博客发布</a></li>
+						<li><a href="{:U('Home/Text/other')}">其他功能</a></li>
+					</ul>
+				</div>
+
+				<div class="col-sm-9 col-sm-3 col-md-10 col-md-offset-2 main">
+					<h1>博客发布</h1>
+
+					<!-- 博客录入和图片上传(important!) -->
+					<div class="row send">
+						<div class="col-sm-9 col-md-10 col-md-offset-1">
+							<form action="{:U('Home/Text/upd')}" enctype="multipart/form-data" method="POST">
+								<div class="form-group">
+									<label for="title">标题</label>
+									<input type="text" class="form-control" name="title" id="title" placeholder="输入博客标题" value="{$data.title}"/>
+								</div>
+								<div class="form-group">
+									<label for="author">作者</label>
+									<input type="text" class="form-control" name="author" id="author" placeholder="输入博客作者" value="{$data.author}"/>
+								</div>
+								<div class="form-group">
+									<label for="classify">分类</label>
+									<select class="form-control" name="classify" id="classify" selected="{$data.classify}">
+										<option>技术</option>
+										<option>杂谈</option>
+										<option>其他</option>
+									</select>
+								</div>
+								<div class="form-group">
+									<label for="introduction">简介</label>
+									<textarea class="form-control" rows="5" cols="60" name="introduction" id="introduction" placeholder="输入博客简介">{$data.introduction}</textarea>
+								</div>	
+								<div class="form-group">
+									<label for="img">封面图(可选)</label>
+									<input type="file" name="img" id="file"/>
+								</div>
+								<div class="form-group">
+									<label for="content">内容</label>
+									<!-- 加载编辑器的容器 -->
+							        <script id="container" name="content" type="text/plain">{$data.content}</script> 
+								</div>	
+								<div style="display:none">
+									<label for="hidd">隐藏字段</label>
+									<input type="text" name="id" id="hidd" value="{$data.id}"/> 
+								</div>
+								<div class="form-group">
+									<button class="btn btn-default" type="submit">提交</button>
+								</div>	
+							</form>
+						</div>
+					</div>
+
+					<!--页脚-->
+					<p>&copy;2015-2016 李昶昕.All rights reserved.</p>
+		
+				</div>
+
+				
+			</div>
+		</div>
+		
+		<!--Bootstrap js-->
+		<script src="__PUBLIC__/jquery/jquery.js"></script>	
+		<script src="__PUBLIC__/bootstrap/dist/js/bootstrap.js"></script>
+		<script src="__PUBLIC__/js/admin/publish.js"></script>	
+		<!--Ueditor-->
+		<!-- 配置文件 -->
+    	<script type="text/javascript" src="__PUBLIC__/ueditor/ueditor.config.js"></script>
+	    <!-- 编辑器源码文件 -->
+	    <script type="text/javascript" src="__PUBLIC__/ueditor/ueditor.all.js"></script>
+	    <!-- 实例化编辑器 -->
+	    <script type="text/javascript">
+	        var editor = UE.getEditor('container',{
+
+	        	toolbars:[
+
+	        		[
+	        			//'anchor', //锚点
+				        'undo', //撤销
+				        'redo', //重做
+				        'bold', //加粗
+				        'indent', //首行缩进
+				        //'snapscreen', //截图
+				        'italic', //斜体
+				        'underline', //下划线
+				        'strikethrough', //删除线
+				        'subscript', //下标
+				        'fontborder', //字符边框
+				        'superscript', //上标
+				        '|',
+				        //'formatmatch', //格式刷
+				        'source', //源代码
+				        'blockquote', //引用
+				        'pasteplain', //纯文本粘贴模式
+				        'selectall', //全选
+				        //'print', //打印
+				        //'preview', //预览
+				        'horizontal', //分隔线
+				        'removeformat', //清除格式
+				        'time', //时间
+				        'date', //日期
+				        'unlink', //取消链接
+				        //'insertrow', //前插入行
+				        //'insertcol', //前插入列
+				        //'mergeright', //右合并单元格
+				        //'mergedown', //下合并单元格
+				        //'deleterow', //删除行
+				        //'deletecol', //删除列
+				        //'splittorows', //拆分成行
+				        //'splittocols', //拆分成列
+				        //'splittocells', //完全拆分单元格
+				        //'deletecaption', //删除表格标题
+				        //'inserttitle', //插入标题
+				        //'mergecells', //合并多个单元格
+				        //'deletetable', //删除表格
+				        'cleardoc', //清空文档
+				        //'insertparagraphbeforetable', //"表格前插入行"
+				        'insertcode', //代码语言
+				        'fontfamily', //字体
+				        'fontsize', //字号
+				        'paragraph', //段落格式
+				        'simpleupload', //单图上传
+				        'insertimage', //多图上传
+				        //'edittable', //表格属性
+				        //'edittd', //单元格属性
+				        'fullscreen', //全屏
+	        		],
+
+	        		[
+	        			'link', //超链接
+				        'emotion', //表情
+				        'spechars', //特殊字符
+				        'searchreplace', //查询替换
+				        //'map', //Baidu地图
+				        //'gmap', //Google地图
+				        //'insertvideo', //视频
+				        'help', //帮助
+				        '|',
+				        'justifyleft', //居左对齐
+				        'justifyright', //居右对齐
+				        'justifycenter', //居中对齐
+				        'justifyjustify', //两端对齐
+				        'forecolor', //字体颜色
+				        //'backcolor', //背景色
+				        '|',
+				        'insertorderedlist', //有序列表
+				        'insertunorderedlist', //无序列表				        
+				        'directionalityltr', //从左向右输入
+				        'directionalityrtl', //从右向左输入
+				        'rowspacingtop', //段前距
+				        'rowspacingbottom', //段后距
+				        'pagebreak', //分页
+				        //'insertframe', //插入Iframe
+				        '|',
+				        'imagenone', //默认
+				        'imageleft', //左浮动
+				        'imageright', //右浮动
+				        'attachment', //附件
+				        'imagecenter', //居中
+				        //'wordimage', //图片转存
+				        'lineheight', //行间距
+				        //'edittip ', //编辑提示
+				        'customstyle', //自定义标题
+				        'autotypeset', //自动排版
+				        //'webapp', //百度应用
+				        'touppercase', //字母大写
+				        'tolowercase', //字母小写
+				        //'background', //背景
+				        'template', //模板
+				        'scrawl', //涂鸦
+				        //'music', //音乐
+				        //'inserttable', //插入表格
+				        //'drafts', // 从草稿箱加载
+				        //'charts', // 图表
+	        		]
+	        	],
+	        });
+	    </script>
+	</body>		
+</html>

@@ -1,0 +1,382 @@
+@charset utf-8;
+
+body{
+
+	background:url(../../images/blog/bg.jpg) no-repeat fixed 0 0;
+}
+
+/*小型设备*/
+@media (min-width:0px) and (max-width:992px){
+
+	.aside-left{
+
+		display:none;
+	}
+
+	.classify{
+
+		display: none;
+	}
+
+	.contact-weixin{
+
+		display:none;
+	}
+
+	.weather{
+
+		display:none;
+	}
+}
+
+/*中性设备*/
+@media (min-width:992px) and (max-width:1200px){
+
+	.aside-left{
+
+		display:none;
+	}
+
+	.classify{
+
+		display: none;
+	}
+
+	.contact-weixin{
+
+		display:none;
+	}
+
+	.weather{
+
+		position:fixed;
+		top:0;
+		bottom:0;
+		right:0;
+		z-index:1001;
+		overflow-x:hidden;
+		overflow-y:auto;
+		padding-top:30px;
+		padding-right:30px;
+	}
+}
+
+/*大型设备*/ 
+@media (min-width:1200px){
+
+	.aside-left{
+
+		position:fixed;
+		top:0;
+		bottom:0;
+		left:0;
+		padding:20px;
+		padding-top:50px;
+		overflow-x:hidden;
+		overflow-y:auto;
+		z-index:1001;
+		background:url(../../images/blog/aside.jpg) no-repeat fixed;	
+	}
+
+	.classify{
+
+		position:fixed;
+		left:0;
+		top:0;
+		bottom:0;
+		width:150px;
+		z-index:1000;
+		background:#2E2E2E;
+	}
+
+	.contact-weixin{
+
+		position:fixed;
+		left:0;
+		bottom:0;
+		z-index:999;
+		background:#2E2E2E;
+	}
+
+	.weather{
+
+		position:fixed;
+		top:0;
+		bottom:0;
+		right:0;
+		z-index:1001;
+		overflow-x:hidden;
+		overflow-y:auto;
+		padding-top:30px;
+		padding-right:30px;
+	}
+
+}
+
+
+.header{
+
+	/*border:1px solid white;*/
+}
+
+.header img{
+
+	display:block;
+	margin:auto;
+	width:50%;	
+}
+
+.oname{
+
+	margin-top:30px;
+	color:#C5C5C5;
+	text-align:center;
+	font-family: "微软雅黑";
+	font-size:25px;
+	cursor:pointer;
+}
+
+.iname{
+
+	margin-top:40px;
+	color:#C5C5C5;
+	text-align:center;
+	font-family: "微软雅黑";
+	font-size:15px;
+}
+
+.bar1,.bar2,.bar3{
+
+	margin-top:20px;
+}
+
+.bar1{
+
+	margin-top:50px;
+}
+
+.bar1 p,.bar2 p,.bar3 p{
+
+	font-family: "微软雅黑";
+	font-size:18px;
+	color:#C5C5C5;
+	cursor:pointer;
+	text-align:center;
+}
+
+.bar1 a,.bar2 a,.bar3 a{
+
+	text-decoration:none;
+	color: #C5C5C5;
+}
+
+.search{
+
+	margin-bottom:130px;
+}
+
+.search form{
+
+	text-align:center;
+	display:none;
+}
+
+.search input{
+
+	border:1px solid #C5C5C5;
+	background:transparent; 
+	width:10px;
+}
+
+.about{
+
+	/*border:1px solid white;*/
+	margin-bottom:30px;
+}
+
+.about p{
+
+	font-family: "微软雅黑";
+	font-size:15px;
+	color:#C5C5C5;
+	text-align:center;
+	cursor:pointer;
+}
+
+.contact{
+
+	/*border:1px solid white;*/
+	
+}
+
+.contact img{
+
+	height:50px;
+	width:50px;
+	cursor:pointer;
+}
+
+.contact-weixin img{
+
+	width:200px;
+	height:200px;
+}
+
+ul{
+
+	list-style:none;
+	margin:0;
+	padding:0;
+	padding-top:50px;
+}
+
+ul li{
+
+	border-bottom:2px solid #3E3E3E;
+	margin-bottom:20px;
+	text-align:center;
+}
+
+.classify a{
+
+	color:#C5C5C5;
+	font-family:"微软雅黑";
+	font-size:18px;
+	text-decoration:none;
+}
+
+.classify a:hover{
+
+	color:white;
+	cursor:pointer;
+}
+
+.article{
+
+	/*padding-top:50px;*/	
+	font-family:"微软雅黑";
+}
+
+#footer{
+
+	margin-top:50px;
+	color:white;
+	text-align:center;
+}
+
+.weather p{
+
+	font-family:"微软雅黑";
+	color:white;
+	padding-left:10px;
+}
+
+#weather-info{
+
+	font:30px "微软雅黑";
+	color:white;
+	text-align:center;
+}
+
+#weather-loc{
+
+	text-align:center;
+}
+
+#weather-img{
+
+	text-align:center;
+}
+
+.panel{
+
+	margin-top:20px;
+}
+
+.panel-body{
+
+	background:hsla(348,20%,80%,0.5);
+}
+
+iframe{
+
+	margin-top:30px;
+}
+
+.content-title{
+
+	margin-top:10px;
+	margin-bottom:20px;
+	padding-bottom:10px;
+	font-size:15px;
+	color:#8A6D3B;
+	border-bottom:1px solid #FFFFFF;
+}
+
+.content-title span:nth-child(2){
+
+	margin-left:30px;
+}
+
+.content-title span:nth-child(3){
+
+	margin-left:30px;
+}
+
+.fav:hover{
+
+	cursor:pointer;
+	color:white;
+}
+
+#name{
+
+	margin-bottom:10px;
+	width:300px;
+}
+
+#homepage{
+
+	margin-bottom:10px;
+	width:300px;
+}
+
+#comment{
+
+	margin-bottom:10px;
+}
+
+#submit{
+
+	margin-top:10px;
+}
+
+.comment{
+
+	margin-bottom:20px;
+}
+
+.comment p:nth-child(1){
+
+	color:red;
+	font-size:18px;
+}
+
+.comment p:nth-child(2){
+
+	font-size:15px;
+}
+
+.hr{
+
+	border-bottom:1px solid white;
+	margin-bottom:30px;
+}
+
+#img-set img{
+
+	width:100%;
+	height:auto;
+	max-width:100%;
+	display:block;
+}

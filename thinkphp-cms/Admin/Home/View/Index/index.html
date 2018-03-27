@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset='utf-8'/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    	<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>欢迎登录后台</title>
+		<!--Bootstrap css-->
+		<link rel="stylesheet" href="__PUBLIC__/bootstrap/dist/css/bootstrap.css"/>
+		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    	<!--[if lt IE 9]>
+      		<script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+     	 	<script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    	<![endif]-->
+		<link rel="stylesheet" href="__PUBLIC__/css/admin/login.css"/>
+	</head>
+
+	<body>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-2 col-md-offset-4">
+					<img src="__PUBLIC__/images/admin/login.jpg" alt="无法加载图片"/>
+				</div>
+			</div>
+		</div>
+
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6 col-md-offset-4">	
+					<div id="con">
+						<form class="form-horizontal" role="form" action="{:U('Home/Index/login')}" method="POST">
+							<div class="form-group">
+								<label for="name" class="col-md-3 control-label">用户名</label>
+								<div class="col-md-9">
+									<input type="text" class="form-control" id="user" name="username" value="{$username}" placeholder="请输入用户名">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="name" class="col-md-3 control-label">密码</label>
+								<div class="col-md-9">
+									<input type="password" class="form-control" id="password" name="password" placeholder="请输入密码">
+								</div>
+							</div>
+							<div class="form-group">
+								<button type="submit" class="btn btn-default btn-sm col-md-3 col-md-offset-4" id="submit">登录</button>
+							</div>
+							
+						</form>
+					</div>
+				</div>
+			</div>	
+		</div>
+
+		<div class="container">
+			<div class="row">
+				<div class="col-md-4 col-md-offset-3" id="footer">
+					<p>版权所有&copy;2015 By Changxin</p>
+				</div>
+			</div>
+		</div>
+
+		<!--Bootstrap js-->
+		<script src="__PUBLIC__/jquery/jquery.js"></script>
+		<script src="__PUBLIC__/bootstrap/dist/js/bootstrap.js"></script>
+		<script src="__PUBLIC__/js/admin/login.js"></script>
+		
+	</body>
+<html>
+

@@ -1,0 +1,43 @@
+@charset utf-8;
+
+.btn{
+
+	width:200px;
+	background:#595394;
+	color: white;
+}
+
+#con{
+
+	padding-top:50px;
+	width:400px;
+	height:250px;
+	border:1px solid #595394;
+	border-radius:25px 25px 25px 25px;
+	background:#D4D0D4;
+}
+
+#user{
+
+	width:200px;
+}
+
+#password{
+
+	width:200px;
+}
+
+#submit{
+
+	width: 150px;
+	margin-top:20px;
+	background:#2F3A6C;
+	color: white;
+}
+
+#footer{
+
+	position: absolute;
+	bottom:0px;
+	font-size:15px;
+}
