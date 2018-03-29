@@ -8,7 +8,7 @@ var ScrollFix = function(elem) {
         return        
     }
 
-    window.addEventListener('touchmove', function(event) {
+    document.body.addEventListener('touchmove', function(event) {
         event.preventDefault()
     })
 	elem.addEventListener('touchstart', function(event) {
