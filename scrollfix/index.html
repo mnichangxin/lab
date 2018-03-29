@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-        <title>bezier</title>
+        <title>scroll</title>
         <style>
             * {
                 margin: 0;
@@ -15,18 +15,21 @@
             .container {
                 height: 100%;
                 background: #690;
-                overflow: scroll;
+                /* overflow: scroll; */
             }
             .box {
                 height: 1000px;
                 background: #ccc;
                 opacity: .8;
+                text-align: center;
             }
         </style>
     </head>
     <body>
         <div class="container">
-            <div class="box"></div>
+            <div class="box">
+                <p>滚动测试</p>
+            </div>
         </div>
         <script type="text/javascript" src="./index.js"></script>
     </body>
