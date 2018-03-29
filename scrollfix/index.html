@@ -9,8 +9,12 @@
                 margin: 0;
                 padding: 0;
             }
-            html, body {
+            html {
                 height: 100%;
+            }
+            body {
+                height: 100%;
+                -webkit-overflow-scrolling: touch;
             }
             .container {
                 height: 100%;
@@ -26,11 +30,15 @@
         </style>
     </head>
     <body>
-        <div class="container">
+        <div class="container" id="scrollable">
             <div class="box">
                 <p>滚动测试</p>
             </div>
         </div>
         <script type="text/javascript" src="./index.js"></script>
     </body>
+    <script>
+        var scrollable = document.getElementById('scrollable')
+        new ScrollFix(scrollable)
+    </script>
 </html>
