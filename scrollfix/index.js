@@ -8,6 +8,9 @@ var ScrollFix = function(elem) {
         return        
     }
 
+    window.addEventListener('touchmove', function(event) {
+        event.preventDefault()
+    })
 	elem.addEventListener('touchstart', function(event) {
 		startY = event.touches[0].pageY
 		startTopScroll = elem.scrollTop
