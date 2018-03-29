@@ -1,4 +1,5 @@
-/* 修复滚动出界 */
+/* 修复滚动出界（仅限 IOS） */
+
 var Overscroll = function(el) {
     el.addEventListener('touchstart', function() {
         var top = el.scrollTop,
