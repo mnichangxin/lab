@@ -93,20 +93,6 @@ function createNode(nodes) {
 
         if (nodes.length === 1) {
             bezierNodes.push(item)
-
-            // if (bezierNodes.length > 1) {
-            //     bezierNodes.forEach(function (obj, i) {
-            //         if (i) {
-            //             var startX = bezierNodes[i - 1].x,
-            //                 startY = bezierNodes[i - 1].y,
-            //                 x = obj.x,
-            //                 y = obj.y
-
-            //             ctx.strokeStyle = '#0090d2'
-            //             drawLine(startX, startY, x, y, 3)
-            //         } 
-            //     })
-            // }
         }
     })
 
@@ -181,6 +167,12 @@ function repaint() {
     drawBezier()
     drawNodes()
     showData()
+
+    if (localStorage) {
+        localStorage.setItem('data', JSON.stringify(bezierNodes))    
+    } else {
+        console.log('浏览器版本过低')
+    }
 
     bezierNodes.forEach(function(item) {
         animationNodes.push(item)
@@ -343,6 +335,28 @@ function showData() {
     dataPanel.innerHTML = data
 }
 
+/* 导出数据 */
+function saveFile() {
+    var text = localStorage.getItem('data')
+    var MIME_TYPE = 'text/plain'
+
+    window.URL = window.webkitURL || window.URL
+
+    var blob = new Blob([text], {type: MIME_TYPE})
+
+    var btn = document.getElementById('button')
+    var script = document.getElementById('script')
+    var a = document.createElement('a')
+
+    a.className = "button"
+    a.download = 'data.txt'
+    a.href = window.URL.createObjectURL(blob)
+    a.textContent = '导出数据'
+    a.dataset.downloadurl = [MIME_TYPE, a.download, a.href].join(':')
+
+    document.body.insertBefore(a, script)
+}
+
 var canvas = document.getElementById('canvas')
 var ctx = canvas.getContext('2d')
 
@@ -354,3 +368,5 @@ var button = document.getElementById('button')
 
 canvas.addEventListener('mousedown', downEve)
 button.addEventListener('click', switchEve)
+
+saveFile()

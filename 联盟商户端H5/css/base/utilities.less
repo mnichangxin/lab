@@ -1,0 +1,197 @@
+//
+// Utility classes
+// --------------------------------------------------
+
+html {
+    font-size: 100px;
+}
+// iphone 6 up
+@media screen and (min-width:375px){
+    html {
+        font-size: 100px;
+        font-size:@base-calc;
+    }
+}
+body {
+    background-color: @body-bg;
+    font-family: @font-family-sans-serif;
+    font-size: @font-size-base;
+    line-height: 1;
+    color: @gray-dark;
+}
+
+//Typography
+// -------------------------
+// Links
+a {
+    color: @gray-dark;
+    text-decoration: none;
+    &:focus,
+    &:visited,
+    &:active  {
+        color:@gray-dark;
+        text-decoration: none;
+    }
+    &.c-green,
+    &.c-green:focus,
+    &.c-green:visited,
+    &.c-green:active{
+        color: @green;
+    }
+}
+// Floats
+// -------------------------
+
+.clearfix {
+    .clearfix();
+}
+.pull-right {
+    float: right !important;
+}
+.pull-left {
+    float: left !important;
+}
+
+// Toggling content
+// -------------------------
+
+// Note: Deprecated .hide in favor of .hidden or .sr-only (as appropriate) in v3.0.1
+.hide,.dn {
+    display: none !important;
+}
+.show {
+    display: block !important;
+}
+.invisible {
+    visibility: hidden;
+}
+
+// For Affix plugin
+// -------------------------
+
+.po-fixed {
+    .po-fixed();
+}
+.po-relative {
+    .po-relative();
+}
+.po-absolute {
+    .po-absolute();
+}
+.po-static {
+    .po-static();
+}
+// Alignment
+.text-left{
+    .text-left() !important;
+}
+.text-right{
+    .text-right() !important;
+}
+.text-center{
+    .text-center() !important;
+}
+.text-justify{
+    .text-justify() !important;
+}
+.text-overflow{
+    .text-overflow();
+}
+.text-ellipsis{
+    .text-ellipsis();
+}
+.text-break{
+    .text-break();
+}
+
+// Contextual colors
+// .text-muted {}
+// .text-primary {}
+// .text-success {}
+// .text-info {}
+// .text-warning {}
+// layout box
+.m-box{
+    .m-box();
+}
+
+.padding-base{
+    padding:@padding-base;
+}
+.padding-large{
+    padding:@padding-large;
+}
+// layout position
+.c-rb,
+.c-rt,
+.c-lb,
+.c-lt{
+    position: absolute;
+    z-index:@zindex-item;
+    overflow: hidden;
+}
+.c-rb{
+    right: 0;
+    bottom: 0;
+}
+.c-rt{
+    right: 0;
+    top: 0;
+}
+.c-lb{
+    left: 0;
+    bottom: 0;
+}
+.c-lt{
+    left: 0;
+    top: 0;
+}
+// date
+.c-date{
+    display: inline-block;
+    font-size: @font-size-11;
+    line-height:.26rem;
+    padding:0 .12rem;
+    color: @white;
+    height:  .26rem;
+}
+.c-date-score{
+    .score-item{
+        color:#ff6e0d;
+        font-weight: 700;
+    }
+}
+.body-overflow{
+    overflow: hidden;
+}
+//delete border
+.noborder-top{
+    .noborder-top();
+}
+//mask layer
+.cover{
+    .po-fixed();
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: -80px;
+    z-index:@zindex-cover;
+    background-color: rgba(0,0,0,0.6);
+}
+//toast
+.m-toast{   
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    padding: .1rem .18rem;
+    line-height: .16rem;
+    max-width: 96%;
+    .text-ellipsis();
+    box-sizing: border-box;
+    color: @white;
+    background: rgba(0,0,0,.8);
+    .translate(-50%; -50%);
+    border-radius: .2rem;
+    white-space: nowrap;
+    z-index: 99;
+}

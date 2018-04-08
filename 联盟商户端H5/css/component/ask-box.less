@@ -1,0 +1,83 @@
+html,
+body {
+    height: 100%;
+    width: 100%;
+}
+
+@media screen and (max-width: 320px) {
+    .ask-box {
+        padding-bottom: .8rem;
+    }
+}
+
+.ask-box {
+    background: #F7F7F7;
+    .ask-list {
+        padding: .05rem .1rem 0;
+        font-size: .15rem;
+        li {
+            padding-bottom: .05rem;
+            .ask-title {
+                padding: .1rem .03rem;
+                display: flex;
+                justify-content: space-between;
+                .title-wrong,
+                .title-bind {
+                    color: #FF2727;
+                }
+            }
+            .ask-mes {
+                padding: 0 .12rem;
+                height: .48rem;
+                line-height: .48rem;
+                border: solid #E5E5E5 1px;
+                border-radius: .1rem;
+                background: #fff;
+                input {
+                    background: #fff;
+                    height: 95%;
+                    width: 100%;
+                }
+            }
+            .ask-wrong {
+                background: #FDE2DB;
+                border: solid #FF2727 1px;
+                input {
+                    background: #FDE2DB;
+                }
+            }
+        }
+    }
+    .agree-read {
+        margin: .2rem .23rem .37rem;
+        text-align: center;
+        font-size: .14rem;
+        color: #656565;
+        line-height: .18rem;
+        a {
+            color: #00BC16;
+        }
+    }
+    .ask-prompt {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        .translate(-50%;
+        -50%);
+        background: rgba(0, 0, 0, 0.8);
+        color: #fff;
+        width: 2.25rem;
+        border-radius: 3rem;
+        text-align: center;
+        padding: .11rem .075rem;
+        line-height: .18rem;
+        font-size: .14rem;
+    }
+}
+
+.choose-btn {
+    width: .14rem;
+    height: .14rem;
+    display: inline-block;
+    line-height: .16rem;
+}

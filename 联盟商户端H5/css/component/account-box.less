@@ -1,0 +1,111 @@
+.account-box{
+    background: #F8F8F8;
+    height: 100%;
+    .balance-box{
+        padding: .06rem .1rem;
+        position: relative;
+        li{
+            background: #EFEFEF;
+            width: .8rem;
+            height: .27rem;
+            text-align: center;
+            line-height: .27rem;
+            border-radius: .05rem;
+            .select{
+                position: absolute;
+                top: .4rem;
+                left: 0;
+                right: 0;
+                display: none;
+                background: #fff;
+                width: 100%;
+            }
+//          .float-fill{
+//              background: rgba(0,0,0,0.5);
+//              height: 100%;
+//              width: 100%;
+//              position: relative;
+//             top: 0;
+//          }
+        }
+        li:hover{
+            .select{
+                display: block;
+            }
+        }
+    }
+}
+.account-box>div{
+    background: #fff;
+}
+.m-content {
+    padding: 0 .1rem;
+    margin-top: .06rem;
+}
+.mes-list {
+        padding-top: .2rem;
+        padding-bottom: .05rem;
+        font-size: .14rem;
+        li {
+            .flexBox>.boxMod();
+            .flexBox>.boxPack(left);
+            .flexBox>.boxAlign(center);
+            padding-bottom: .15rem;
+            .c-circle {
+                display: block;
+                width: .07rem;
+                height: .07rem;
+                border-radius: 50%;
+                margin: 0 .06rem;
+            }
+            .green {
+                background: #00BC16;
+            }
+            .gray {
+                background: #BABABA;
+            }
+            .red {
+                background: #FF2828;
+            }
+            .list-two {
+                .flexBox>.boxMod();
+                .flexBox>.boxAlign(center);
+                .flexBox>.boxPack(justify);
+                width: 100%;
+                &>.list-right {
+                    margin-left: .1rem;
+                }
+                &>div {
+                    .flexBox>.boxMod();
+                    .flexBox>.boxAlign(center);
+                    width: 50%;
+                }
+            }
+            .c-name {
+                color: #666666;
+            }
+        }
+    }
+.money-box {
+    .flexBox>.boxMod();
+    .flexBox>.boxAlign(center);
+    .flexBox>.boxPack(justify);
+    padding: .13rem .1rem;
+    border-top: solid 1px #E9E9E9;
+    .check-btn {
+        .job-btn {
+            padding: .07rem .13rem;
+            color: @green;
+            border-radius: .15rem;
+            border: solid 1px @green;
+        }
+        .disabled{
+            color: #B2B2B2;
+            border: solid 1px #B2B2B2;
+        }
+        .cancel{
+            color: #333;
+            border: solid 1px #B2B2B2;
+        }
+    }
+}

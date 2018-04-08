@@ -1,0 +1,28 @@
+{
+  "name": "union-h5",
+  "version": "1.0.0",
+  "description": "It's a react pwa.",
+  "main": "app.js",
+  "scripts": {
+    "start": "webpack-dev-server --open",
+    "build": "webpack --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "keywords": [
+    "react",
+    "pwa"
+  ],
+  "author": "mnichangxin",
+  "license": "MIT",
+  "devDependencies": {
+    "html-webpack-plugin": "^3.2.0",
+    "react": "^16.3.1",
+    "react-dom": "^16.3.1",
+    "webpack": "^4.5.0",
+    "webpack-cli": "^2.0.14",
+    "webpack-dev-server": "^3.1.2"
+  }
+}
