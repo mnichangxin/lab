@@ -6,11 +6,13 @@ module.exports = {
     entry: ['./app.js'],
     output: {
         filename: 'bundle.js',
-        path: path.resolve(__dirname, 'build')
+        path: path.resolve(__dirname, 'build'),
+        publicPath: "/"
     },
     devServer: {
         contentBase: path.resolve(__dirname, 'build'),
         port: 80,
+        historyApiFallback: true,
         disableHostCheck: true
     },
     module: {
