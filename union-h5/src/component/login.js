@@ -1,5 +1,7 @@
+/* 首页 */
 import React from 'react'
 import {Link} from 'react-router-dom'
+import {isLogin} from '../utils/isLogin'
 import 'whatwg-fetch'
 
 class Login extends React.Component {
@@ -12,21 +14,28 @@ class Login extends React.Component {
     }
 
     // 获取 Cookie
-    getCookie(name) { 
-        let arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)")
+    // getCookie(name) { 
+    //     let arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)")
     
-        if (arr = document.cookie.match(reg)) {
-            return unescape(arr[2])             
-        } else {
-            return null             
-        }
-    }
+    //     if (arr = document.cookie.match(reg)) {
+    //         return unescape(arr[2])             
+    //     } else {
+    //         return null             
+    //     }
+    // }
 
     componentDidMount() {
-        let P00001 = this.getCookie('P00001')
+        // let P00001 = this.getCookie('P00001')
 
-        // 判断是否登录
-        if (P00001) {
+        // // 判断是否登录
+        // if (P00001) {
+        //     this.setState({
+        //         isLogin: true,
+        //         P00001: P00001
+        //     })
+        // }
+
+        if (isLogin) {
             this.setState({
                 isLogin: true,
                 P00001: P00001
