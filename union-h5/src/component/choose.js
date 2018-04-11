@@ -1,5 +1,7 @@
 import React from 'react'
 import {Link, withRouter} from 'react-router-dom'
+import {isLogin} from '../utils/isLogin'
+import {getCookie} from '../utils/cookie'
 import 'whatwg-fetch'
 
 class Choose extends React.Component {
@@ -24,7 +26,9 @@ class Choose extends React.Component {
                         personal: 'enterprise-box'
                     }
                 })
-                window.location.href = 'https://www.iqiyi.com/common/qimeng/main.html'
+                setTimeout(() => {
+                    window.location.href = 'https://www.iqiyi.com/common/qimeng/main.html'
+                }, 100)
                 break
             case 'personal':
                 this.setState({
@@ -33,15 +37,21 @@ class Choose extends React.Component {
                         personal: 'enterprise-box choosed'
                     }
                 })
-                this.props.history.push('/invite')
+                setTimeout(() => {
+                    this.props.history.push('/invite')
+                }, 100)
                 break
         }    
     }
 
     componentWillMount() {
-        this.setState({
-            P00001: this.props.location.state.P00001
-        })
+        if (isLogin) {
+            this.setState({
+                P00001: getCookie('P00001')
+            })
+        } else {
+
+        }
     }
 
     componentDidMount() {
@@ -74,7 +84,7 @@ class Choose extends React.Component {
                         <div className="c-pic c-enterprise-pic">
                             <img src="http://www.qiyipic.com/common/fix/h5-persional-union/h5-union-persional.png" />
                         </div>
-                        <p className="c-title">企业电员</p>
+                        <p className="c-title">企业店员</p>
                         <div className="choose-btn">
                             <img src="http://www.qiyipic.com/common/fix/h5-union/h5-union-already.png"/>
                         </div>

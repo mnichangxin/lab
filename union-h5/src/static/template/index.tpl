@@ -8,7 +8,7 @@
 		<link rel="stylesheet" type="text/css" href="http://static.iqiyi.com/css/20180408/h5-union.css" />
 		<!--<link rel="stylesheet" type="text/css" href="../../css/page/h5-union.css"/>-->
 		<style>
-			#app {
+			html, body, #app {
 				height: 100%;
 			}
 		</style>
