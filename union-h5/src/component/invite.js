@@ -105,14 +105,14 @@ class Invite extends React.Component {
                     card = this.state.field.card 
 
                 if (name.status && code.status && card.status) {
-                    fetch('', {
+                    // fetch('', {
 
-                    })
-                    .then(function(res) {
-                        
-                    })
+                    // })
+                    // .then(function(res) {
+
+                    // })
                 } else {
-
+                    this.props.history.push('/person')
                 }
             }, 100)
         } else {
@@ -121,14 +121,10 @@ class Invite extends React.Component {
             })
             setTimeout(() => {
                 this.setState({
-                    toastStatus: false
+                    toastStatus: false 
                 })
             }, 800)
         }
-    }
-
-    componentDidUpdate() {
-        console.log(this.state)
     }
 
     render() {

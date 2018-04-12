@@ -13,7 +13,7 @@ class Login extends React.Component {
     }
 
     componentDidMount() {
-        if (isLogin) {
+        if (isLogin()) {
             this.setState({
                 isLogin: true
             })

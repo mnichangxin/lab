@@ -10,4 +10,14 @@ var getCookie = function(name) {
     }
 }
 
-export {getCookie}
+var removeCookie = function(name) {
+    let exp = new Date()
+
+    exp.setTime(exp.getTime() - 1)
+
+    if (getCookie('P00001') != null) {
+        document.cookie = name + '=' + getCookie('P00001') + ';expires=' + exp.toGMTString() + 'domain=' + '.iqiyi.com;'
+    }
+}
+
+export {getCookie, removeCookie}

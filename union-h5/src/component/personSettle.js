@@ -5,7 +5,33 @@ import 'whatwg-fetch'
 class PersonSettle extends React.Component {
     constructor(props) {
         super(props)
+
+        this.state = {
+            invite_status: false,
+            settle_status: false
+        }
+
+        this.handleSelect = this.handleSelect.bind(this)
     }
+
+    handleSelect(id, e) {
+        switch(id) {
+            case 'invite_status':
+                this.setState({
+                    invite_status: true,
+                    settle_status: false
+                })
+                break
+            case 'settle_status':
+                this.setState({
+                    invite_status: false,
+                    settle_status: true
+                })
+                this
+                break
+        }
+    }
+
     render() {
         return (
             <div>
@@ -20,30 +46,26 @@ class PersonSettle extends React.Component {
                 <div className="account-box">
                     <div className="m-nav">
                         <ul className="balance-box">
-                            <li className="clicked">
+                            <li className={this.state.invite_status ? 'clicked' : ''} onClick={(e) => this.handleSelect('invite_status', e)}>
                                 申请状态 <i className="select-icon"></i>
                                 <div className="select">
                                     <p className="c-mark">全部</p>
-                                    <p>有效 </p>
+                                    <p>有效</p>
                                     <p>已撤销</p>
                                     <p>已过期</p>
                                 </div>
                                 <div className="float-fill"></div>
                             </li>
-                            <li>
-                                结算管控 <i className="select-icon"></i>
+                            <li className={this.state.settle_status ? 'clicked' : ''} onClick={(e) => this.handleSelect('settle_status', e)}>
+                                结算状态 <i className="select-icon"></i>
                                 <div className="select">
-                                    <p>全部</p>
-                                    <p className="c-mark">有效 </p>
-                                    <p>已撤销</p>
-                                    <p>已过期</p>
+                                    <p className="c-mark">全部</p>
+                                    <p>已结算</p>
+                                    <p>未结算</p>
                                 </div>
                                 <div className="float-fill"></div>
                             </li>
                         </ul>
-                        {/* <select name="">
-                            <option value="">结算管控</option>
-                        </select> */}
                     </div>
                     <div className="m-content">
                         <ul className="mes-list">
