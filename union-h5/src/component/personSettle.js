@@ -73,7 +73,7 @@ class MoneyBox extends React.Component {
                                 </div>
                                 <div className="list-right">
                                     <div className="c-name">结算状态：</div>
-                                    <span className="c-circle gray"></span> 未結算
+                                    <span className="c-circle gray"></span> 未结算
                                 </div>
                             </div>
                         </li>

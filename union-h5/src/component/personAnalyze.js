@@ -1,10 +1,32 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 import 'whatwg-fetch'
+import DatePicker from 'react-mobile-datepicker'
 
 class PersonAnalyze extends React.Component {
     constructor(props) {
         super(props)
+
+        this.state = {
+            theme: 'ios',
+            isOpen: true,
+            time: new Date()
+        }
+
+        this.handleSelect = this.handleSelect.bind(this)
+        this.handleCancel = this.handleCancel.bind(this)
+    }
+
+    handleSelect() {
+        this.setState({
+            isOpen: false
+        })
+    }
+
+    handleCancel() {
+        this.setState({
+            isOpen: false
+        })
     }
 
     render() {
@@ -14,7 +36,7 @@ class PersonAnalyze extends React.Component {
                     <div className="m-box-items m-box-items-full">
                         <section className="m-topSite m-borderB">
                             <a className="c-goback" onClick={()=>this.props.history.goBack()}><i className="arrow"></i></a>
-                            <div className="c-content">结算管控</div>
+                            <div className="c-content">业绩分析</div>
                         </section>
                     </div>
                 </div>
@@ -57,6 +79,12 @@ class PersonAnalyze extends React.Component {
                         </div>
                     </div>
                 </div>
+                <DatePicker
+                        theme={this.state.theme}
+                        value={this.state.time}
+                        isOpen={this.state.isOpen}
+                        onSelect={this.handleSelect}
+                        onCancel={this.handleCancel} />
             </div>
         )
     }
