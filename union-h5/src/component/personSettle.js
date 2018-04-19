@@ -54,6 +54,24 @@ class PersonSettle extends React.Component {
                 settleStatus: '未结算',
                 walletAccount: '12345678',
                 identityCard: '371329***245'   
+            }, {
+                startDate: 1523861711000,
+                endDate: 1523861711000,
+                applyId: '12345678',
+                applyDate: 1523861711000,
+                applyStatus: '已撤销',
+                settleStatus: '未结算',
+                walletAccount: '12345678',
+                identityCard: '371329***245'   
+            }, {
+                startDate: 1523861711000,
+                endDate: 1523861711000,
+                applyId: '12345678',
+                applyDate: 1523861711000,
+                applyStatus: '已撤销',
+                settleStatus: '未结算',
+                walletAccount: '12345678',
+                identityCard: '371329***245'   
             }],
             settle_doc: []
         }
@@ -172,8 +190,16 @@ class PersonSettle extends React.Component {
     }
 
     componentDidMount() {
+        let timer = null
+        
         this.setState({
             settle_doc: this.state.total_doc
+        })
+
+        window.addEventListener('scroll', () => {
+            if (timeoutId) {
+                clearTimeout(timer)
+            }
         })
     }
 
@@ -208,6 +234,7 @@ class PersonSettle extends React.Component {
                     <MoneyBox settle_doc={this.state.settle_doc} handleOndo={this.handleOndo} />
                 </div>
                 <FloatBox apply_box_status={this.state.apply_box_status} undo_box_status={this.state.undo_box_status} handleCancel={this.handleCancel} />
+                <section className="m-noInfo-tip" ref="container">下拉加载更多</section>
             </div>
         )
     }

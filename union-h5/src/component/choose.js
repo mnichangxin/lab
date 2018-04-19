@@ -39,26 +39,27 @@ class Choose extends React.Component {
                     }
                 })
                 
-                // fetch('http://10.3.74.198:8080/ocm-union-api/personUnionh5/verifyExistsPerson.do?P00001=' + this.state.P00001, {
-                //        mode: 'no-cors'
-                //     })
-                //     .then(function(res) {
-                //         // return res.text().then(function(text) {
-                //         //     return text ? JSON.parse(text) : {}
-                //         // })
-                //         console.log(res)
-                //         return res.json()
-                //     })
-                //     .then(function(json) {
-                //         console.log(json)
-                //     })
-                //     .catch(function(err) {
-                //         console.log(err)
-                //     })
+                let that = this
 
-                setTimeout(() => {
-                    this.props.history.push('/invite')
-                }, 100)
+                fetch('http://10.3.74.198:8080/ocm-union-api/personUnionh5/verifyExistsPerson.do?P00001=' + this.state.P00001)
+                    .then(function(res) {
+                        return res.json()
+                    })
+                    .then(function(json) {
+                        if (json.code == 'A00000') {
+                            that.props.history.push('/person')
+                        } else {
+                            that.props.history.push('/invite')
+                            console.log(json.message)
+                        }
+                    })
+                    .catch(function(err) {
+                        console.log(err)
+                    })
+
+                // setTimeout(() => {
+                //     this.props.history.push('/invite')
+                // }, 100)
                 break
         }    
     }

@@ -2,6 +2,8 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 import 'whatwg-fetch'
 import DatePicker from 'react-mobile-datepicker'
+import {stamp2Date} from '../utils/parseDate'
+
 
 class PersonAnalyze extends React.Component {
     constructor(props) {
@@ -10,7 +12,10 @@ class PersonAnalyze extends React.Component {
         this.state = {
             theme: 'ios',
             isOpen: false,
-            time: new Date()
+            time: new Date(),
+            id: '',
+            startDate: stamp2Date(Date.parse(new Date())),
+            endDate: stamp2Date(Date.parse(new Date()))
         }
 
         this.handleClick = this.handleClick.bind(this)
@@ -18,16 +23,30 @@ class PersonAnalyze extends React.Component {
         this.handleCancel = this.handleCancel.bind(this)
     }
 
-    handleClick() {
+    handleClick(id, e) {
         this.setState({
             isOpen: true
         })
+
+        this.setState({
+            id: id
+        })
     }
 
-    handleSelect() {
+    handleSelect(date) {
         this.setState({
             isOpen: false
         })
+        
+        if (this.state.id == 'start') {
+            this.setState({
+                startDate: stamp2Date(Date.parse(date))
+            })
+        } else {
+            this.setState({
+                endDate: stamp2Date(Date.parse(date))
+            })
+        }
     }
 
     handleCancel() {
@@ -50,15 +69,15 @@ class PersonAnalyze extends React.Component {
                 <div className="account-box analyse-box">
                     <div className="m-nav">
                         <ul className="balance-box">
-                            <li onClick={this.handleClick}>
-                                2018/03/21 <i className="select-icon"></i>
+                            <li onClick={(e) => this.handleClick('start', e)}>
+                                {this.state.startDate} <i className="select-icon"></i>
                                 <div className="float-fill"></div>
                             </li>
                             <li className="line">
                                 -
                             </li>
-                            <li onClick={this.handleClick}>
-                                2018/03/21 <i className="select-icon"></i>
+                            <li onClick={(e) => this.handleClick('end', e)}>
+                                {this.state.endDate} <i className="select-icon"></i>
                                 <div className="float-fill"></div>
                             </li>
                         </ul>
@@ -129,7 +148,7 @@ class PersonAnalyze extends React.Component {
                         theme={this.state.theme}
                         value={this.state.time}
                         isOpen={this.state.isOpen}
-                        onSelect={this.handleSelect}
+                        onSelect={(date) => this.handleSelect(date)}
                         onCancel={this.handleCancel} />
             </div>
         )

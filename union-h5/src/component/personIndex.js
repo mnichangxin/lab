@@ -39,7 +39,7 @@ class PersonIndex extends React.Component {
     }
 
     handleSave() {
-        fetch('http://qm.vip.iqiyi.com/api/clerk/getQRCode.do?P00001=' + this.state.P00001)
+        fetch('http://10.3.74.198:8080/ocm-union-api/personUnionh5/getQRCode.do?P00001=' + this.state.P00001)
             .then(function(res) {
                 return res.blob()
             })

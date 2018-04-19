@@ -49,19 +49,18 @@ class Invite extends React.Component {
                     setStatus(name, value, false)
                 }
             } else if (name == 'code') {
-                fetch('http://qm.vip.iqiyi.com/api/corporate/verifyInviteCode.do', {
-                    corporateInviteCode: value
-                })
-                .then(function(res) {
-                    return res.json()
-                })
-                .then(function(json) {
-                    if (json.code == 'A00000') {
-                        setStatus(name, value, true)
-                    } else {
-                        setStatus(name, value, false)
-                    }
-                })
+                fetch('http://10.3.74.198:8080/ocm-union-api/personUnionh5/verifyCode.do?inviteCode=' + value)
+                    .then(function(res) {
+                        return res.json()
+                    })
+                    .then(function(json) {
+                        console.log(json)
+                        if (json.code == 'A00000') {
+                            setStatus(name, value, true)
+                        } else {
+                            setStatus(name, value, false)
+                        }
+                    })
             } else if (name == 'card') {
                 if (/^\d{17}[\dxX]$/.test(value)) {
                     setStatus(name, value, true)
@@ -105,12 +104,16 @@ class Invite extends React.Component {
                     card = this.state.field.card 
 
                 if (name.status && code.status && card.status) {
-                    // fetch('', {
-
-                    // })
-                    // .then(function(res) {
-
-                    // })
+                    fetch('http://10.3.74.198:8080/ocm-union-api/personUnionh5/apply.do?inviteCode=' + code)
+                        .then(function(res) {
+                            return res.json()
+                        })
+                        .then(function(json) {
+                            console.log(json)
+                        })
+                        .catch(function(err) {
+                            console.log(err)
+                        })
                 } else {
                     this.props.history.push('/person')
                 }
