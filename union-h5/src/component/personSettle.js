@@ -3,104 +3,9 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 import 'whatwg-fetch'
 
-class Select extends React.Component {
-    constructor(props) {
-        super(props)
-        
-        this.state = {
-            index: 0
-        }
-
-        this.handleClick = this.handleClick.bind(this)
-    }
-
-    handleClick(index, e) {
-        this.setState({
-            index: index
-        })
-
-        setTimeout(() => {
-            this.props.changeStatus()
-        }, 50)
-    } 
-
-    render() {
-        return (
-            <div className="select">
-                {
-                    this.props.items.map(
-                        (item, index) => {
-                            return (
-                                <p className={this.state.index == index ? 'c-mark' : ''} key={index} onClick={(e) => this.handleClick(index, e)}>{item}<i className="choosed-right"></i></p>
-                            )
-                        }
-                    )
-                }
-            </div>
-        )
-    }
-}
-
-class MoneyBox extends React.Component {
-    constructor(props) {
-        super(props)
-    }
-
-    render() {
-        return (
-            <div>
-                <div className="m-content">
-                    <ul className="mes-list">
-                        <li>
-                            <div className="c-name">结算周期：</div>
-                            <div className="c-mes">2018/01/01 - 2018/03/01</div>
-                        </li>
-                        <li>
-                            <div className="list-two">
-                                <div className="list-left">
-                                    <div className="c-name">申请ID：</div>041545478478
-                                </div>
-                                <div className="list-right">
-                                    <div className="c-name">申请日期：</div>2018/03/01
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div className="list-two">
-                                <div className="list-left">
-                                    <div className="c-name">申请状态：</div>
-                                    <span className="c-circle green"></span> 有效
-                                </div>
-                                <div className="list-right">
-                                    <div className="c-name">结算状态：</div>
-                                    <span className="c-circle gray"></span> 未結算
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div className="c-name">电子钱包账户：</div>
-                            <div className="c-mes">45456484541</div>
-                        </li>
-
-                        <li>
-                            <div className="c-name">收款人身份证：</div>
-                            <div className="c-mes">041545478478</div>
-                        </li>
-                    </ul>
-                </div>
-                <div className="money-box">
-                    <div className="money">
-                        返佣金额 <span className="c-mark">￥1545.57</span>
-                    </div>
-                    <div className="check-btn">
-                        <a href="" className="job-btn cancel">撤消申请</a>
-                        <a href="" className="job-btn disabled">查看业绩</a>
-                    </div>
-                </div>
-            </div>
-        )
-    }
-}
+import {Select} from './select'
+import {MoneyBox} from './moneyBox'
+import {FloatBox} from  './floatBox'
 
 class PersonSettle extends React.Component {
     constructor(props) {
@@ -108,18 +13,120 @@ class PersonSettle extends React.Component {
 
         this.state = {
             invite_status: false,
-            settle_status: false
+            settle_status: false,
+            apply_box_status: false,
+            undo_box_status: false,
+            applyStatus: '全部',
+            settleStatus: '全部',
+            total_doc: [{
+                startDate: 1523861711000,
+                endDate: 1523861711000,
+                applyId: '12345678',
+                applyDate: 1523861711000,
+                applyStatus: '有效',
+                settleStatus: '已结算',
+                walletAccount: '12345678',
+                identityCard: '371329***245'   
+            }, {
+                startDate: 1523861711000,
+                endDate: 1523861711000,
+                applyId: '12345678',
+                applyDate: 1523861711000,
+                applyStatus: '已过期',
+                settleStatus: '未结算',
+                walletAccount: '12345678',
+                identityCard: '371329***245'   
+            }, {
+                startDate: 1523861711000,
+                endDate: 1523861711000,
+                applyId: '12345678',
+                applyDate: 1523861711000,
+                applyStatus: '有效',
+                settleStatus: '未结算',
+                walletAccount: '12345678',
+                identityCard: '371329***245'   
+            }, {
+                startDate: 1523861711000,
+                endDate: 1523861711000,
+                applyId: '12345678',
+                applyDate: 1523861711000,
+                applyStatus: '已撤销',
+                settleStatus: '未结算',
+                walletAccount: '12345678',
+                identityCard: '371329***245'   
+            }],
+            settle_doc: []
         }
 
         this.handleSelect = this.handleSelect.bind(this)
+        this.handleApply = this.handleApply.bind(this)
+        this.handleOndo = this.handleOndo.bind(this)
+        this.handleCancel = this.handleCancel.bind(this)
         this.changeStatus = this.changeStatus.bind(this)
     }
 
-    changeStatus(status) {
+    reRenderBox() {
+        let docs =  this.state.total_doc
+        let newDocs = []
+
+        let applyStatus =  this.state.applyStatus,
+            settleStatus = this.state.settleStatus
+
+        if (applyStatus == '全部' && settleStatus != '全部') {
+            newDocs = docs.filter((doc) => {
+                return doc.settleStatus == settleStatus
+            })
+        } else if (applyStatus != '全部' && settleStatus == '全部') {
+            newDocs = docs.filter((doc) => {
+                return doc.applyStatus == applyStatus
+            })
+        } else if (applyStatus != '全部' && settleStatus != '全部') {
+            newDocs = docs.filter((doc) => {
+                return doc.applyStatus == applyStatus && doc.settleStatus == settleStatus
+            })
+        } else {
+            newDocs = docs
+        }
+
+        this.setState({
+            settle_doc: newDocs
+        })
+    }
+
+    changeStatus(type) {
+        switch(type) {
+            case '全部':
+                if (this.state.invite_status) {
+                    this.setState({
+                        applyStatus: type
+                    })
+                } else {
+                    this.setState({
+                        settleStatus: type
+                    })
+                }
+                break
+            case '有效':
+            case '已撤销':
+            case '已过期':
+                this.setState({
+                    applyStatus: type
+                })
+                break
+            case '已结算':
+            case '未结算':
+                this.setState({
+                    settleStatus: type
+                })         
+                break   
+        }
+        
         this.setState({
             invite_status: false,
             settle_status: false
         })
+
+        this.reRenderBox()
     }
 
     handleSelect(id, e) {
@@ -141,7 +148,33 @@ class PersonSettle extends React.Component {
                     invite_status: false,
                     settle_status: false
                 })
+                break
         }
+    }
+    
+    handleApply() {
+        this.setState({
+            apply_box_status: true
+        })
+    }
+
+    handleOndo() {
+        this.setState({
+            undo_box_status: true
+        })
+    }
+
+    handleCancel() {
+        this.setState({
+            apply_box_status: false,
+            undo_box_status: false
+        })
+    }
+
+    componentDidMount() {
+        this.setState({
+            settle_doc: this.state.total_doc
+        })
     }
 
     render() {
@@ -155,7 +188,7 @@ class PersonSettle extends React.Component {
                         </section>
                     </div>
                 </div>
-                <div className="account-box">
+                <div className={this.state.invite_status || this.state.settle_status || this.state.apply_box_status || this.state.undo_box_status ? 'account-box account-cover' : 'account-box'}>
                     <div className={this.state.invite_status || this.state.settle_status ? 'cover' : ''} onClick={(e) => this.handleSelect('cover_status', e)}></div>
                     <div className="m-nav">
                         <ul className="balance-box">
@@ -170,181 +203,11 @@ class PersonSettle extends React.Component {
                                 <div className="float-fill"></div>
                             </li>
                         </ul>
+                        <div className="btn-r" onClick={this.handleApply}>申请结算</div>
                     </div>
-                    <MoneyBox />
-                    {/*<div className="m-content">
-                        <ul className="mes-list">
-                            <li>
-                                <div className="c-name">结算周期：</div>
-                                <div className="c-mes">2018/01/01 - 2018/03/01</div>
-                            </li>
-                            <li>
-                                <div className="list-two">
-                                    <div className="list-left">
-                                        <div className="c-name">申请ID：</div>041545478478
-                                    </div>
-                                    <div className="list-right">
-                                        <div className="c-name">申请日期：</div>2018/03/01
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div className="list-two">
-                                    <div className="list-left">
-                                        <div className="c-name">申请状态：</div>
-                                        <span className="c-circle green"></span> 有效
-                                    </div>
-                                    <div className="list-right">
-                                        <div className="c-name">结算状态：</div>
-                                        <span className="c-circle gray"></span> 未結算
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div className="c-name">电子钱包账户：</div>
-                                <div className="c-mes">45456484541</div>
-                            </li>
- 
-                            <li>
-                                <div className="c-name">收款人身份证：</div>
-                                <div className="c-mes">041545478478</div>
-                            </li>
-                        </ul>
-                    </div>
-                    <div className="money-box">
-                        <div className="money">
-                            返佣金额 <span className="c-mark">￥1545.57</span>
-                        </div>
-                        <div className="check-btn">
-                            <a href="" className="job-btn cancel">撤消申请</a>
-                            <a href="" className="job-btn disabled">查看业绩</a>
-                        </div>
-                    </div>
-                    <div className="m-content">
-                        <ul className="mes-list">
-                            <li>
-                                <div className="c-name">结算周期：</div>
-                                <div className="c-mes">2018/01/01 - 2018/03/01</div>
-                            </li>
-                            <li>
-                                <div className="list-two">
-                                    <div className="list-left">
-                                        <div className="c-name">申请ID：</div>041545478478
-                                    </div>
-                                    <div className="list-right">
-                                        <div className="c-name">申请日期：</div>2018/03/01
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div className="list-two">
-                                    <div className="list-left">
-                                        <div className="c-name">申请状态：</div>
-                                        <span className="c-circle red"></span> 已失效
-                                    </div>
-                                    <div className="list-right">
-                                        <div className="c-name">结算状态：</div>
-                                        <span className="c-circle gray"></span> 未結算
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div className="c-name">电子钱包账户：</div>
-                                <div className="c-mes">45456484541</div>
-                            </li>
-
-                            <li>
-                                <div className="c-name">收款人身份证：</div>
-                                <div className="c-mes">041545478478</div>
-                            </li>
-                        </ul>
-                    </div>
-                    <div className="money-box">
-                        <div className="money">
-                            返佣金额 <span className="c-mark">￥1545.57</span>
-                        </div>
-                        <div className="check-btn">
-                            <a href="" className="job-btn">查看业绩</a>
-                        </div>
-                    </div>
-                    <div className="m-content">
-                        <ul className="mes-list">
-                            <li>
-                                <div className="c-name">结算周期：</div>
-                                <div className="c-mes">2018/01/01 - 2018/03/01</div>
-                            </li>
-                            <li>
-                                <div className="list-two">
-                                    <div className="list-left">
-                                        <div className="c-name">申请ID：</div>041545478478
-                                    </div>
-                                    <div className="list-right">
-                                        <div className="c-name">申请日期：</div>2018/03/01
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div className="list-two">
-                                    <div className="list-left">
-                                        <div className="c-name">申请状态：</div>
-                                        <span className="c-circle green"></span> 有效
-                                    </div>
-                                    <div className="list-right">
-                                        <div className="c-name">结算状态：</div>
-                                        <span className="c-circle gray"></span> 未結算
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div className="c-name">电子钱包账户：</div>
-                                <div className="c-mes">45456484541</div>
-                            </li>
-
-                            <li>
-                                <div className="c-name">收款人身份证：</div>
-                                <div className="c-mes">041545478478</div>
-                            </li>
-                        </ul>
-                    </div>
-                    <div className="money-box">
-                        <div className="money">
-                            返佣金额 <span className="c-mark">￥1545.57</span>
-                        </div>
-                        <div className="check-btn">
-                            <a href="" className="job-btn">查看业绩</a>
-                        </div>
-                    </div>
+                    <MoneyBox settle_doc={this.state.settle_doc} handleOndo={this.handleOndo} />
                 </div>
-                <div className="float-box hide">
-                    <div className="settle-accounts">
-                        <div className="c-title">申请结算</div>
-                        <div className="info">
-                            <span className="c-bold">姓名：</span>俏丽
-                        </div>
-                        <div className="info">
-                            <span className="c-bold">结算周期：</span>2017/01/01-2018/12/31
-                        </div>
-                        <div className="info">
-                            <span className="c-bold">申请日期：</span>45456484541
-                        </div>
-                        <div className="info">
-                            <span className="c-bold">电子钱包：</span>45456484541
-                        </div>
-                        <p className="c-mes">您的审核预计在5-7个工作日完成</p>
-                        <div className="commit">
-                            <span className="c-mark c-normal">取消</span>
-                            <span className="c-mark">提交</span>
-                        </div>
-                    </div> */}
-                    <div className="settle-accounts hide">
-                        <div className="c-title">申请结算</div>
-                        <p className="c-word">是否确认撤销此申请，<br />撤销后需要重新提交结算申请</p>
-                        <div className="commit">
-                            <span className="c-mark c-normal">取消</span>
-                            <span className="c-mark">提交</span>
-                        </div>
-                    </div>
-                </div>
+                <FloatBox apply_box_status={this.state.apply_box_status} undo_box_status={this.state.undo_box_status} handleCancel={this.handleCancel} />
             </div>
         )
     }

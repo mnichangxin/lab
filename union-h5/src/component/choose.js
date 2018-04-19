@@ -1,8 +1,9 @@
 import React from 'react'
 import {Link, withRouter} from 'react-router-dom'
+import 'whatwg-fetch'
+
 import {isLogin} from '../utils/isLogin'
 import {getCookie} from '../utils/cookie'
-import 'whatwg-fetch'
 
 class Choose extends React.Component {
     constructor(props) {
@@ -37,6 +38,24 @@ class Choose extends React.Component {
                         personal: 'enterprise-box choosed'
                     }
                 })
+                
+                // fetch('http://10.3.74.198:8080/ocm-union-api/personUnionh5/verifyExistsPerson.do?P00001=' + this.state.P00001, {
+                //        mode: 'no-cors'
+                //     })
+                //     .then(function(res) {
+                //         // return res.text().then(function(text) {
+                //         //     return text ? JSON.parse(text) : {}
+                //         // })
+                //         console.log(res)
+                //         return res.json()
+                //     })
+                //     .then(function(json) {
+                //         console.log(json)
+                //     })
+                //     .catch(function(err) {
+                //         console.log(err)
+                //     })
+
                 setTimeout(() => {
                     this.props.history.push('/invite')
                 }, 100)
@@ -50,7 +69,7 @@ class Choose extends React.Component {
                 P00001: getCookie('P00001')
             })
         } else {
-
+            window.location.href = 'https://m.iqiyi.com/user.html#baseLogin'
         }
     }
 
@@ -61,7 +80,6 @@ class Choose extends React.Component {
                 return res.json()
             })
             .then(function(json) {
-                console.log(json)
                 if (json.data.userinfo.phone.length > 0) {
                     console.log('已绑定，无弹框')
                 } else {
