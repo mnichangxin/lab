@@ -46,6 +46,7 @@ class Choose extends React.Component {
                         return res.json()
                     })
                     .then(function(json) {
+                        console.log(json)
                         if (json.code == 'A00000') {
                             that.props.history.push('/person')
                         } else {

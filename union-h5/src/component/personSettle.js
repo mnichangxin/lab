@@ -191,15 +191,25 @@ class PersonSettle extends React.Component {
 
     componentDidMount() {
         let timer = null
-        
+        let container = this.refs.container
+
         this.setState({
             settle_doc: this.state.total_doc
         })
 
         window.addEventListener('scroll', () => {
-            if (timeoutId) {
+            if (timer) {
                 clearTimeout(timer)
             }
+
+            timer = setTimeout(() => {
+                let top = container.getBoundingClientRect().top
+                let windowHeight = window.screen.height
+
+                if (top && top < windowHeight) {
+                    console.log('加载更多...')
+                }
+            }, 50)
         })
     }
 

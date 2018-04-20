@@ -3,6 +3,9 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 import 'whatwg-fetch'
 
+
+import {getCookie} from '../utils/cookie'
+
 class Invite extends React.Component {
     constructor(props) {
         super(props)
@@ -30,42 +33,55 @@ class Invite extends React.Component {
         this.handleInputBlur = this.handleInputBlur.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
         this.handleChoose = this.handleChoose.bind(this)
+        this.setStatus = this.setStatus.bind(this)
+    }
+
+    setStatus(name, value, status) {
+        this.setState(preState => ({
+            field: Object.assign({}, preState.field, {[name]: Object.assign({}, {value: value}, {status: status})})  
+        }))
     }
 
     validateField(...names) {
-        let setStatus = (name, value, status) => {
-            this.setState(preState => ({
-                field: Object.assign({}, preState.field, {[name]: Object.assign({}, {value: value}, {status: status})})  
-            }))
-        }
+        let that = this
 
         names.forEach((name) => {
             let value = this.state.field[name].value
 
             if (name == 'name') {
                 if (/^[\u4e00-\u9fa5]{2,8}$/.test(value)) {
-                    setStatus(name, value, true)
+                    that.setStatus(name, value, true)
                 } else {
-                    setStatus(name, value, false)
+                    that.setStatus(name, value, false)
                 }
             } else if (name == 'code') {
-                fetch('http://10.3.74.198:8080/ocm-union-api/personUnionh5/verifyCode.do?inviteCode=' + value)
+                fetch('http://qm.vip.iqiyi.com/api/personUnionh5/verifyCode.do', {
+                        method: 'POST',
+                        body: JSON.stringify({
+                            inviteCode: value
+                        })
+                    })
                     .then(function(res) {
                         return res.json()
                     })
                     .then(function(json) {
                         console.log(json)
+
                         if (json.code == 'A00000') {
-                            setStatus(name, value, true)
+                            that.setStatus(name, value, true)
                         } else {
-                            setStatus(name, value, false)
+                            that.setStatus(name, value, false)
                         }
+                    })
+                    .catch(function(err) {
+                        // that.setStatus(name, value, false)
+                        console.log(err)
                     })
             } else if (name == 'card') {
                 if (/^\d{17}[\dxX]$/.test(value)) {
-                    setStatus(name, value, true)
+                    that.setStatus(name, value, true)
                 } else {
-                    setStatus(name, value, false)
+                    that.setStatus(name, value, false)
                 }
             }
         })
@@ -82,6 +98,9 @@ class Invite extends React.Component {
 
     handleInputBlur(e) {
         let name = e.target.name
+        let value = e.target.value
+
+        localStorage.setItem(name, value)
 
         this.validateField(name)
     }
@@ -103,19 +122,36 @@ class Invite extends React.Component {
                     code = this.state.field.code,
                     card = this.state.field.card 
 
+                console.log(code.status)
+
                 if (name.status && code.status && card.status) {
-                    fetch('http://10.3.74.198:8080/ocm-union-api/personUnionh5/apply.do?inviteCode=' + code)
+                    fetch('http://qm.vip.iqiyi.com/api/personUnionh5/apply.do', {
+                            method: 'POST',
+                            body: JSON.stringify({
+                                personName: name.value,
+                                inviteCode: code.value,
+                                identityCardCode: card.value,
+                                P00001: getCookie('P00001')
+                            })
+                        })
                         .then(function(res) {
                             return res.json()
                         })
                         .then(function(json) {
                             console.log(json)
+
+                            if (json.code == 'A00000') {
+                                console.log('申请成功...')
+                            } else {
+                                console.log('申请失败...')
+                            }
                         })
                         .catch(function(err) {
                             console.log(err)
                         })
                 } else {
-                    this.props.history.push('/person')
+                    // this.props.history.push('/person')
+                    console.log()
                 }
             }, 100)
         } else {
@@ -127,6 +163,20 @@ class Invite extends React.Component {
                     toastStatus: false 
                 })
             }, 800)
+        }
+    }
+
+    componentDidMount() {
+        if (window.localStorage) {
+            let name = localStorage.getItem('name'),
+                code = localStorage.getItem('code'),
+                card = localStorage.getItem('card')
+
+            this.setStatus('name', (name ? name : ''), true)
+            this.setStatus('code', (code ? code : ''), true)
+            this.setStatus('card', (card ? card : ''), true)
+        } else {
+            console.log('请升级浏览器到最新版本')
         }
     }
 
