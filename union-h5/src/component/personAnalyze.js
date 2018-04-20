@@ -15,8 +15,8 @@ class PersonAnalyze extends React.Component {
             isOpen: false,
             time: new Date(),
             id: '',
-            startDate: '',
-            endDate: '',
+            startDate: getPreMonth(),
+            endDate: stamp2Date(new Date().getTime()),
             orders: [
                 {
                     orderId: '041510515',
@@ -24,7 +24,23 @@ class PersonAnalyze extends React.Component {
                     orderMoney: 50,
                     rebateMoney: 33,
                     orderStatus: '已支付',
-                    orderDate: 1524209707000
+                    orderDate: '2018/04/19'
+                },
+                {
+                    orderId: '041510515',
+                    orderType: '黄金年卡套餐',
+                    orderMoney: 50,
+                    rebateMoney: 33,
+                    orderStatus: '已支付',
+                    orderDate: '2018/04/20'
+                },
+                {
+                    orderId: '041510515',
+                    orderType: '黄金年卡套餐',
+                    orderMoney: 50,
+                    rebateMoney: 33,
+                    orderStatus: '已支付',
+                    orderDate: '2018/04/21'
                 }
             ]
         }
@@ -66,13 +82,6 @@ class PersonAnalyze extends React.Component {
         })
     }
 
-    componentDidMount() {
-        this.setState({
-            startDate: getPreMonth(),
-            endDate: stamp2Date(Date.parse(new Date()))
-        })
-    }
-
     render() {
         return (
             <div>
@@ -101,7 +110,7 @@ class PersonAnalyze extends React.Component {
                         </ul>
                         <a className="btn-r money">返佣：<span className="c-mark">¥1888.89</span></a>
                     </div>
-                    <OrderBox orders={this.state.orders} />
+                    <OrderBox orders={this.state.orders} startDate={this.state.startDate} endDate={this.state.endDate} />
                 </div>
                 <section className="m-noInfo-tip" ref="container">下拉加载更多</section>
                 <DatePicker

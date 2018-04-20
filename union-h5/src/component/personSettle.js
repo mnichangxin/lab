@@ -170,6 +170,7 @@ class PersonSettle extends React.Component {
         }
     }
     
+    // 申请结算
     handleApply() {
         this.setState({
             apply_box_status: true
@@ -196,6 +197,17 @@ class PersonSettle extends React.Component {
         this.setState({
             settle_doc: this.state.total_doc
         })
+
+        fetch('http://10.3.74.198:8080/person-union-api/settlementApplyApi/h5page.do?applyPeriodStart=121311&applyPeriodEnd=131311')
+            .then(function(res) {
+                return res.json()
+            })
+            .then(function(json) {
+                console.log(json)
+            })
+            .catch(function(err) {
+                console.log(err)
+            })
 
         window.addEventListener('scroll', () => {
             if (timer) {

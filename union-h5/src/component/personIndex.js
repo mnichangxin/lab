@@ -12,7 +12,6 @@ class PersonIndex extends React.Component {
         super(props)
 
         this.state = {
-            P00001: '',
             code: '123456',
             rebate: 1,
             spreads: [
@@ -39,7 +38,7 @@ class PersonIndex extends React.Component {
     }
 
     handleSave() {
-        fetch('http://qm.vip.iqiyi.com/api/personUnionh5/getQRCode.do?P00001=' + this.state.P00001)
+        fetch('http://qm.vip.iqiyi.com/api/personUnionh5/getQRCode.do?P00001=' + getCookie('P00001'))
             .then(function(res) {
                 return res.blob()
             })
@@ -62,7 +61,7 @@ class PersonIndex extends React.Component {
     }
 
     handleQuit() {
-        window.location.href = 'https://passport.iqiyi.com/user/logout.php?authcookie=' + this.state.P00001 + '&agenttype=5&url=' + encodeURIComponent(location.href.split('/person')[0])
+        window.location.href = 'https://passport.iqiyi.com/user/logout.php?authcookie=' + getCookie('P00001') + '&agenttype=5&url=' + encodeURIComponent(location.href.split('/person')[0])
     }
 
     componentDidMount() {
@@ -70,11 +69,59 @@ class PersonIndex extends React.Component {
             P00001: getCookie('P00001')
         })
 
-        fetch('http://10.3.74.198:8080/ocm-union-api/personSettlementApplyh5/amount.do')
+        let that = this
+
+        // 我的邀请码
+        fetch('http://qm.vip.iqiyi.com/api/personUnionh5/getInviteCode.do?P00001=' + getCookie('P00001'))
             .then(function(res) {
                 return res.json()
             })
             .then(function(json) {
+                if (json.code == 'A00000') {
+                    that.setState({
+                        code: json.data
+                    })
+                    console.log(json)
+                } else {
+                    console.log('邀请码请求失败')
+                }
+            })
+            .catch(function(err) {
+                console.log(err)
+            })
+
+        // 今日入账
+        fetch('http://qm.vip.iqiyi.com/api/personSettlementApplyh5/todayAmount.do?P00001=' + getCookie('P00001'))
+            .then(function(res) {
+                return res.json()
+            })
+            .then(function(json) {
+                console.log(json)
+                if (json.code == 'A00000') {
+                    that.setState({
+                        rebate: json.data ? json.data : 0
+                    })
+                } else {
+                    console.log('返佣金额请求失败')
+                }
+            })
+            .catch(function(err) {
+                console.log(err)
+            })
+
+        // 推广动态
+        fetch('http://qm.vip.iqiyi.com/api/personUnionh5/spreadOrder.do?P00001=' + getCookie('P00001'))
+            .then(function(res) {
+                return res.json()
+            })
+            .then(function(json) {
+                if (json.code == 'A00000') {
+                    that.setState({
+                        spreads: json.datalist ? json.datalist : []
+                    })
+                } else {
+                    console.log('推广动态请求失败')
+                }
                 console.log(json)
             })
             .catch(function(err) {
@@ -96,7 +143,7 @@ class PersonIndex extends React.Component {
                         <img src="http://www.qiyipic.com/common/fix/h5-union/h5-union-banner.png" />
                         <div className="code-card">
                             <div className="c-code">
-                                <img src={'http://10.3.74.198:8080/ocm-union-api/personUnionh5/personUnionh5/getQRCode.do?P00001=' + this.state.P00001} />
+                                <img src={'http://qm.vip.iqiyi.com/api/personUnionh5/getQRCode.do?P00001=' + getCookie('P00001')} />
                             </div>
                             <p className="c-word">我的二维码</p>
                             <p className="c-invite">我的邀请码：

@@ -2,13 +2,15 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 import 'whatwg-fetch'
 
+import {getCookie} from '../utils/cookie'
+
 class PersonInfo extends React.Component {
     constructor(props) {
         super(props)
     }
 
     componentDidMount() {
-        fetch('http://qm.vip.iqiyi.com/api/personUnionh5/info.do')
+        fetch('http://qm.vip.iqiyi.com/api/personUnionh5/info.do?P00001=' + getCookie('P00001'))
             .then(function(res) {
                 return res.json()
             })

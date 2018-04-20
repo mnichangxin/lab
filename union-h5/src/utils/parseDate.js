@@ -13,7 +13,7 @@ const stamp2Date = function(stamp) {
 
 // 日期转时间戳
 const date2Stamp = function(date) {
-    return Date.parse(new Date(date))
+    return (new Date(date)).getTime()
 }
 
 // 获取前一个月
