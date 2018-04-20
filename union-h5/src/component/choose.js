@@ -41,7 +41,7 @@ class Choose extends React.Component {
                 
                 let that = this
 
-                fetch('http://10.3.74.198:8080/ocm-union-api/personUnionh5/verifyExistsPerson.do?P00001=' + this.state.P00001)
+                fetch('http://qm.vip.iqiyi.com/api/personUnionh5/verifyExistsPerson.do?P00001=' + this.state.P00001)
                     .then(function(res) {
                         return res.json()
                     })

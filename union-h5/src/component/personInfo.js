@@ -7,6 +7,19 @@ class PersonInfo extends React.Component {
         super(props)
     }
 
+    componentDidMount() {
+        fetch('http://qm.vip.iqiyi.com/api/personUnionh5/info.do')
+            .then(function(res) {
+                return res.json()
+            })
+            .then(function(json) {
+                console.log(json)
+            })
+            .catch(function(err) {
+                console.log(err)
+            }) 
+    }
+
     render() {
         return (
             <div>

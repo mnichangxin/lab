@@ -7,10 +7,6 @@ class MoneyBox extends React.Component {
         super(props)
     }
 
-    handleOnMousedown() {
-        
-    }
-
     render() {
         return (
             this.props.settle_doc.map((doc, index) => {

@@ -2,8 +2,9 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 import 'whatwg-fetch'
 import DatePicker from 'react-mobile-datepicker'
-import {stamp2Date} from '../utils/parseDate'
+import {stamp2Date, getPreMonth} from '../utils/parseDate'
 
+import {OrderBox} from './orderBox'
 
 class PersonAnalyze extends React.Component {
     constructor(props) {
@@ -14,8 +15,18 @@ class PersonAnalyze extends React.Component {
             isOpen: false,
             time: new Date(),
             id: '',
-            startDate: stamp2Date(Date.parse(new Date())),
-            endDate: stamp2Date(Date.parse(new Date()))
+            startDate: '',
+            endDate: '',
+            orders: [
+                {
+                    orderId: '041510515',
+                    orderType: '黄金年卡套餐',
+                    orderMoney: 50,
+                    rebateMoney: 33,
+                    orderStatus: '已支付',
+                    orderDate: 1524209707000
+                }
+            ]
         }
 
         this.handleClick = this.handleClick.bind(this)
@@ -55,6 +66,13 @@ class PersonAnalyze extends React.Component {
         })
     }
 
+    componentDidMount() {
+        this.setState({
+            startDate: getPreMonth(),
+            endDate: stamp2Date(Date.parse(new Date()))
+        })
+    }
+
     render() {
         return (
             <div>
@@ -81,69 +99,11 @@ class PersonAnalyze extends React.Component {
                                 <div className="float-fill"></div>
                             </li>
                         </ul>
-                        <a href="" className="btn-r money">返佣：<span className="c-mark">¥1888.89</span></a>
+                        <a className="btn-r money">返佣：<span className="c-mark">¥1888.89</span></a>
                     </div>
-                    <div className="m-content">
-                        <ul className="mes-list">
-                            <li>
-                                <div className="list-two">
-                                    <div className="list-left">
-                                        <div className="c-name">订单号：</div>041545478478
-                                    </div>
-                                    <div className="list-right c-bold">
-                                        黄金年卡套餐
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div className="c-name">订单金额：</div>
-                                <div className="c-mes c-bold">￥50</div>
-                            </li>
-                            <li>
-                                <div className="c-name">返佣金额：</div>
-                                <div className="c-mes c-bold">￥33</div>
-                            </li>
-                        </ul>
-                    </div>
-                    <div className="money-box">
-                        <div className="money">
-                            <span className="c-mark c-normal">已支付</span>
-                        </div>
-                        <div className="c-six">
-                            订单日期：2018/01/01
-                        </div>
-                    </div>
-                    <div className="m-content">
-                        <ul className="mes-list">
-                            <li>
-                                <div className="list-two">
-                                    <div className="list-left">
-                                        <div className="c-name">订单号：</div>041545478478
-                                    </div>
-                                    <div className="list-right c-bold">
-                                        黄金年卡套餐
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div className="c-name">订单金额：</div>
-                                <div className="c-mes c-bold">￥50</div>
-                            </li>
-                            <li>
-                                <div className="c-name">返佣金额：</div>
-                                <div className="c-mes c-bold">￥33</div>
-                            </li>
-                        </ul>
-                    </div>
-                    <div className="money-box">
-                        <div className="money">
-                            <span className="c-mark c-normal">已支付</span>
-                        </div>
-                        <div className="c-six">
-                            订单日期：2018/01/01
-                        </div>
-                    </div>
+                    <OrderBox orders={this.state.orders} />
                 </div>
+                <section className="m-noInfo-tip" ref="container">下拉加载更多</section>
                 <DatePicker
                         theme={this.state.theme}
                         value={this.state.time}

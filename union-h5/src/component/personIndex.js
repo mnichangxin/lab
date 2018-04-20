@@ -39,7 +39,7 @@ class PersonIndex extends React.Component {
     }
 
     handleSave() {
-        fetch('http://10.3.74.198:8080/ocm-union-api/personUnionh5/getQRCode.do?P00001=' + this.state.P00001)
+        fetch('http://qm.vip.iqiyi.com/api/personUnionh5/getQRCode.do?P00001=' + this.state.P00001)
             .then(function(res) {
                 return res.blob()
             })
@@ -69,6 +69,17 @@ class PersonIndex extends React.Component {
         this.setState({
             P00001: getCookie('P00001')
         })
+
+        fetch('http://10.3.74.198:8080/ocm-union-api/personSettlementApplyh5/amount.do')
+            .then(function(res) {
+                return res.json()
+            })
+            .then(function(json) {
+                console.log(json)
+            })
+            .catch(function(err) {
+                console.log(err)
+            })
     }
 
     render() {
@@ -85,7 +96,7 @@ class PersonIndex extends React.Component {
                         <img src="http://www.qiyipic.com/common/fix/h5-union/h5-union-banner.png" />
                         <div className="code-card">
                             <div className="c-code">
-                                <img src={'http://qm.vip.iqiyi.com/api/clerk/getQRCode.do?P00001=' + this.state.P00001} />
+                                <img src={'http://10.3.74.198:8080/ocm-union-api/personUnionh5/personUnionh5/getQRCode.do?P00001=' + this.state.P00001} />
                             </div>
                             <p className="c-word">我的二维码</p>
                             <p className="c-invite">我的邀请码：

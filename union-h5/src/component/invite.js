@@ -55,12 +55,7 @@ class Invite extends React.Component {
                     that.setStatus(name, value, false)
                 }
             } else if (name == 'code') {
-                fetch('http://qm.vip.iqiyi.com/api/personUnionh5/verifyCode.do', {
-                        method: 'POST',
-                        body: JSON.stringify({
-                            inviteCode: value
-                        })
-                    })
+                fetch('http://qm.vip.iqiyi.com/api/personUnionh5/verifyCode.do?inviteCode=' + value)
                     .then(function(res) {
                         return res.json()
                     })
@@ -74,7 +69,7 @@ class Invite extends React.Component {
                         }
                     })
                     .catch(function(err) {
-                        // that.setStatus(name, value, false)
+                        that.setStatus(name, value, false)
                         console.log(err)
                     })
             } else if (name == 'card') {
@@ -122,36 +117,35 @@ class Invite extends React.Component {
                     code = this.state.field.code,
                     card = this.state.field.card 
 
-                console.log(code.status)
+                let that = this
 
                 if (name.status && code.status && card.status) {
-                    fetch('http://qm.vip.iqiyi.com/api/personUnionh5/apply.do', {
-                            method: 'POST',
-                            body: JSON.stringify({
-                                personName: name.value,
-                                inviteCode: code.value,
-                                identityCardCode: card.value,
-                                P00001: getCookie('P00001')
-                            })
+                    fetch('http://qm.vip.iqiyi.com/api/personUnionh5/apply.do?P00001=' + getCookie('P00001'), {
+                        method: 'POST',
+                        body: JSON.stringify({
+                            personName: name.value,
+                            inviteCode: code.value,
+                            identityCardCode: card.value
                         })
-                        .then(function(res) {
-                            return res.json()
-                        })
-                        .then(function(json) {
-                            console.log(json)
+                    })
+                    .then(function(res) {
+                        return res.json()
+                    })
+                    .then(function(json) {
+                        console.log(json)
 
-                            if (json.code == 'A00000') {
-                                console.log('申请成功...')
-                            } else {
-                                console.log('申请失败...')
-                            }
-                        })
-                        .catch(function(err) {
-                            console.log(err)
-                        })
+                        if (json.code == 'A00000') {
+                            console.log('申请成功...')
+                            that.props.history.push('/person')
+                        } else {
+                            console.log('申请失败...')
+                        }
+                    })
+                    .catch(function(err) {
+                        console.log(err)
+                    })
                 } else {
-                    // this.props.history.push('/person')
-                    console.log()
+                    console.log('字段有误')
                 }
             }, 100)
         } else {
