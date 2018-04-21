@@ -143,7 +143,7 @@ class PersonIndex extends React.Component {
                         <img src="http://www.qiyipic.com/common/fix/h5-union/h5-union-banner.png" />
                         <div className="code-card">
                             <div className="c-code">
-                                <img src={'http://qm.vip.iqiyi.com/api/personUnionh5/getQRCode.do?P00001=' + getCookie('P00001')} />
+                                <img src={'http://10.3.74.198:8080/person-union-api/personUnionApi/getQRCode.do?width=100&P00001=' + getCookie('P00001')} />
                             </div>
                             <p className="c-word">我的二维码</p>
                             <p className="c-invite">我的邀请码：

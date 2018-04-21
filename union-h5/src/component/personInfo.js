@@ -7,14 +7,40 @@ import {getCookie} from '../utils/cookie'
 class PersonInfo extends React.Component {
     constructor(props) {
         super(props)
+
+        this.state = {
+            info: {
+                personName: '',
+                fv: '',
+                contactTel: '',
+                cooperateStatus: '',
+                identityCardCode: ''
+            }
+        }
     }
 
     componentDidMount() {
+        let that = this
+
+        // 个人信息
         fetch('http://qm.vip.iqiyi.com/api/personUnionh5/info.do?P00001=' + getCookie('P00001'))
             .then(function(res) {
                 return res.json()
             })
             .then(function(json) {
+                if (json.code == 'A00000') {
+                    that.setState({
+                        info: {
+                            personName: json.data.personName,
+                            fv: json.data.fv,
+                            contactTel: json.data.contactTel,
+                            cooperateStatus: json.data.cooperateStatus,
+                            identityCardCode: json.data.identityCardCode
+                        }
+                    })
+                } else {
+                    console.log('个人信息请求失败')
+                }
                 console.log(json)
             })
             .catch(function(err) {
@@ -37,24 +63,24 @@ class PersonInfo extends React.Component {
                     <ul className="mes-list">
                         <li>
                             <div className="c-name">姓名：</div>
-                            <div className="c-mes">马巧丽</div>
+                            <div className="c-mes">{this.state.info.personName}</div>
                         </li>
                         <li>
                             <div className="c-name">所属代理商：</div>
-                            <div className="c-mes">是个办公费</div>
+                            <div className="c-mes">{this.state.info.fv}</div>
                         </li>
                         <li>
                             <div className="c-name">联系方式：</div>
-                            <div className="c-mes">041545478478</div>
+                            <div className="c-mes">{this.state.info.contactTel}</div>
                         </li>
                         <li>
                             <div className="c-name">合作状态：</div>
-                            <div className="c-mes">有效</div>
+                            <div className="c-mes">{this.state.info.cooperateStatus ? '有效' : '无效'}</div>
                         </li>
 
                         <li>
                             <div className="c-name">身份证号码：</div>
-                            <div className="c-mes">041545478478</div>
+                            <div className="c-mes">{this.state.info.identityCardCode}</div>
                         </li>
                     </ul>
                 </div>

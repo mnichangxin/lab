@@ -3,6 +3,7 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 import 'whatwg-fetch'
 
+import {getCookie} from '../utils/cookie'
 import {Select} from './select'
 import {MoneyBox} from './moneyBox'
 import {FloatBox} from  './floatBox'
@@ -79,6 +80,7 @@ class PersonSettle extends React.Component {
         this.handleSelect = this.handleSelect.bind(this)
         this.handleApply = this.handleApply.bind(this)
         this.handleOndo = this.handleOndo.bind(this)
+        this.handlePerformance = this.handlePerformance.bind(this)
         this.handleCancel = this.handleCancel.bind(this)
         this.changeStatus = this.changeStatus.bind(this)
     }
@@ -175,12 +177,69 @@ class PersonSettle extends React.Component {
         this.setState({
             apply_box_status: true
         })
+        
+        // 结算信息
+        // fetch('http://10.3.74.198:8080/person-union-api/settlementApplyApi/show.do?P00001=' + getCookie('P00001'))
+        //     .then(function(res) {
+        //         return res.json()
+        //     })
+        //     .then(function(json) {
+        //         console.log(json)
+        //     })
+        //     .catch(function(err) {
+        //         console.log(err)
+        //     })
+        
+        // 申请结算
+        fetch('http://10.3.74.198:8080/person-union-api/settlementApplyApi/add.do?P00001=' + getCookie('P00001') + '&applyPeriodStart=' + 1483200000000 + '&applyPeriodEnd=' + 1522505358295, {
+            // method: 'POST',
+            // body: JSON.stringify({
+            //     applicantName: '李昶昕',
+            //     applyPeriodStart: null,
+            //     applyPeriodEnd: 1522505358295
+            // })
+        })
+            .then(function(res) {
+                return res.json()
+            })
+            .then(function(json) {
+                console.log(json)
+            })
+            .catch(function(err) {
+                console.log(err)
+            })
     }
 
+    // 撤销结算
     handleOndo() {
         this.setState({
             undo_box_status: true
         })
+
+        fetch('http://10.3.74.198:8080/person-union-api/settlementApplyApi/withdraw.do?applyCode=123456&P00001=' + getCookie('P00001'))
+            .then(function(res) {
+                return res.json()
+            })
+            .then(function(json) {
+                console.log(json)
+            })
+            .catch(function(err) {
+                console.log(err)
+            })
+    }
+
+    // 查看业绩
+    handlePerformance() {
+        fetch('http://10.3.74.198:8080/person-union-api/performanceApi/h5page.do?pageSize=10&pageNo=5&startDate=1483200000000&&endDate=1522505358295&P00001=' + getCookie('P00001'))
+            .then(function(res) {
+                return res.json()
+            })
+            .then(function(json) {
+                console.log(json)
+            })
+            .catch(function(err) {
+                console.log(err)
+            })
     }
 
     handleCancel() {
@@ -198,31 +257,33 @@ class PersonSettle extends React.Component {
             settle_doc: this.state.total_doc
         })
 
-        fetch('http://10.3.74.198:8080/person-union-api/settlementApplyApi/h5page.do?applyPeriodStart=121311&applyPeriodEnd=131311')
-            .then(function(res) {
-                return res.json()
-            })
-            .then(function(json) {
-                console.log(json)
-            })
-            .catch(function(err) {
-                console.log(err)
-            })
+        // 加载列表
+        // fetch('http://10.3.74.198:8080/person-union-api/settlementApplyApi/h5page.do?applyPeriodStart=121311&applyPeriodEnd=131311&applyCode=123456&applyStatus=1&settlementStatus=1&pageNo=1&pageSize=10')
+        //     .then(function(res) {
+        //         return res.json()
+        //     })
+        //     .then(function(json) {
+        //         console.log(json)
+        //     })
+        //     .catch(function(err) {
+        //         console.log(err)
+        //     })
+        
+        // // 加载更多
+        // window.addEventListener('scroll', () => {
+        //     if (timer) {
+        //         clearTimeout(timer)
+        //     }
 
-        window.addEventListener('scroll', () => {
-            if (timer) {
-                clearTimeout(timer)
-            }
+        //     timer = setTimeout(() => {
+        //         let top = container.getBoundingClientRect().top
+        //         let windowHeight = window.screen.height
 
-            timer = setTimeout(() => {
-                let top = container.getBoundingClientRect().top
-                let windowHeight = window.screen.height
-
-                if (top && top < windowHeight) {
-                    console.log('加载更多...')
-                }
-            }, 50)
-        })
+        //         if (top && top < windowHeight) {
+        //             console.log('加载更多...')
+        //         }
+        //     }, 50)
+        // })
     }
 
     render() {
@@ -253,7 +314,7 @@ class PersonSettle extends React.Component {
                         </ul>
                         <div className="btn-r" onClick={this.handleApply}>申请结算</div>
                     </div>
-                    <MoneyBox settle_doc={this.state.settle_doc} handleOndo={this.handleOndo} />
+                    <MoneyBox settle_doc={this.state.settle_doc} handleOndo={this.handleOndo} handlePerformance={this.handlePerformance} />
                 </div>
                 <FloatBox apply_box_status={this.state.apply_box_status} undo_box_status={this.state.undo_box_status} handleCancel={this.handleCancel} />
                 <section className="m-noInfo-tip" ref="container">下拉加载更多</section>

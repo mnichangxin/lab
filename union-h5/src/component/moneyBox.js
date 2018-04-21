@@ -57,7 +57,7 @@ class MoneyBox extends React.Component {
                             </div>
                             <div className="check-btn">
                                 <a className={doc.applyStatus == '有效' && doc.settleStatus == '未结算' ? 'job-btn cancel' : 'job-btn cancel hide'} onClick={this.props.handleOndo}>撤消申请</a>
-                                <a className={doc.settleStatus == '已结算' ? 'job-btn' : 'job-btn disabled'}>查看业绩</a>
+                                <a className={doc.settleStatus == '已结算' ? 'job-btn' : 'job-btn disabled'} onClick={this.props.handlePerformance}>查看业绩</a>
                             </div>
                         </div>
                     </div>
