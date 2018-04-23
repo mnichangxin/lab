@@ -23,7 +23,9 @@ class PersonInfo extends React.Component {
         let that = this
 
         // 个人信息
-        fetch('http://qm.vip.iqiyi.com/api/personUnionService/info.do?P00001=' + getCookie('P00001'))
+        fetch('http://qm.vip.iqiyi.com/api/personUnionService/info.do?P00001=' + getCookie('P00001'), {
+                credentials: 'include'
+            })
             .then(function(res) {
                 return res.json()
             })

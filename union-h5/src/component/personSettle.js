@@ -185,17 +185,20 @@ class PersonSettle extends React.Component {
     }
 
     // 查看业绩
-    handlePerformance() {
-        fetch('http://10.3.74.198:8080/person-union-api/performanceApi/h5page.do?pageSize=10&pageNo=5&startDate=1483200000000&&endDate=1522505358295&P00001=' + getCookie('P00001'))
-            .then(function(res) {
-                return res.json()
-            })
-            .then(function(json) {
-                console.log(json)
-            })
-            .catch(function(err) {
-                console.log(err)
-            })
+    handlePerformance(e) {
+        if (e.target.className == 'job-btn') {
+            // fetch('http://10.3.74.198:8080/person-union-api/performanceApi/h5page.do?pageSize=10&pageNo=5&startDate=1483200000000&&endDate=1522505358295&P00001=' + getCookie('P00001'))
+            //     .then(function(res) {
+            //         return res.json()
+            //     })
+            //     .then(function(json) {
+            //         console.log(json)
+            //     })
+            //     .catch(function(err) {
+            //         console.log(err)
+            //     })
+            this.props.history.push('/person/personAnalyze')
+        }
     }
 
     handleCancel() {

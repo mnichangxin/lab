@@ -55,7 +55,9 @@ class Invite extends React.Component {
                     that.setStatus(name, value, false)
                 }
             } else if (name == 'code') {
-                fetch('http://qm.vip.iqiyi.com/api/personUnionService/verifyCode.do?inviteCode=' + value + '&P00001=' + getCookie('P00001'))
+                fetch('http://qm.vip.iqiyi.com/api/personUnionService/verifyCode.do?inviteCode=' + value + '&P00001=' + getCookie('P00001'), {
+                        credentials: 'include'
+                    })
                     .then(function(res) {
                         return res.json()
                     })

@@ -48,7 +48,9 @@ class Choose extends React.Component {
                 let that = this
                 
                 // 申请通过/未通过 跳转逻辑
-                fetch('http://qm.vip.iqiyi.com/api/personUnionService/verifyExistsPerson.do?P00001=' + this.state.P00001)
+                fetch('http://qm.vip.iqiyi.com/api/personUnionService/verifyExistsPerson.do?P00001=' + this.state.P00001, {
+                        credentials: 'include'
+                    })
                     .then(function(res) {
                         return res.json()
                     })

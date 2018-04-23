@@ -69,41 +69,6 @@ class PersonIndex extends React.Component {
         aLink.href = canvas.toDataURL('image/png')
         
         aLink.click()
-        // fetch('http://qm.vip.iqiyi.com/api/personUnionService/getQRCode.do?P00001=' + getCookie('P00001'))
-        //     .then(function(res) {
-        //         return res.json()
-        //     })
-        //     .then(function(json) {
-        //         if (json.code == 'A00000') {
-        //             let base64 = json.data
-
-        //             // let uInt8Array = new Uint8Array(base64.length)
-                    
-        //             // for (let i = 0; i < base64.length; i++) {
-        //             //     uInt8Array[i] = base64.charCodeAt(i)
-        //             // }
-
-        //             // let blob = new Blob([uInt8Array], {type: 'image/png'})
-
-        //             // let reader = new FileReader()
-
-        //             // reader.onload = (e) => {
-        //             //     let aLink = document.createElement('a') 
-            
-        //             //     aLink.download = 'QRCode.png'
-        //             //     aLink.href = e.target.result
-
-        //             //     console.log(e.target.result)
-
-        //             //     aLink.click()
-        //             // }
-
-        //             // reader.readAsDataURL(blob)
-        //         }
-        //     })
-        //     .catch(function(err) {
-        //         console.log(err)
-        //     })
     }
 
     handleQuit() {
@@ -118,7 +83,9 @@ class PersonIndex extends React.Component {
         let that = this
 
         // 二维码
-        fetch('http://qm.vip.iqiyi.com/api/personUnionService/getQRCode.do?P00001=' + getCookie('P00001'))
+        fetch('http://qm.vip.iqiyi.com/api/personUnionService/getQRCode.do?P00001=' + getCookie('P00001'), {
+                credentials: 'include'
+            })
             .then(function(res) {
                 return res.json()
             })
@@ -137,7 +104,9 @@ class PersonIndex extends React.Component {
             })
 
         // 我的邀请码
-        fetch('http://qm.vip.iqiyi.com/api/personUnionService/getInviteCode.do?P00001=' + getCookie('P00001'))
+        fetch('http://qm.vip.iqiyi.com/api/personUnionService/getInviteCode.do?P00001=' + getCookie('P00001'), {
+                credentials: 'include'
+            })
             .then(function(res) {
                 return res.json()
             })
@@ -156,7 +125,9 @@ class PersonIndex extends React.Component {
             })
 
         // 今日入账
-        fetch('http://qm.vip.iqiyi.com/api/personSettlementApplyService/todayAmount.do?P00001=' + getCookie('P00001'))
+        fetch('http://qm.vip.iqiyi.com/api/personSettlementApplyService/todayAmount.do?P00001=' + getCookie('P00001'), {
+                credentials: 'include'
+            })
             .then(function(res) {
                 return res.json()
             })
@@ -175,7 +146,9 @@ class PersonIndex extends React.Component {
             })
 
         // 推广动态
-        fetch('http://qm.vip.iqiyi.com/api/personUnionService/spreadOrder.do?P00001=' + getCookie('P00001'))
+        fetch('http://qm.vip.iqiyi.com/api/personUnionService/spreadOrder.do?P00001=' + getCookie('P00001'), {
+                credentials: 'include'
+            })
             .then(function(res) {
                 return res.json()
             })
