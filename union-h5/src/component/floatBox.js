@@ -1,7 +1,9 @@
 /* 浮动弹窗 */
 import React from 'react'
 
- class FloatBox extends React.Component {
+import {stamp2Date} from '../utils/parseDate'
+
+class FloatBox extends React.Component {
     constructor(props) {
         super(props)
     }
@@ -12,16 +14,16 @@ import React from 'react'
                 <div className={this.props.apply_box_status ? 'settle-accounts' : 'settle-accounts hide'}>
                     <div className="c-title">申请结算</div>
                     <div className="info">
-                        <span className="c-bold">姓名：</span>俏丽
+                        <span className="c-bold">姓名：</span>{this.props.apply_box.applyName}
                     </div>
                     <div className="info">
-                        <span className="c-bold">结算周期：</span>2017/01/01-2018/12/31
+                        <span className="c-bold">结算周期：</span>{stamp2Date(this.props.apply_box.applyPeriodStart)}-{stamp2Date(this.props.apply_box.applyPeriodEnd)}
                     </div>
                     <div className="info">
-                        <span className="c-bold">申请日期：</span>45456484541
+                        <span className="c-bold">申请日期：</span>{this.props.apply_box.applyDate}
                     </div>
                     <div className="info">
-                        <span className="c-bold">电子钱包：</span>45456484541
+                        <span className="c-bold">电子钱包：</span>{this.props.apply_box.elecWallet}
                     </div>
                     <p className="c-mes">您的审核预计在5-7个工作日完成</p>
                     <div className="commit">
@@ -40,9 +42,9 @@ import React from 'react'
             </div>
         )
     }
- }
+}
 
- class Span extends React.Component {
+class Span extends React.Component {
     constructor(porps) {
         super(porps) 
         
@@ -73,6 +75,6 @@ import React from 'react'
             <span className="c-mark" className={this.state.isDown ? 'c-mark c-normal' : 'c-mark'} onTouchStart={this.handleOnTouchStart} onTouchEnd={this.handleOnTouchEnd}>{this.props.text}</span>
         )
     }
- }
+}
 
  export {FloatBox}

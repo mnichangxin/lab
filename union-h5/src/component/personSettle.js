@@ -19,9 +19,12 @@ class PersonSettle extends React.Component {
             undo_box_status: false,
             applyStatus: '全部',
             settleStatus: '全部',
-            invite_box: {
-                name: '',
-                applyPeriod: ''
+            apply_box: {
+                applyName: '',
+                applyPeriodStart: '',
+                applyPeriodEnd: '',
+                applyDate: '',
+                elecWallet: ''
             },
             total_doc: [],
             settle_doc: []
@@ -126,15 +129,28 @@ class PersonSettle extends React.Component {
     
     // 结算信息弹框
     handleApply() {
+        let that = this
+
         this.setState({
             apply_box_status: true
         })
         
-        fetch('http://10.3.74.198:8080/person-union-api/settlementApplyApi/show.do?uid=2271647078')
+        fetch('http://10.3.74.198:8080/person-union-api/settlementApplyApi/show.do?uid=2271647078', {
+                credentials: 'include'
+            })
             .then(function(res) {
                 return res.json()
             })
             .then(function(json) {
+                that.setState({
+                    apply_box: {
+                        applyName: json.data.applyName,
+                        applyPeriodStart: json.data.applyPeriodStart,
+                        applyPeriodEnd: json.data.applyPeriodEnd,
+                        applyDate: json.data.applyDate,
+                        elecWallet: json.data.elecWallet
+                    }
+                })
                 console.log(json)
             })
             .catch(function(err) {
@@ -326,7 +342,7 @@ class PersonSettle extends React.Component {
                     </div>
                     <MoneyBox settle_doc={this.state.settle_doc} handleOndo={this.handleOndo} handlePerformance={this.handlePerformance} />
                 </div>
-                <FloatBox apply_box_status={this.state.apply_box_status} undo_box_status={this.state.undo_box_status} handleSubmit={this.handleSubmit} handleCancel={this.handleCancel} handleOndo={this.handleOndo} handleNoSubmit={this.handleNoSubmit} />
+                <FloatBox apply_box_status={this.state.apply_box_status} undo_box_status={this.state.undo_box_status} apply_box={this.state.apply_box} handleSubmit={this.handleSubmit} handleCancel={this.handleCancel} handleOndo={this.handleOndo} handleNoSubmit={this.handleNoSubmit} />
                 <section className="m-noInfo-tip" ref="container">下拉加载更多</section>
             </div>
         )
