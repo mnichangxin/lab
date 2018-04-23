@@ -26,7 +26,7 @@ import React from 'react'
                     <p className="c-mes">您的审核预计在5-7个工作日完成</p>
                     <div className="commit">
                         <Span text="取消" handleCancel={this.props.handleCancel} />
-                        <Span text="提交" handleCancel={this.props.handleCancel} />
+                        <Span text="提交" handleCancel={this.props.handleSubmit} />
                     </div>
                 </div>
                 <div className={this.props.undo_box_status ? 'settle-accounts' : 'settle-accounts hide'}>
@@ -34,7 +34,7 @@ import React from 'react'
                     <p className="c-word">是否确认撤销此申请， <br />撤销后需要重新提交结算申请</p>
                     <div className="commit">
                         <Span text="取消" handleCancel={this.props.handleCancel} />
-                        <Span text="确认" handleCancel={this.props.handleCancel} />
+                        <Span text="确认" handleCancel={this.props.handleNoSubmit} />
                     </div>
                 </div>
             </div>

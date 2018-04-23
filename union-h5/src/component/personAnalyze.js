@@ -17,32 +17,7 @@ class PersonAnalyze extends React.Component {
             id: '',
             startDate: getPreMonth(),
             endDate: stamp2Date(new Date().getTime()),
-            orders: [
-                {
-                    orderId: '041510515',
-                    orderType: '黄金年卡套餐',
-                    orderMoney: 50,
-                    rebateMoney: 33,
-                    orderStatus: '已支付',
-                    orderDate: '2018/04/19'
-                },
-                {
-                    orderId: '041510515',
-                    orderType: '黄金年卡套餐',
-                    orderMoney: 50,
-                    rebateMoney: 33,
-                    orderStatus: '已支付',
-                    orderDate: '2018/04/20'
-                },
-                {
-                    orderId: '041510515',
-                    orderType: '黄金年卡套餐',
-                    orderMoney: 50,
-                    rebateMoney: 33,
-                    orderStatus: '已支付',
-                    orderDate: '2018/04/21'
-                }
-            ]
+            orders: []
         }
 
         this.handleClick = this.handleClick.bind(this)
@@ -80,6 +55,93 @@ class PersonAnalyze extends React.Component {
         this.setState({
             isOpen: false
         })
+    }
+
+    loadList() {
+        let datalist = [
+            {
+                orderId: '041510515',
+                orderType: '黄金年卡套餐',
+                orderMoney: 50,
+                rebateMoney: 33,
+                orderStatus: '已支付',
+                orderDate: '2018/04/19'
+            },
+            {
+                orderId: '041510515',
+                orderType: '黄金年卡套餐',
+                orderMoney: 50,
+                rebateMoney: 33,
+                orderStatus: '已支付',
+                orderDate: '2018/04/20'
+            },
+            {
+                orderId: '041510515',
+                orderType: '黄金年卡套餐',
+                orderMoney: 50,
+                rebateMoney: 33,
+                orderStatus: '已支付',
+                orderDate: '2018/04/21'
+            },
+            {
+                orderId: '041510515',
+                orderType: '黄金年卡套餐',
+                orderMoney: 50,
+                rebateMoney: 33,
+                orderStatus: '已支付',
+                orderDate: '2018/04/21'
+            },
+            {
+                orderId: '041510515',
+                orderType: '黄金年卡套餐',
+                orderMoney: 50,
+                rebateMoney: 33,
+                orderStatus: '已支付',
+                orderDate: '2018/04/21'
+            },
+            {
+                orderId: '041510515',
+                orderType: '黄金年卡套餐',
+                orderMoney: 50,
+                rebateMoney: 33,
+                orderStatus: '已支付',
+                orderDate: '2018/04/21'
+            }
+        ]
+
+        this.setState({
+            orders: [...this.state.orders, ...datalist]
+        })
+
+        // setTimeout(() => {
+        //     this.setState({
+        //         render
+        //     })
+        // }, 10)
+    }
+
+    componentDidMount() {
+        let timer = null
+        let container = this.refs.container
+
+        // 初次加载
+        this.loadList()
+
+        // 加载更多
+        window.addEventListener('scroll', () => {
+            if (timer) {
+                clearTimeout(timer)
+            }
+
+            timer = setTimeout(() => {
+                let top = container.getBoundingClientRect().top
+                let windowHeight = window.screen.height
+
+                if (top && top < windowHeight) {
+                    this.loadList()
+                }
+            }, 10)
+        })        
     }
 
     render() {

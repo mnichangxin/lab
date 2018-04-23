@@ -3,7 +3,6 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 import 'whatwg-fetch'
 
-
 import {getCookie} from '../utils/cookie'
 
 class Invite extends React.Component {
@@ -42,6 +41,7 @@ class Invite extends React.Component {
         }))
     }
 
+    // 验证字段
     validateField(...names) {
         let that = this
 
@@ -55,18 +55,17 @@ class Invite extends React.Component {
                     that.setStatus(name, value, false)
                 }
             } else if (name == 'code') {
-                fetch('http://qm.vip.iqiyi.com/api/personUnionh5/verifyCode.do?inviteCode=' + value)
+                fetch('http://qm.vip.iqiyi.com/api/personUnionService/verifyCode.do?inviteCode=' + value + '&P00001=' + getCookie('P00001'))
                     .then(function(res) {
                         return res.json()
                     })
                     .then(function(json) {
-                        console.log(json)
-
                         if (json.code == 'A00000') {
                             that.setStatus(name, value, true)
                         } else {
                             that.setStatus(name, value, false)
                         }
+                        console.log(json)
                     })
                     .catch(function(err) {
                         that.setStatus(name, value, false)
@@ -98,8 +97,9 @@ class Invite extends React.Component {
         localStorage.setItem(name, value)
 
         this.validateField(name)
-    }
+    }   
 
+    // 处理勾选
     handleChoose() {
         let radioStatus = this.state.radioStatus
 
@@ -108,6 +108,7 @@ class Invite extends React.Component {
         })
     }
 
+    // 处理提交
     handleSubmit() {
         if (this.state.radioStatus) {
             this.validateField('name', 'code', 'card')
@@ -120,7 +121,7 @@ class Invite extends React.Component {
                 let that = this
 
                 if (name.status && code.status && card.status) {
-                    fetch('http://qm.vip.iqiyi.com/api/personUnionh5/apply.do?P00001=' + getCookie('P00001'), {
+                    fetch('http://qm.vip.iqiyi.com/api/personUnionService/apply.do?P00001=' + getCookie('P00001'), {
                         method: 'POST',
                         body: JSON.stringify({
                             personName: name.value,
@@ -132,20 +133,19 @@ class Invite extends React.Component {
                         return res.json()
                     })
                     .then(function(json) {
-                        console.log(json)
-
                         if (json.code == 'A00000') {
                             console.log('申请成功...')
+                            // 跳转个人页
                             that.props.history.push('/person')
                         } else {
+                            // 弹窗提示
                             console.log('申请失败...')
                         }
+                        console.log(json)
                     })
                     .catch(function(err) {
                         console.log(err)
                     })
-                } else {
-                    console.log('字段有误')
                 }
             }, 100)
         } else {
@@ -170,6 +170,7 @@ class Invite extends React.Component {
             this.setStatus('code', (code ? code : ''), true)
             this.setStatus('card', (card ? card : ''), true)
         } else {
+            // 当前浏览器不支持 LocalStorage, 弹窗提示升级浏览器
             console.log('请升级浏览器到最新版本')
         }
     }

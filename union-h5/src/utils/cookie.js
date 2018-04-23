@@ -1,6 +1,6 @@
 /* Cookie 相关操作 */
 
-var getCookie = function(name) {
+const getCookie = function(name) {
     let arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)")
     
     if (arr = document.cookie.match(reg)) {
@@ -10,7 +10,7 @@ var getCookie = function(name) {
     }
 }
 
-var removeCookie = function(name) {
+const removeCookie = function(name) {
     let exp = new Date()
 
     exp.setTime(exp.getTime() - 1)
