@@ -26,8 +26,19 @@ class PersonSettle extends React.Component {
                 applyDate: '',
                 elecWallet: ''
             },
+            toast: {
+                toastStatus: false,
+                toastText: ''
+            },
+            totalPages: 1,
+            currentPage: 1,
+            pageNo: 1,
+            pageSize: 5,
             total_doc: [],
-            settle_doc: []
+            settle_doc: [],
+            loadMore: true,
+            applyCode: '',
+            index: 0
         }
 
         this.handleSelect = this.handleSelect.bind(this)
@@ -49,15 +60,15 @@ class PersonSettle extends React.Component {
 
         if (applyStatus == '全部' && settleStatus != '全部') {
             newDocs = docs.filter((doc) => {
-                return doc.settleStatus == settleStatus
+                return (doc.settleStatus == 0 ? '已结算' : '未结算') == settleStatus
             })
         } else if (applyStatus != '全部' && settleStatus == '全部') {
             newDocs = docs.filter((doc) => {
-                return doc.applyStatus == applyStatus
+                return (doc.applyStatus == 1 ? '有效' : (doc.applyStatus == 0 ? '已撤销' : '已过期')) == applyStatus
             })
         } else if (applyStatus != '全部' && settleStatus != '全部') {
             newDocs = docs.filter((doc) => {
-                return doc.applyStatus == applyStatus && doc.settleStatus == settleStatus
+                return (doc.applyStatus == 1 ? '有效' : (doc.applyStatus == 0 ? '已撤销' : '已过期')) == applyStatus && (doc.settleStatus == 0 ? '已结算' : '未结算') == settleStatus
             })
         } else {
             newDocs = docs
@@ -126,31 +137,56 @@ class PersonSettle extends React.Component {
                 break
         }
     }
+
+    // Toast
+    showToast(text) {
+        this.setState({
+            toast: {
+                toastStatus: true,
+                toastText: text
+            }
+        })
+        setTimeout(() => {
+            this.setState({
+                toast: {
+                    toastStatus: false,
+                    toastText: ''
+                }
+            })
+        }, 800)
+    }
     
     // 结算信息弹框
     handleApply() {
         let that = this
-
-        this.setState({
-            apply_box_status: true
-        })
         
-        fetch('http://10.3.74.198:8080/person-union-api/settlementApplyApi/show.do?uid=2271647078', {
+        fetch('http://qm.vip.iqiyi.com/api/personSettlementApplyService/show.do', {
                 credentials: 'include'
             })
             .then(function(res) {
                 return res.json()
             })
             .then(function(json) {
-                that.setState({
-                    apply_box: {
-                        applyName: json.data.applyName,
-                        applyPeriodStart: json.data.applyPeriodStart,
-                        applyPeriodEnd: json.data.applyPeriodEnd,
-                        applyDate: json.data.applyDate,
-                        elecWallet: json.data.elecWallet
-                    }
-                })
+                if (json.code == 'A00000') {
+                    that.setState({
+                        apply_box_status: true,
+                        apply_box: {
+                            applyName: json.data.applyName,
+                            applyPeriodStart: json.data.applyPeriodStart,
+                            applyPeriodEnd: json.data.applyPeriodEnd,
+                            applyDate: json.data.applyDate,
+                            elecWallet: json.data.elecWallet
+                        }
+                    })
+                } else if (json.code == 'Q00248') {
+                    that.showToast('当前不在结算周期')
+                } else if (json.code == 'Q00215') {
+                    that.showToast('当前没有可结算订单')
+                } else if (json.code == 'Q00209') {
+                    that.showToast('本月已申请过，请勿重复提交')
+                } else {
+                    that.showToast('系统错误')
+                }
                 console.log(json)
             })
             .catch(function(err) {
@@ -160,14 +196,9 @@ class PersonSettle extends React.Component {
 
     // 申请结算
     handleSubmit() {
-        fetch('http://10.3.74.198:8080/person-union-api/settlementApplyApi/add.do?P00001=' + getCookie('P00001') + '&applyPeriodStart=' + 1483200000000 + '&applyPeriodEnd=' + 1522505358295, {
-            // method: 'POST',
-            // body: JSON.stringify({
-            //     applicantName: '李昶昕',
-            //     applyPeriodStart: null,
-            //     applyPeriodEnd: 1522505358295
-            // })
-        })
+        fetch('http://qm.vip.iqiyi.com/api/personSettlementApplyService/add.do?P00001=' + getCookie('P00001') + '&applyPeriodStart=' + this.apply_box.applyPeriodStart + '&applyPeriodEnd=' + this.apply_box.applyPeriodEnd, {
+                credentials: 'include'
+            })
             .then(function(res) {
                 return res.json()
             })
@@ -180,20 +211,40 @@ class PersonSettle extends React.Component {
     }
 
     // 撤销结算弹框
-    handleOndo() {
+    handleOndo(applyCode, index) {
         this.setState({
-            undo_box_status: true
+            undo_box_status: true,
+            applyCode: applyCode,
+            index: index
         })
     }
 
     // 撤销结算
     handleNoSubmit() {
-        fetch('http://10.3.74.198:8080/person-union-api/settlementApplyApi/withdraw.do?applyCode=123456&P00001=' + getCookie('P00001'))
+        let that = this
+
+        fetch('http://qm.vip.iqiyi.com/api/personSettlementApplyService/withdraw.do?applyCode=' + this.state.applyCode, {
+                credentials: 'include'
+            })
             .then(function(res) {
                 return res.json()
             })
             .then(function(json) {
+                if (json.code == 'A00000') {
+                    let index = that.state.index
+
+                    that.state.settle_doc[index]['applyStatus'] = 0
+                    
+                    that.setState({
+                        settle_doc: that.state.settle_doc
+                    })
+                }
                 console.log(json)
+            })
+            .then(function() {
+                that.setState({
+                    undo_box_status: false
+                })
             })
             .catch(function(err) {
                 console.log(err)
@@ -201,20 +252,8 @@ class PersonSettle extends React.Component {
     }
 
     // 查看业绩
-    handlePerformance(e) {
-        if (e.target.className == 'job-btn') {
-            // fetch('http://10.3.74.198:8080/person-union-api/performanceApi/h5page.do?pageSize=10&pageNo=5&startDate=1483200000000&&endDate=1522505358295&P00001=' + getCookie('P00001'))
-            //     .then(function(res) {
-            //         return res.json()
-            //     })
-            //     .then(function(json) {
-            //         console.log(json)
-            //     })
-            //     .catch(function(err) {
-            //         console.log(err)
-            //     })
-            this.props.history.push('/person/personAnalyze')
-        }
+    handlePerformance() {
+        this.props.history.push('/person/personAnalyze')
     }
 
     handleCancel() {
@@ -226,66 +265,36 @@ class PersonSettle extends React.Component {
     
     // 加载列表
     loadList() {
-        // fetch('http://10.3.74.198:8080/person-union-api/settlementApplyApi/h5page.do?applyPeriodStart=121311&applyPeriodEnd=131311&applyCode=123456&applyStatus=1&settlementStatus=1&pageNo=1&pageSize=10')
-        //     .then(function(res) {
-        //         return res.json()
-        //     })
-        //     .then(function(json) {
-        //         that.setState({
-        //             total_doc: [...that.state.total_doc, ...json.datalist]
-        //         })
+        let that = this
 
-        //         console.log(json)
-        //     })
-        //     .catch(function(err) {
-        //         console.log(err)
-        //     })
+        fetch('http://qm.vip.iqiyi.com/api/personSettlementApplyService/page.do?pageNo=' + this.state.pageNo +'&pageSize=' + this.state.pageSize, {
+                credentials: 'include'
+            })
+            .then(function(res) {
+                return res.json()
+            })
+            .then(function(json) {
+                if (json.code == 'A00000') {
+                    if (json.pageInfo.currentPage == 1) {
+                        that.setState({
+                            totalPages: json.pageInfo.totalPages
+                        })
+                    }
+    
+                    that.setState({
+                        currentPage: json.pageInfo.currentPage,
+                        total_doc: [...that.state.total_doc, ...json.dataList],
+                    })
+                }
 
-        let datalist = [{
-            startDate: 1523861711000,
-            endDate: 1523861711000,
-            applyId: '12345678',
-            applyDate: 1523861711000,
-            applyStatus: '有效',
-            settleStatus: '已结算',
-            walletAccount: '12345678',
-            identityCard: '371329***245'   
-        }, {
-            startDate: 1523861711000,
-            endDate: 1523861711000,
-            applyId: '12345678',
-            applyDate: 1523861711000,
-            applyStatus: '已过期',
-            settleStatus: '未结算',
-            walletAccount: '12345678',
-            identityCard: '371329***245'   
-        }, {
-            startDate: 1523861711000,
-            endDate: 1523861711000,
-            applyId: '12345678',
-            applyDate: 1523861711000,
-            applyStatus: '有效',
-            settleStatus: '未结算',
-            walletAccount: '12345678',
-            identityCard: '371329***245'   
-        }, {
-            startDate: 1523861711000,
-            endDate: 1523861711000,
-            applyId: '12345678',
-            applyDate: 1523861711000,
-            applyStatus: '已撤销',
-            settleStatus: '未结算',
-            walletAccount: '12345678',
-            identityCard: '371329***245'   
-        }]
-
-        this.setState({
-            total_doc: [...this.state.total_doc, ...datalist]
-        })
-
-        setTimeout(() => {
-            this.reRenderBox()
-        }, 10)
+                console.log(json)
+            })
+            .then(function() {
+                that.reRenderBox()
+            }) 
+            .catch(function(err) {
+                console.log(err)
+            })
     }
 
     componentDidMount() {
@@ -295,19 +304,41 @@ class PersonSettle extends React.Component {
         // 初次加载
         this.loadList()
 
+        if (this.state.settle_doc.length < 5) {
+            this.setState({
+                loadMore: false
+            })
+        }
+
         // 加载更多
+        const scorllLoad = () => {
+            let top = container.getBoundingClientRect().top
+            let windowHeight = window.screen.height
+
+            if (top && top < windowHeight) {
+                this.setState({
+                    pageNo: this.state.pageNo + 1,
+                })
+
+                if (this.state.currentPage > this.state.totalPages) {
+                    window.removeEventListener('scroll', scorllLoad)
+                    
+                    this.setState({
+                        loadMore: false
+                    })
+                } else {
+                    this.loadList()
+                }
+            }
+        }
+
         window.addEventListener('scroll', () => {
             if (timer) {
                 clearTimeout(timer)
             }
 
             timer = setTimeout(() => {
-                let top = container.getBoundingClientRect().top
-                let windowHeight = window.screen.height
-
-                if (top && top < windowHeight) {
-                    this.loadList()
-                }
+                scorllLoad()
             }, 10)
         })
     }
@@ -343,7 +374,12 @@ class PersonSettle extends React.Component {
                     <MoneyBox settle_doc={this.state.settle_doc} handleOndo={this.handleOndo} handlePerformance={this.handlePerformance} />
                 </div>
                 <FloatBox apply_box_status={this.state.apply_box_status} undo_box_status={this.state.undo_box_status} apply_box={this.state.apply_box} handleSubmit={this.handleSubmit} handleCancel={this.handleCancel} handleOndo={this.handleOndo} handleNoSubmit={this.handleNoSubmit} />
-                <section className="m-noInfo-tip" ref="container">下拉加载更多</section>
+                <section className={this.state.loadMore ? 'm-noInfo-tip' : 'm-noInfo-tip hide'} ref="container">下拉加载更多</section>
+                <div className={this.state.toast.toastStatus ? 'ask-prompt' : 'ask-prompt hide'}>
+                    {
+                        this.state.toast.toastText
+                    }
+                </div>
             </div>
         )
     }

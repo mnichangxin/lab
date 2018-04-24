@@ -6,6 +6,7 @@ import {PersonInfo} from './personInfo'
 import {PersonSettle} from './personSettle'
 import {PersonAnalyze} from './personAnalyze'
 import {getCookie, removeCookie} from '../utils/cookie'
+import {stamp2Date} from '../utils/parseDate'
 
 class PersonIndex extends React.Component {
     constructor(props) {
@@ -15,38 +16,7 @@ class PersonIndex extends React.Component {
             qrCode: '',
             code: '123456',
             rebate: 1,
-            spreads: [
-                {
-                    time: '2018-2-4',
-                    type: '黄金卡',
-                    money: '8'
-                },
-                {
-                    time: '2018-2-4',
-                    type: '黄金卡',
-                    money: '8'
-                },
-                {
-                    time: '2018-2-4',
-                    type: '黄金卡',
-                    money: '8'
-                },
-                {
-                    time: '2018-2-4',
-                    type: '黄金卡',
-                    money: '8'
-                },
-                {
-                    time: '2018-2-4',
-                    type: '黄金卡',
-                    money: '8'
-                },
-                {
-                    time: '2018-2-4',
-                    type: '黄金卡',
-                    money: '8'
-                }
-            ]
+            spreads: []
         }
 
         this.handleSave = this.handleSave.bind(this)
@@ -154,7 +124,7 @@ class PersonIndex extends React.Component {
             })
             .then(function(json) {
                 if (json.code == 'A00000') {
-                    let datas = json.data ?  json.data : []
+                    let datas = json.dataList ?  json.dataList : []
                     let datalist = []
 
                     // 只显示 5 条记录
@@ -232,13 +202,13 @@ class PersonIndex extends React.Component {
                                 (spread, index) => {
                                     return (
                                         <li key={index}>
-                                            <div className="c-user">{spread.time}：</div>
+                                            <div className="c-user">{stamp2Date(spread.orderTime)}：</div>
                                             <div className="c-info">
                                                 您售出一张
                                                 <span className="c-card">
-                                                    “ {spread.type} ”
+                                                    “ {spread.productName} ”
                                                 </span>
-                                                ，获得佣金奖励 <a href="javascript:;">￥{spread.money}</a>
+                                                ，获得佣金奖励 <a href="javascript:;">￥{spread.personCommissionBackFee}</a>
                                             </div>
                                         </li>
                                     )

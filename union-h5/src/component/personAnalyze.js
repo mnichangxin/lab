@@ -2,8 +2,9 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 import 'whatwg-fetch'
 import DatePicker from 'react-mobile-datepicker'
-import {stamp2Date, getPreMonth} from '../utils/parseDate'
 
+import {stamp2Date, date2Stamp, getPreMonth} from '../utils/parseDate'
+import {getCookie} from '../utils/cookie'
 import {OrderBox} from './orderBox'
 
 class PersonAnalyze extends React.Component {
@@ -17,7 +18,14 @@ class PersonAnalyze extends React.Component {
             id: '',
             startDate: getPreMonth(),
             endDate: stamp2Date(new Date().getTime()),
-            orders: []
+            sumBounus: 0,
+            totalPages: 1,
+            currentPage: 1,
+            pageNo: 1,
+            pageSize: 5,
+            loadMore: true,
+            orders: [],
+            newOrders: []
         }
 
         this.handleClick = this.handleClick.bind(this)
@@ -55,93 +63,120 @@ class PersonAnalyze extends React.Component {
         this.setState({
             isOpen: false
         })
-    }
+    }  
 
+    // 重新渲染
+    // reRenderBox() {
+    //     let orders = this.state.orders
+    //     let newOrders = []
+
+    //     let startDate = date2Stamp(this.state.startDate),
+    //           endDate = date2Stamp(this.state.endDate)
+  
+    //     newOrders = orders.filter((order) => {
+    //         return (order.orderDate >= startDate && order.orderDate <= endDate)
+    //     })
+
+    //     this.setState({
+    //         newOrders: newOrders
+    //     })
+    // }
+
+    // 加载列表
     loadList() {
-        let datalist = [
-            {
-                orderId: '041510515',
-                orderType: '黄金年卡套餐',
-                orderMoney: 50,
-                rebateMoney: 33,
-                orderStatus: '已支付',
-                orderDate: '2018/04/19'
-            },
-            {
-                orderId: '041510515',
-                orderType: '黄金年卡套餐',
-                orderMoney: 50,
-                rebateMoney: 33,
-                orderStatus: '已支付',
-                orderDate: '2018/04/20'
-            },
-            {
-                orderId: '041510515',
-                orderType: '黄金年卡套餐',
-                orderMoney: 50,
-                rebateMoney: 33,
-                orderStatus: '已支付',
-                orderDate: '2018/04/21'
-            },
-            {
-                orderId: '041510515',
-                orderType: '黄金年卡套餐',
-                orderMoney: 50,
-                rebateMoney: 33,
-                orderStatus: '已支付',
-                orderDate: '2018/04/21'
-            },
-            {
-                orderId: '041510515',
-                orderType: '黄金年卡套餐',
-                orderMoney: 50,
-                rebateMoney: 33,
-                orderStatus: '已支付',
-                orderDate: '2018/04/21'
-            },
-            {
-                orderId: '041510515',
-                orderType: '黄金年卡套餐',
-                orderMoney: 50,
-                rebateMoney: 33,
-                orderStatus: '已支付',
-                orderDate: '2018/04/21'
-            }
-        ]
+        let that = this
 
-        this.setState({
-            orders: [...this.state.orders, ...datalist]
-        })
+        fetch('http://qm.vip.iqiyi.com/api/personPerformanceService/page.do?pageNo=' + this.state.pageNo + '&pageSize=' + this.state.pageSize, {
+                credentials: 'include'
+            })
+            .then(function(res) {
+                return res.json()
+            })
+            .then(function(json) {
+                if (json.code == 'A00000') {
+                    if (json.pageInfo.currentPage == 1) {
+                        that.setState({
+                            totalPages: json.pageInfo.totalPages
+                        })
 
-        // setTimeout(() => {
-        //     this.setState({
-        //         render
-        //     })
-        // }, 10)
+                        that.setState({
+                            currentPage: json.pageInfo.currentPage,
+                            orders: [...that.state.orders, ...json.dataList]
+                        })
+                    }
+                }
+
+                console.log(json)
+            })
+            .catch(function(err) {
+                console.log(err)
+            })
     }
 
     componentDidMount() {
+        let that = this
         let timer = null
         let container = this.refs.container
+
+        // 总返佣金额
+        fetch('http://qm.vip.iqiyi.com/api/personPerformanceService/sumBounus.do?P00001=' + getCookie('P00001') + '&settlePeriodStart=' + new Date().getTime() + '&settlePeriodEnd=' + date2Stamp(getPreMonth()), {
+                credentials: 'include'
+            })
+            .then(function(res) {
+                return res.json()
+            })
+            .then(function(json) {
+                if (json.code == 'A00000') {
+                    that.setState({
+                        sumBounus: json.data 
+                    })
+                }
+                console.log(json)
+            })
+            .then(function(err) {
+                console.log(err)
+            })
 
         // 初次加载
         this.loadList()
 
+        if (this.state.orders.length < 5) {
+            this.setState({
+                loadMore: false
+            })
+        }
+
         // 加载更多
+        const scorllLoad = () => {
+            let top = container.getBoundingClientRect().top
+            let windowHeight = window.screen.height
+
+            if (top && top < windowHeight) {
+                this.setState({
+                    pageNo: this.state.pageNo + 1,
+                })
+
+                if (this.state.currentPage > this.state.totalPages) {
+                    window.removeEventListener('scroll', scorllLoad)
+                    
+                    this.setState({
+                        loadMore: false
+                    })
+                } else {
+                    this.loadList()
+                }
+            }
+        }
+
         window.addEventListener('scroll', () => {
             if (timer) {
                 clearTimeout(timer)
             }
 
             timer = setTimeout(() => {
-                let top = container.getBoundingClientRect().top
-                let windowHeight = window.screen.height
-
-                if (top && top < windowHeight) {
-                    this.loadList()
-                }
+                scorllLoad()
             }, 10)
-        })        
+        })    
     }
 
     render() {
@@ -170,11 +205,11 @@ class PersonAnalyze extends React.Component {
                                 <div className="float-fill"></div>
                             </li>
                         </ul>
-                        <a className="btn-r money">返佣：<span className="c-mark">¥1888.89</span></a>
+                        <a className="btn-r money">返佣：<span className="c-mark">¥{this.state.sumBounus}</span></a>
                     </div>
                     <OrderBox orders={this.state.orders} startDate={this.state.startDate} endDate={this.state.endDate} />
                 </div>
-                <section className="m-noInfo-tip" ref="container">下拉加载更多</section>
+                <section className={this.state.loadMore ? 'm-noInfo-tip' : 'm-noInfo-tip hide'} ref="container">下拉加载更多</section>
                 <DatePicker
                         theme={this.state.theme}
                         value={this.state.time}
