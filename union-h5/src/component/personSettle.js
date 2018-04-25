@@ -374,7 +374,7 @@ class PersonSettle extends React.Component {
                     <MoneyBox settle_doc={this.state.settle_doc} handleOndo={this.handleOndo} handlePerformance={this.handlePerformance} />
                 </div>
                 <FloatBox apply_box_status={this.state.apply_box_status} undo_box_status={this.state.undo_box_status} apply_box={this.state.apply_box} handleSubmit={this.handleSubmit} handleCancel={this.handleCancel} handleOndo={this.handleOndo} handleNoSubmit={this.handleNoSubmit} />
-                <section className={this.state.loadMore ? 'm-noInfo-tip' : 'm-noInfo-tip hide'} ref="container">下拉加载更多</section>
+                <section className="m-noInfo-tip" ref="container">{this.state.loadMore ? '下拉加载更多' : '没有更多了'}</section>
                 <div className={this.state.toast.toastStatus ? 'ask-prompt' : 'ask-prompt hide'}>
                     {
                         this.state.toast.toastText

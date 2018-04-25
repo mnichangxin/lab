@@ -56,11 +56,13 @@ class Choose extends React.Component {
                     })
                     .then(function(json) {
                         if (json.code == 'A00000') {
-                            // 申请通过 -> 个人页
-                            that.props.history.push('/person')
-                        } else {
-                            // 未申请 -> 申请页
-                            that.props.history.push('/invite')
+                            if (json.data) {
+                                // 申请通过 -> 个人页
+                                that.props.history.push('/person')
+                            } else {
+                                // 未申请 -> 申请页
+                                that.props.history.push('/invite')
+                            }   
                         }
                         console.log(json)
                     })
