@@ -1,9 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import {BrowserRouter as Router, Route} from 'react-router-dom'
+import {HashRouter as Router, Route} from 'react-router-dom'
 
 import {Login} from './src/component/login'
-import Choose from './src/component/choose'
+import {Choose} from './src/component/choose'
 import {Invite} from './src/component/invite'
 import {Person} from './src/component/person'
 

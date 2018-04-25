@@ -149,4 +149,4 @@ class Choose extends React.Component {
     }
 }
 
-export default withRouter(Choose)
+export {Choose}

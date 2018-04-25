@@ -160,7 +160,7 @@ class PersonSettle extends React.Component {
     handleApply() {
         let that = this
         
-        fetch('http://qm.vip.iqiyi.com/api/personSettlementApplyService/show.do', {
+        fetch('http://qm.vip.iqiyi.com/api/personSettlementApplyService/show.do?P00001=' + getCookie('P00001'), {
                 credentials: 'include'
             })
             .then(function(res) {
@@ -178,7 +178,7 @@ class PersonSettle extends React.Component {
                             elecWallet: json.data.elecWallet
                         }
                     })
-                } else if (json.code == 'Q00248') {
+                } else if (json.code == 'Q00248' || json.code == 'Q00003') {
                     that.showToast('当前不在结算周期')
                 } else if (json.code == 'Q00215') {
                     that.showToast('当前没有可结算订单')

@@ -53,7 +53,7 @@ class PersonIndex extends React.Component {
         let that = this
 
         // 二维码
-        fetch('http://qm.vip.iqiyi.com/api/personUnionService/getQRCode.do?P00001=' + getCookie('P00001'), {
+        fetch('http://qm.vip.iqiyi.com/api/personUnionService/getQRCode.do?width=100&P00001=' + getCookie('P00001'), {
                 credentials: 'include'
             })
             .then(function(res) {
