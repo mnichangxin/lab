@@ -196,13 +196,24 @@ class PersonSettle extends React.Component {
 
     // 申请结算
     handleSubmit() {
-        fetch('http://qm.vip.iqiyi.com/api/personSettlementApplyService/add.do?P00001=' + getCookie('P00001') + '&applyPeriodStart=' + this.apply_box.applyPeriodStart + '&applyPeriodEnd=' + this.apply_box.applyPeriodEnd, {
+        let that = this
+
+        fetch('http://qm.vip.iqiyi.com/api/personSettlementApplyService/apply.do?P00001=' + getCookie('P00001') + '&applyPeriodStart=' + this.state.apply_box.applyPeriodStart + '&applyPeriodEnd=' + this.state.apply_box.applyPeriodEnd, {
                 credentials: 'include'
             })
             .then(function(res) {
                 return res.json()
             })
             .then(function(json) {
+                that.setState({
+                    apply_box_status: false
+                })
+
+                if (json.data == 'A00000') {
+                    that.showToast('结算成功')
+                } else {  
+                    that.showToast('结算失败')
+                }
                 console.log(json)
             })
             .catch(function(err) {
@@ -374,7 +385,7 @@ class PersonSettle extends React.Component {
                     <MoneyBox settle_doc={this.state.settle_doc} handleOndo={this.handleOndo} handlePerformance={this.handlePerformance} />
                 </div>
                 <FloatBox apply_box_status={this.state.apply_box_status} undo_box_status={this.state.undo_box_status} apply_box={this.state.apply_box} handleSubmit={this.handleSubmit} handleCancel={this.handleCancel} handleOndo={this.handleOndo} handleNoSubmit={this.handleNoSubmit} />
-                <section className="m-noInfo-tip" ref="container">{this.state.loadMore ? '下拉加载更多' : '没有更多了'}</section>
+                <section className="m-noInfo-tip" ref="container">{this.state.loadMore ? '下拉加载更多' : '暂无数据'}</section>
                 <div className={this.state.toast.toastStatus ? 'ask-prompt' : 'ask-prompt hide'}>
                     {
                         this.state.toast.toastText

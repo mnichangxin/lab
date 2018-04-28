@@ -209,7 +209,8 @@ class PersonAnalyze extends React.Component {
                     </div>
                     <OrderBox orders={this.state.orders} startDate={this.state.startDate} endDate={this.state.endDate} />
                 </div>
-                <section className={this.state.loadMore ? 'm-noInfo-tip' : 'm-noInfo-tip hide'} ref="container">下拉加载更多</section>
+                {/* <section className={this.state.loadMore ? 'm-noInfo-tip' : 'm-noInfo-tip hide'} ref="container">下拉加载更多</section> */}
+                <section className="m-noInfo-tip" ref="container">{this.state.loadMore ? '下拉加载更多' : '暂无数据'}</section>
                 <DatePicker
                         theme={this.state.theme}
                         value={this.state.time}

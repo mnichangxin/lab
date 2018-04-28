@@ -62,7 +62,7 @@ class Choose extends React.Component {
                             } else {
                                 // 未申请 -> 申请页
                                 that.props.history.push('/invite')
-                            }   
+                            }
                         }
                         console.log(json)
                     })
