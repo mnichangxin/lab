@@ -5,6 +5,7 @@ import 'whatwg-fetch'
 
 import {isLogin} from '../utils/isLogin'
 import {getCookie} from '../utils/cookie'
+import {Toast} from './toast'
 
 class Choose extends React.Component {
     constructor(props) {
@@ -16,6 +17,12 @@ class Choose extends React.Component {
                 enterprise: 'enterprise-box',
                 personal: 'enterprise-box'
             },
+
+            toast: {
+                toastStatus: false,
+                toastText: ''
+            },
+
             bindBoxStatus: false
         }
 
@@ -25,6 +32,8 @@ class Choose extends React.Component {
 
     // 处理选择
     handleSelect(id, e) {
+        let that = this
+
         switch(id) {
             case 'enterprise':
                 this.setState({
@@ -45,8 +54,6 @@ class Choose extends React.Component {
                     }
                 })
                 
-                let that = this
-                
                 // 申请通过/未通过 跳转逻辑
                 fetch('http://qm.vip.iqiyi.com/api/personUnionService/verifyExistsPerson.do?P00001=' + this.state.P00001, {
                         credentials: 'include'
@@ -60,14 +67,32 @@ class Choose extends React.Component {
                                 // 申请通过 -> 个人页
                                 that.props.history.push('/person')
                             } else {
-                                // 未申请 -> 申请页
+                                // 未通过-> 申请页
                                 that.props.history.push('/invite')
                             }
+                        } else if (json.code == 'Q00301') {
+                            that.setState({
+                                toast: {
+                                    toastStatus: true,
+                                    toastText: '参数错误'
+                                }
+                            })
+                        } else {
+                            that.setState({
+                                toast: {
+                                    toastStatus: true,
+                                    toastText: '系统错误'
+                                }
+                            })
                         }
-                        console.log(json)
                     })
                     .catch(function(err) {
-                        console.log(err)
+                        that.setState({
+                            toast: {
+                                toastStatus: true,
+                                toastText: '系统错误'
+                            }
+                        })
                     })
                 break
         }    
@@ -85,6 +110,10 @@ class Choose extends React.Component {
     componentDidMount() {
         let that = this
 
+        this.setState({
+            _isMounted: true
+        })
+
         // 判断登录
         if (isLogin()) {
             this.setState({
@@ -100,18 +129,26 @@ class Choose extends React.Component {
                 return res.json()
             })
             .then(function(json) {
-                if (json.data.userinfo.phone.length > 0) {
-                    console.log('已绑定，无弹框')
-                } else {
+                if (!json.data.userinfo.phone.length) {
                     that.setState({
                         bindBoxStatus: true
                     })
-                    console.log('未绑定，弹框提示，跳到安全中心')
                 }
             })
             .catch(function(err) {
-                console.log(err)
+                that.setState({
+                    toast: {
+                        toastStatus: true,
+                        toastText: '系统错误'
+                    }
+                })
             })
+    }
+
+    componentWillUnmount() {
+        this.setState({
+            _isMounted: false
+        })
     }
 
     render() {
@@ -146,6 +183,7 @@ class Choose extends React.Component {
                         <div className="btn-box" onClick={this.handleBind}>去绑定</div>
                     </div>
                 </div>
+                <Toast toastStatus={this.state.toast.toastStatus} toastText={this.state.toast.toastText} _isMounted={this.state._isMounted} />
             </div>
         )
     }
