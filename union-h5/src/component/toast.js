@@ -20,34 +20,11 @@ class Toast extends React.Component {
                 toastText: nextProps.toastText
             }
         })
-
-        setTimeout(() => {
-            if (this._isMounted) {
-                this.setState({
-                    toast: {
-                        toastStatus: false,
-                        toastText: ''
-                    }
-                })
-            }
-        }, 800)
-    }
-
-    componentDidUpdate() {
-        this._isMounted = true
-    }
-
-    componentWillUnmount() {
-        this._isMounted = false
     }
 
     render() {
         return (
-            <div className={this.state.toast.toastStatus ? 'ask-prompt' : 'ask-prompt hide'}>
-                {
-                    this.state.toast.toastText
-                }
-            </div>
+            <div className={this.state.toast.toastStatus ? 'ask-prompt' : 'ask-prompt hide'} dangerouslySetInnerHTML={{__html: this.state.toast.toastText}}></div>
         )
     }
  }

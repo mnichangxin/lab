@@ -1,11 +1,12 @@
 /* 身份选择 */
 import React from 'react'
-import {Link, withRouter} from 'react-router-dom'
 import 'whatwg-fetch'
+
+import {Toast} from './toast'
 
 import {isLogin} from '../utils/isLogin'
 import {getCookie} from '../utils/cookie'
-import {Toast} from './toast'
+import {showToast} from '../utils/toast'
 
 class Choose extends React.Component {
     constructor(props) {
@@ -71,28 +72,13 @@ class Choose extends React.Component {
                                 that.props.history.push('/invite')
                             }
                         } else if (json.code == 'Q00301') {
-                            that.setState({
-                                toast: {
-                                    toastStatus: true,
-                                    toastText: '参数错误'
-                                }
-                            })
+                            showToast(that, '系统错误', 800)
                         } else {
-                            that.setState({
-                                toast: {
-                                    toastStatus: true,
-                                    toastText: '系统错误'
-                                }
-                            })
+                            showToast(that, '系统错误', 800)
                         }
                     })
                     .catch(function(err) {
-                        that.setState({
-                            toast: {
-                                toastStatus: true,
-                                toastText: '系统错误'
-                            }
-                        })
+                        showToast(that, '系统错误', 800)
                     })
                 break
         }    
@@ -103,16 +89,12 @@ class Choose extends React.Component {
         this.setState({
             bindBoxStatus: false
         })
-        
+         
         window.location.href = 'https://m.iqiyi.com/m5/security/home.html'
     }
 
     componentDidMount() {
         let that = this
-
-        this.setState({
-            _isMounted: true
-        })
 
         // 判断登录
         if (isLogin()) {
@@ -136,19 +118,8 @@ class Choose extends React.Component {
                 }
             })
             .catch(function(err) {
-                that.setState({
-                    toast: {
-                        toastStatus: true,
-                        toastText: '系统错误'
-                    }
-                })
+                showToast(that, '系统错误', 800)
             })
-    }
-
-    componentWillUnmount() {
-        this.setState({
-            _isMounted: false
-        })
     }
 
     render() {
@@ -183,7 +154,7 @@ class Choose extends React.Component {
                         <div className="btn-box" onClick={this.handleBind}>去绑定</div>
                     </div>
                 </div>
-                <Toast toastStatus={this.state.toast.toastStatus} toastText={this.state.toast.toastText} _isMounted={this.state._isMounted} />
+                <Toast toastStatus={this.state.toast.toastStatus} toastText={this.state.toast.toastText} />
             </div>
         )
     }

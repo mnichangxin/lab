@@ -1,8 +1,10 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
 import 'whatwg-fetch'
 
+import {Toast} from './toast'
+
 import {getCookie} from '../utils/cookie'
+import {showToast} from '../utils/toast'
 
 class PersonInfo extends React.Component {
     constructor(props) {
@@ -15,6 +17,11 @@ class PersonInfo extends React.Component {
                 contactTel: '',
                 cooperateStatus: '',
                 identityCardCode: ''
+            },
+
+            toast: {
+                toastStatus: false,
+                toastText: ''
             }
         }
     }
@@ -40,13 +47,14 @@ class PersonInfo extends React.Component {
                             identityCardCode: json.data.identityCardCode
                         }
                     })
+                } else if (json.code == 'Q00301') {
+                    showToast(that, '参数错误', 800)
                 } else {
-                    console.log('个人信息请求失败')
+                    showToast(that, '系统错误', 800)
                 }
-                console.log(json)
             })
             .catch(function(err) {
-                console.log(err)
+                showToast(that, '系统错误', 800)
             }) 
     }
 
@@ -86,6 +94,7 @@ class PersonInfo extends React.Component {
                         </li>
                     </ul>
                 </div>
+                <Toast toastStatus={this.state.toast.toastStatus} toastText={this.state.toast.toastText} />
             </div>
         )
     }

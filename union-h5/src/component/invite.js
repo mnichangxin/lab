@@ -1,9 +1,11 @@
 /* 申请加盟 */
 import React from 'react'
-import {Link} from 'react-router-dom'
 import 'whatwg-fetch'
 
+import {Toast} from './toast'
+
 import {getCookie} from '../utils/cookie'
+import {showToast} from '../utils/toast'
 
 class Invite extends React.Component {
     constructor(props) {
@@ -24,8 +26,13 @@ class Invite extends React.Component {
                     status: true
                 }
             },
-            radioStatus: false,
-            toastStatus: false 
+            
+            toast: {
+                toastStatus: false,
+                toastText: ''
+            },
+
+            radioStatus: false
         }
 
         this.handleInputChange = this.handleInputChange.bind(this)
@@ -63,15 +70,19 @@ class Invite extends React.Component {
                     })
                     .then(function(json) {
                         if (json.code == 'A00000') {
-                            that.setStatus(name, value, true)
-                        } else {
+                            if (json.data) {
+                                that.setStatus(name, value, true)
+                            } else {
+                                that.setStatus(name, value, false)
+                            }
+                        } else if (json.code == 'Q00301') {
                             that.setStatus(name, value, false)
+                        } else {
+                            showToast(that, '系统错误', 800)
                         }
-                        console.log(json)
                     })
                     .catch(function(err) {
-                        that.setStatus(name, value, false)
-                        console.log(err)
+                        showToast(that, '系统错误', 800)
                     })
             } else if (name == 'card') {
                 if (/^\d{17}[\dxX]$/.test(value)) {
@@ -112,6 +123,8 @@ class Invite extends React.Component {
 
     // 处理提交
     handleSubmit() {
+        let that = this
+
         if (this.state.radioStatus) {
             this.validateField('name', 'code', 'card')
 
@@ -120,10 +133,9 @@ class Invite extends React.Component {
                     code = this.state.field.code,
                     card = this.state.field.card 
 
-                let that = this
-
                 if (name.status && code.status && card.status) {
                     fetch('http://qm.vip.iqiyi.com/api/personUnionService/apply.do?P00001=' + getCookie('P00001'), {
+                        credentials: 'include',
                         method: 'POST',
                         body: JSON.stringify({
                             personName: name.value,
@@ -135,30 +147,33 @@ class Invite extends React.Component {
                         return res.json()
                     })
                     .then(function(json) {
-                        if (json.code == 'A00000') {
-                            console.log('申请成功...')
-                            // 跳转个人页
+                        if (json.code == 'A00000') {             
                             that.props.history.push('/person')
+                        } else if (json.code == 'Q00301') {
+                            showToast(that, '参数错误', 800)
+                        } else if (json.code == 'Q00243') {
+                            showToast(that, '该用户身份证号无效', 800)
+                        } else if (json.code == 'Q00201') {
+                            showToast(that, '邀请码无效', 800)
+                        } else if (json.code == 'Q00207') {
+                            showToast(that, '该账户已存在', 800)
+                        } else if (json.code == 'Q00206') {
+                            showToast(that, '身份证信息处理异常', 800)
+                        } else if (json.code == 'Q00239') {
+                            showToast(that, '申请加入个人联盟失败', 800)
+                        } else if (json.code == 'Q00241') {
+                            showToast(that, '更新代理商人数失败', 800)
                         } else {
-                            // 弹窗提示
-                            console.log('申请失败...')
+                            showToast(that, '系统错误', 800)
                         }
-                        console.log(json)
                     })
                     .catch(function(err) {
-                        console.log(err)
+                        showToast(that, '系统错误', 800)
                     })
                 }
             }, 100)
         } else {
-            this.setState({
-                toastStatus: true
-            })
-            setTimeout(() => {
-                this.setState({
-                    toastStatus: false 
-                })
-            }, 800)
+            showToast(this, '请勾选《奇艺盟服务协议》<br />《奇艺盟会员返佣政策》', 800)
         }
     }
 
@@ -172,8 +187,7 @@ class Invite extends React.Component {
             this.setStatus('code', (code ? code : ''), true)
             this.setStatus('card', (card ? card : ''), true)
         } else {
-            // 当前浏览器不支持 LocalStorage, 弹窗提示升级浏览器
-            console.log('请升级浏览器到最新版本')
+            showToast(this, '请升级浏览器到最新版本', 800)
         }
     }
 
@@ -231,10 +245,7 @@ class Invite extends React.Component {
                     <div className="m-btn">
                         <a className="entry-btn" onClick={this.handleSubmit}>提交</a>
                     </div>
-                    <div className={this.state.toastStatus ? 'ask-prompt' : 'ask-prompt hide'}>
-                        请勾选《奇艺盟服务协议》
-                        <br />《奇艺盟会员返佣政策》
-                    </div>
+                    <Toast toastStatus={this.state.toast.toastStatus} toastText={this.state.toast.toastText} />
                 </div>
             </div>
         )
