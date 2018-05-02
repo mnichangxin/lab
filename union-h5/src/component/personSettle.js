@@ -37,8 +37,7 @@ class PersonSettle extends React.Component {
             },
 
             totalPages: 1,
-            currentPage: 1,
-            pageNo: 1,
+            pageNo: 1, 
             pageSize: 5,
             total_doc: [],
             settle_doc: [],
@@ -293,8 +292,16 @@ class PersonSettle extends React.Component {
     }
 
     // 查看业绩
-    handlePerformance() {
-        this.props.history.push('/person/personAnalyze')
+    handlePerformance(settleStatus, startDate, endDate) {
+        if (settleStatus == 1) {
+            this.props.history.push({
+                pathname: '/person/personAnalyze',
+                query: {
+                    startDate: startDate,
+                    endDate: endDate
+                }
+            })
+        }
     }
 
     handleCancel() {
@@ -322,20 +329,17 @@ class PersonSettle extends React.Component {
                         })
                     }
                     that.setState({
-                        currentPage: json.pageInfo.currentPage,
                         total_doc: [...that.state.total_doc, ...json.dataList],
                     })
+                    that.reRenderBox()
                 } else if (json.code == 'Q00301') {
                     showToast(that, '参数错误', 800)
-                } else {
+                } else { 
                     showToast(that, '系统错误', 800)
                 }
             })
-            .then(function() {
-                that.reRenderBox()
-            }) 
             .catch(function(err) {
-                console.log(err)
+                showToast(that, '系统错误', 800)
             })
     }
 
@@ -360,17 +364,17 @@ class PersonSettle extends React.Component {
             if (top && top < windowHeight) {
                 this.setState({
                     pageNo: this.state.pageNo + 1,
+                }, () => {
+                    if (this.state.pageNo > this.state.totalPages) {
+                        window.removeEventListener('scroll', scorllLoad)
+                        
+                        this.setState({
+                            loadMore: false
+                        })
+                    } else {
+                        this.loadList()
+                    }
                 })
-
-                if (this.state.currentPage > this.state.totalPages) {
-                    window.removeEventListener('scroll', scorllLoad)
-                    
-                    this.setState({
-                        loadMore: false
-                    })
-                } else {
-                    this.loadList()
-                }
             }
         }
 
@@ -417,7 +421,7 @@ class PersonSettle extends React.Component {
                 </div>
                 <FloatBox apply_box_status={this.state.apply_box_status} undo_box_status={this.state.undo_box_status} apply_box={this.state.apply_box} handleSubmit={this.handleSubmit} handleCancel={this.handleCancel} handleOndo={this.handleOndo} handleNoSubmit={this.handleNoSubmit} />
                 <Toast toastStatus={this.state.toast.toastStatus} toastText={this.state.toast.toastText} />
-                <section className="m-noInfo-tip" ref="container">{this.state.loadMore ? '下拉加载更多' : '暂无数据'}</section>
+                <section className="m-noInfo-tip" ref="container">{this.state.loadMore ? '下拉加载更多' : '暂无更多'}</section>
             </div>
         )
     }

@@ -5,6 +5,12 @@ import {stamp2Date, date2Stamp} from '../utils/parseDate'
 class MoneyBox extends React.Component {
     constructor(props) {
         super(props)
+        
+        this.handleClick = this.handleClick.bind(this)
+    }
+
+    handleClick(settleStatus, startDate, endDate) {
+        this.props.handlePerformance(settleStatus, startDate, endDate)
     }
 
     render() {
@@ -57,7 +63,7 @@ class MoneyBox extends React.Component {
                             </div>
                             <div className="check-btn">
                                 <a className={doc.applyStatus == 1 && doc.settleStatus == 0 ? 'job-btn cancel' : 'job-btn cancel hide'} onClick={(applyCode, indexNum) => this.props.handleOndo(doc.applyCode, index)}>撤消申请</a>
-                                <a className={doc.settleStatus == 1 ? 'job-btn' : 'job-btn disabled'} onClick={this.props.handlePerformance}>查看业绩</a>
+                                <a className={doc.settleStatus == 1 ? 'job-btn' : 'job-btn disabled'} onClick={(settleStatus, startDate, endDate, e) => this.handleClick(doc.settleStatus, doc.applyPeriodStart, doc.applyPeriodEnd)}>查看业绩</a>
                             </div>
                         </div>
                     </div>

@@ -3,9 +3,12 @@ import {Link} from 'react-router-dom'
 import 'whatwg-fetch'
 import DatePicker from 'react-mobile-datepicker'
 
+import {OrderBox} from './orderBox'
+import {Toast} from './toast'
+
 import {stamp2Date, date2Stamp, getPreMonth} from '../utils/parseDate'
 import {getCookie} from '../utils/cookie'
-import {OrderBox} from './orderBox'
+import {showToast} from '../utils/toast'
 
 class PersonAnalyze extends React.Component {
     constructor(props) {
@@ -20,12 +23,16 @@ class PersonAnalyze extends React.Component {
             endDate: stamp2Date(new Date().getTime()),
             sumBounus: 0,
             totalPages: 1,
-            currentPage: 1,
             pageNo: 1,
             pageSize: 5,
             loadMore: true,
             orders: [],
-            newOrders: []
+            newOrders: [],
+
+            toast: {
+                toastStatus: false,
+                toastText: ''
+            }
         }
 
         this.handleClick = this.handleClick.bind(this)
@@ -65,23 +72,6 @@ class PersonAnalyze extends React.Component {
         })
     }  
 
-    // 重新渲染
-    // reRenderBox() {
-    //     let orders = this.state.orders
-    //     let newOrders = []
-
-    //     let startDate = date2Stamp(this.state.startDate),
-    //           endDate = date2Stamp(this.state.endDate)
-  
-    //     newOrders = orders.filter((order) => {
-    //         return (order.orderDate >= startDate && order.orderDate <= endDate)
-    //     })
-
-    //     this.setState({
-    //         newOrders: newOrders
-    //     })
-    // }
-
     // 加载列表
     loadList() {
         let that = this
@@ -100,16 +90,18 @@ class PersonAnalyze extends React.Component {
                         })
 
                         that.setState({
-                            currentPage: json.pageInfo.currentPage,
                             orders: [...that.state.orders, ...json.dataList]
                         })
                     }
+                } else if (json.code == 'Q00301') {
+                    showToast(that, '参数错误', 800)
+                } else {
+                    showToast(that, '系统错误', 800)
                 }
 
-                console.log(json)
             })
             .catch(function(err) {
-                console.log(err)
+                showToast(that, '系统错误', 800)
             })
     }
 
@@ -117,6 +109,15 @@ class PersonAnalyze extends React.Component {
         let that = this
         let timer = null
         let container = this.refs.container
+
+        let query = this.props.history.location.query
+
+        if (query) {
+            this.setState({
+                startDate: stamp2Date(query.startDate),
+                endDate: stamp2Date(query.endDate)
+            })
+        }
 
         // 总返佣金额
         fetch('http://qm.vip.iqiyi.com/api/personPerformanceService/sumBounus.do?P00001=' + getCookie('P00001') + '&settlePeriodStart=' + new Date().getTime() + '&settlePeriodEnd=' + date2Stamp(getPreMonth()), {
@@ -130,11 +131,14 @@ class PersonAnalyze extends React.Component {
                     that.setState({
                         sumBounus: json.data 
                     })
+                } else if (json.code == 'Q00301') {
+                    showToast(that, '参数错误', 800)
+                } else {
+                    showToast(that, '系统错误', 800)
                 }
-                console.log(json)
             })
-            .then(function(err) {
-                console.log(err)
+            .catch(function(err) {
+                showToast(that, '系统错误', 800)
             })
 
         // 初次加载
@@ -154,17 +158,17 @@ class PersonAnalyze extends React.Component {
             if (top && top < windowHeight) {
                 this.setState({
                     pageNo: this.state.pageNo + 1,
+                }, () => {
+                    if (this.state.pageNo > this.state.totalPages) {
+                        window.removeEventListener('scroll', scorllLoad)
+                        
+                        this.setState({
+                            loadMore: false
+                        })
+                    } else {
+                        this.loadList()
+                    }
                 })
-
-                if (this.state.currentPage > this.state.totalPages) {
-                    window.removeEventListener('scroll', scorllLoad)
-                    
-                    this.setState({
-                        loadMore: false
-                    })
-                } else {
-                    this.loadList()
-                }
             }
         }
 
@@ -209,8 +213,8 @@ class PersonAnalyze extends React.Component {
                     </div>
                     <OrderBox orders={this.state.orders} startDate={this.state.startDate} endDate={this.state.endDate} />
                 </div>
-                {/* <section className={this.state.loadMore ? 'm-noInfo-tip' : 'm-noInfo-tip hide'} ref="container">下拉加载更多</section> */}
-                <section className="m-noInfo-tip" ref="container">{this.state.loadMore ? '下拉加载更多' : '暂无数据'}</section>
+                <Toast toastStatus={this.state.toast.toastStatus} toastText={this.state.toast.toastText} />
+                <section className="m-noInfo-tip" ref="container">{this.state.loadMore ? '下拉加载更多' : '暂无更多'}</section>
                 <DatePicker
                         theme={this.state.theme}
                         value={this.state.time}

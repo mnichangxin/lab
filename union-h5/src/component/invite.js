@@ -6,6 +6,7 @@ import {Toast} from './toast'
 
 import {getCookie} from '../utils/cookie'
 import {showToast} from '../utils/toast'
+import {validateIdentity} from '../utils/validate'
 
 class Invite extends React.Component {
     constructor(props) {
@@ -85,7 +86,7 @@ class Invite extends React.Component {
                         showToast(that, '系统错误', 800)
                     })
             } else if (name == 'card') {
-                if (/^\d{17}[\dxX]$/.test(value)) {
+                if (validateIdentity(value).bool) {
                     that.setStatus(name, value, true)
                 } else {
                     that.setStatus(name, value, false)
