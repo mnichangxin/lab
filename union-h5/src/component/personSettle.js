@@ -4,9 +4,12 @@ import {Link} from 'react-router-dom'
 import 'whatwg-fetch'
 
 import {getCookie} from '../utils/cookie'
+import {showToast} from '../utils/toast'
+
 import {Select} from './select'
 import {MoneyBox} from './moneyBox'
 import {FloatBox} from  './floatBox'
+import {Toast} from './toast'
 
 class PersonSettle extends React.Component {
     constructor(props) {
@@ -19,6 +22,7 @@ class PersonSettle extends React.Component {
             undo_box_status: false,
             applyStatus: '全部',
             settleStatus: '全部',
+            
             apply_box: {
                 applyName: '',
                 applyPeriodStart: '',
@@ -26,10 +30,12 @@ class PersonSettle extends React.Component {
                 applyDate: '',
                 elecWallet: ''
             },
+
             toast: {
                 toastStatus: false,
                 toastText: ''
             },
+
             totalPages: 1,
             currentPage: 1,
             pageNo: 1,
@@ -178,19 +184,31 @@ class PersonSettle extends React.Component {
                             elecWallet: json.data.elecWallet
                         }
                     })
-                } else if (json.code == 'Q00248' || json.code == 'Q00003') {
-                    that.showToast('当前不在结算周期')
+                } else if (json.code == 'Q00248') {
+                    showToast(that, '当前不在结算周期', 800)
                 } else if (json.code == 'Q00215') {
-                    that.showToast('当前没有可结算订单')
+                    showToast(that, '当前没有可结算订单', 800)
                 } else if (json.code == 'Q00209') {
-                    that.showToast('本月已申请过，请勿重复提交')
+                    that.setState({
+                        apply_box_status: true,
+                        apply_box: {
+                            applyName: '',
+                            applyPeriodStart: '',
+                            applyPeriodEnd: '',
+                            applyDate: '',
+                            elecWallet: ''
+                        }
+                    })
+
+                    showToast(that, '本月已申请过，请勿重复提交', 800)
+                } else if (json.code == 'Q00214') {
+                    showToast(that, '客户已离职或客户不存在', 800)
                 } else {
-                    that.showToast('系统错误')
+                    showToast(that, '系统错误', 800)
                 }
-                console.log(json)
             })
             .catch(function(err) {
-                console.log(err)
+                showToast(that, '系统错误', 800)
             })
     }
 
@@ -209,15 +227,20 @@ class PersonSettle extends React.Component {
                     apply_box_status: false
                 })
 
-                if (json.data == 'A00000') {
-                    that.showToast('结算成功')
-                } else {  
-                    that.showToast('结算失败')
+                if (json.code == 'A00000') {
+                    showToast(that, '结算成功', 800)
+                } else if (json.code == 'Q00251') {  
+                    showToast(that, '客户合作状态无效或客户不存在', 800)
+                } else if (json.code == 'Q00215') {
+                    showToast(that, '当前没有可结算订单', 800)
+                } else if (json.code == 'Q00132') {
+                    showToast(that, '该结算申请无效', 800)
+                } else {
+                    showToast(that, '系统错误', 800)
                 }
-                console.log(json)
             })
             .catch(function(err) {
-                console.log(err)
+                showToast(that, '系统错误', 800)
             })
     }
 
@@ -249,8 +272,15 @@ class PersonSettle extends React.Component {
                     that.setState({
                         settle_doc: that.state.settle_doc
                     })
+
+                    showToast(that, '撤销成功', 800)
+                } else if (json.code == 'Q00216') {
+                    showToast(that, '撤销失败', 800)
+                } else if (json.code == 'Q00215') {
+                    showToast(that, '当前没有可结算订单', 800)
+                } else {
+                    showToast(that, '系统错误', 800)
                 }
-                console.log(json)
             })
             .then(function() {
                 that.setState({
@@ -258,7 +288,7 @@ class PersonSettle extends React.Component {
                 })
             })
             .catch(function(err) {
-                console.log(err)
+                showToast(that, '系统错误', 800)
             })
     }
 
@@ -291,14 +321,15 @@ class PersonSettle extends React.Component {
                             totalPages: json.pageInfo.totalPages
                         })
                     }
-    
                     that.setState({
                         currentPage: json.pageInfo.currentPage,
                         total_doc: [...that.state.total_doc, ...json.dataList],
                     })
+                } else if (json.code == 'Q00301') {
+                    showToast(that, '参数错误', 800)
+                } else {
+                    showToast(that, '系统错误', 800)
                 }
-
-                console.log(json)
             })
             .then(function() {
                 that.reRenderBox()
@@ -385,12 +416,8 @@ class PersonSettle extends React.Component {
                     <MoneyBox settle_doc={this.state.settle_doc} handleOndo={this.handleOndo} handlePerformance={this.handlePerformance} />
                 </div>
                 <FloatBox apply_box_status={this.state.apply_box_status} undo_box_status={this.state.undo_box_status} apply_box={this.state.apply_box} handleSubmit={this.handleSubmit} handleCancel={this.handleCancel} handleOndo={this.handleOndo} handleNoSubmit={this.handleNoSubmit} />
+                <Toast toastStatus={this.state.toast.toastStatus} toastText={this.state.toast.toastText} />
                 <section className="m-noInfo-tip" ref="container">{this.state.loadMore ? '下拉加载更多' : '暂无数据'}</section>
-                <div className={this.state.toast.toastStatus ? 'ask-prompt' : 'ask-prompt hide'}>
-                    {
-                        this.state.toast.toastText
-                    }
-                </div>
             </div>
         )
     }
