@@ -25,14 +25,12 @@ class MoneyBox extends React.Component {
                                     <div className="c-mes">{stamp2Date(doc.applyPeriodStart) + ' - ' + stamp2Date(doc.applyPeriodEnd)}</div>
                                 </li>
                                 <li>
-                                    <div className="list-two">
-                                        <div className="list-left">
-                                            <div className="c-name">申请ID：</div>{doc.applyCode}
-                                        </div>
-                                        <div className="list-right">
-                                            <div className="c-name">申请日期：</div>{stamp2Date(doc.applyDate)}
-                                        </div>
-                                    </div>
+                                    <div className="c-name">申请ID：</div>
+                                    <div className="c-mes">{doc.applyCode}</div>
+                                </li>
+                                <li>
+                                    <div className="c-name">申请日期：</div>
+                                    <div className="c-mes">{stamp2Date(doc.applyDate)}</div>
                                 </li>
                                 <li>
                                     <div className="list-two">

@@ -65,7 +65,7 @@ class PersonSettle extends React.Component {
 
         if (applyStatus == '全部' && settleStatus != '全部') {
             newDocs = docs.filter((doc) => {
-                return (doc.settleStatus == 0 ? '已结算' : '未结算') == settleStatus
+                return (doc.settleStatus == 2 ? '已结算' : '未结算') == settleStatus
             })
         } else if (applyStatus != '全部' && settleStatus == '全部') {
             newDocs = docs.filter((doc) => {
@@ -73,7 +73,7 @@ class PersonSettle extends React.Component {
             })
         } else if (applyStatus != '全部' && settleStatus != '全部') {
             newDocs = docs.filter((doc) => {
-                return (doc.applyStatus == 1 ? '有效' : (doc.applyStatus == 0 ? '已撤销' : '已过期')) == applyStatus && (doc.settleStatus == 0 ? '已结算' : '未结算') == settleStatus
+                return (doc.applyStatus == 1 ? '有效' : (doc.applyStatus == 0 ? '已撤销' : '已过期')) == applyStatus && (doc.settleStatus == 2 ? '已结算' : '未结算') == settleStatus
             })
         } else {
             newDocs = docs

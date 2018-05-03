@@ -26,6 +26,13 @@ class PersonInfo extends React.Component {
         }
     }
 
+    identityEncrypt(identityCardCode) {
+        let head = identityCardCode.slice(0, 3),
+            foot = identityCardCode.slice(-3)
+
+        return head + 'xxxxxxxxxxxx' + foot
+    }
+
     componentDidMount() {
         let that = this
 
@@ -44,7 +51,7 @@ class PersonInfo extends React.Component {
                             fv: json.data.fv,
                             contactTel: json.data.contactTel,
                             cooperateStatus: json.data.cooperateStatus,
-                            identityCardCode: json.data.identityCardCode
+                            identityCardCode: that.identityEncrypt(json.data.identityCardCode)
                         }
                     })
                 } else if (json.code == 'Q00301') {
