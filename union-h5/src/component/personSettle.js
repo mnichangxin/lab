@@ -38,7 +38,7 @@ class PersonSettle extends React.Component {
 
             totalPages: 1,
             pageNo: 1, 
-            pageSize: 5,
+            pageSize: 3,
             total_doc: [],
             settle_doc: [],
             loadMore: true,
@@ -188,17 +188,6 @@ class PersonSettle extends React.Component {
                 } else if (json.code == 'Q00215') {
                     showToast(that, '当前没有可结算订单', 800)
                 } else if (json.code == 'Q00209') {
-                    that.setState({
-                        apply_box_status: true,
-                        apply_box: {
-                            applyName: '',
-                            applyPeriodStart: '',
-                            applyPeriodEnd: '',
-                            applyDate: '',
-                            elecWallet: ''
-                        }
-                    })
-
                     showToast(that, '本月已申请过，请勿重复提交', 800)
                 } else if (json.code == 'Q00214') {
                     showToast(that, '客户已离职或客户不存在', 800)
@@ -255,7 +244,7 @@ class PersonSettle extends React.Component {
     // 撤销结算
     handleNoSubmit() {
         let that = this
-
+        
         fetch('http://qm.vip.iqiyi.com/api/personSettlementApplyService/withdraw.do?applyCode=' + this.state.applyCode, {
                 credentials: 'include'
             })
@@ -293,15 +282,13 @@ class PersonSettle extends React.Component {
 
     // 查看业绩
     handlePerformance(settleStatus, startDate, endDate) {
-        if (settleStatus == 1) {
-            this.props.history.push({
-                pathname: '/person/personAnalyze',
-                query: {
-                    startDate: startDate,
-                    endDate: endDate
-                }
-            })
-        }
+        this.props.history.push({
+            pathname: '/person/personAnalyze',
+            query: {
+                startDate: startDate,
+                endDate: endDate
+            }
+        })
     }
 
     handleCancel() {
@@ -315,7 +302,7 @@ class PersonSettle extends React.Component {
     loadList() {
         let that = this
 
-        fetch('http://qm.vip.iqiyi.com/api/personSettlementApplyService/page.do?pageNo=' + this.state.pageNo +'&pageSize=' + this.state.pageSize, {
+        fetch('http://qm.vip.iqiyi.com/api/personSettlementApplyService/page.do?pageNo=' + this.state.pageNo + '&pageSize=' + this.state.pageSize, {
                 credentials: 'include'
             })
             .then(function(res) {
@@ -344,7 +331,6 @@ class PersonSettle extends React.Component {
     }
 
     componentDidMount() {
-        let timer = null
         let container = this.refs.container
 
         // 初次加载
@@ -365,13 +351,16 @@ class PersonSettle extends React.Component {
                 this.setState({
                     pageNo: this.state.pageNo + 1,
                 }, () => {
-                    if (this.state.pageNo > this.state.totalPages) {
-                        window.removeEventListener('scroll', scorllLoad)
-                        
+                    if (this.state.pageNo > this.state.totalPages) {                        
                         this.setState({
                             loadMore: false
                         })
+                        return
                     } else {
+                        this.setState({
+                            loadMore: true
+                        })
+
                         this.loadList()
                     }
                 })
@@ -379,13 +368,7 @@ class PersonSettle extends React.Component {
         }
 
         window.addEventListener('scroll', () => {
-            if (timer) {
-                clearTimeout(timer)
-            }
-
-            timer = setTimeout(() => {
-                scorllLoad()
-            }, 10)
+            scorllLoad()
         })
     }
 
@@ -421,7 +404,7 @@ class PersonSettle extends React.Component {
                 </div>
                 <FloatBox apply_box_status={this.state.apply_box_status} undo_box_status={this.state.undo_box_status} apply_box={this.state.apply_box} handleSubmit={this.handleSubmit} handleCancel={this.handleCancel} handleOndo={this.handleOndo} handleNoSubmit={this.handleNoSubmit} />
                 <Toast toastStatus={this.state.toast.toastStatus} toastText={this.state.toast.toastText} />
-                <section className="m-noInfo-tip" ref="container">{this.state.loadMore ? '下拉加载更多' : '暂无更多'}</section>
+                <section className="m-noInfo-tip" ref="container">{this.state.loadMore ? '加载更多' : '暂无更多'}</section>
             </div>
         )
     }

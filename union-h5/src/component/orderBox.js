@@ -34,7 +34,7 @@ class OrderBox extends React.Component {
                                     </li>
                                     <li>
                                         <div className="c-name">返佣金额：</div>
-                                        <div className="c-mes c-bold">￥{order.commisionBack}</div>
+                                        <div className="c-mes c-bold">￥{order.commissionBack}</div>
                                     </li>
                                 </ul>
                             </div>

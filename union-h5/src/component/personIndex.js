@@ -18,8 +18,8 @@ class PersonIndex extends React.Component {
 
         this.state = {
             qrCode: '',
-            code: '123456',
-            rebate: 1,
+            code: '',
+            rebate: '',
             spreads: [],
 
             toast: {

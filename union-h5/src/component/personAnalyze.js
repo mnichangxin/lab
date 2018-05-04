@@ -64,6 +64,10 @@ class PersonAnalyze extends React.Component {
                 endDate: stamp2Date(Date.parse(date))
             })
         }
+
+        setTimeout(() => {
+            this.getSumBounus(date2Stamp(this.state.startDate), date2Stamp(this.state.endDate))
+        }, 50)
     }
 
     handleCancel() {
@@ -105,22 +109,12 @@ class PersonAnalyze extends React.Component {
             })
     }
 
-    componentDidMount() {
+    // 总返佣金额
+    getSumBounus(startDate, endDate) {
         let that = this
-        let timer = null
-        let container = this.refs.container
-
-        let query = this.props.history.location.query
-
-        if (query) {
-            this.setState({
-                startDate: stamp2Date(query.startDate),
-                endDate: stamp2Date(query.endDate)
-            })
-        }
 
         // 总返佣金额
-        fetch('http://qm.vip.iqiyi.com/api/personPerformanceService/sumBounus.do?P00001=' + getCookie('P00001') + '&settlePeriodStart=' + new Date().getTime() + '&settlePeriodEnd=' + date2Stamp(getPreMonth()), {
+        fetch('http://qm.vip.iqiyi.com/api/personPerformanceService/sumBounus.do?P00001=' + getCookie('P00001') + '&settlePeriodStart=' + startDate + '&settlePeriodEnd=' + endDate, {
                 credentials: 'include'
             })
             .then(function(res) {
@@ -140,6 +134,26 @@ class PersonAnalyze extends React.Component {
             .catch(function(err) {
                 showToast(that, '系统错误', 800)
             })
+    }
+
+    componentDidMount() {
+        let that = this
+        let timer = null
+        let container = this.refs.container
+
+        let query = this.props.history.location.query
+
+        if (query) {
+            this.setState({
+                startDate: stamp2Date(query.startDate),
+                endDate: stamp2Date(query.endDate)
+            })
+        }
+
+        // 加载默认总返佣金额
+        setTimeout(() => {
+            this.getSumBounus(date2Stamp(this.state.startDate), date2Stamp(this.state.endDate))
+        }, 50)
 
         // 初次加载
         this.loadList()

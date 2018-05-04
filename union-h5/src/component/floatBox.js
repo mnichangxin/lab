@@ -20,7 +20,7 @@ class FloatBox extends React.Component {
                         <span className="c-bold">结算周期：</span>{stamp2Date(this.props.apply_box.applyPeriodStart)}-{stamp2Date(this.props.apply_box.applyPeriodEnd)}
                     </div> 
                     <div className="info">
-                        <span className="c-bold">申请日期：</span>{this.props.apply_box.applyDate}
+                        <span className="c-bold">申请日期：</span>{stamp2Date(this.props.apply_box.applyDate)}
                     </div>
                     <div className="info">
                         <span className="c-bold">电子钱包：</span>{this.props.apply_box.elecWallet}

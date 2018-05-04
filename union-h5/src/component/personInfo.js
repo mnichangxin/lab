@@ -27,6 +27,10 @@ class PersonInfo extends React.Component {
     }
 
     identityEncrypt(identityCardCode) {
+        if (!identityCardCode) {
+            return ''
+        }
+
         let head = identityCardCode.slice(0, 3),
             foot = identityCardCode.slice(-3)
 
@@ -48,7 +52,7 @@ class PersonInfo extends React.Component {
                     that.setState({
                         info: {
                             personName: json.data.personName,
-                            fv: json.data.fv,
+                            fv: json.data.agentName,
                             contactTel: json.data.contactTel,
                             cooperateStatus: json.data.cooperateStatus,
                             identityCardCode: that.identityEncrypt(json.data.identityCardCode)
@@ -80,24 +84,24 @@ class PersonInfo extends React.Component {
                     <ul className="mes-list">
                         <li>
                             <div className="c-name">姓名：</div>
-                            <div className="c-mes">{this.state.info.personName}</div>
+                            <div className="c-info">{this.state.info.personName}</div>
                         </li>
                         <li>
                             <div className="c-name">所属代理商：</div>
-                            <div className="c-mes">{this.state.info.fv}</div>
+                            <div className="c-info">{this.state.info.fv}</div>
                         </li>
                         <li>
                             <div className="c-name">联系方式：</div>
-                            <div className="c-mes">{this.state.info.contactTel}</div>
+                            <div className="c-info">{this.state.info.contactTel}</div>
                         </li>
                         <li>
                             <div className="c-name">合作状态：</div>
-                            <div className="c-mes">{this.state.info.cooperateStatus ? '有效' : '无效'}</div>
+                            <div className="c-info">{this.state.info.cooperateStatus == 1 ? '有效' : '无效'}</div>
                         </li>
 
                         <li>
                             <div className="c-name">身份证号码：</div>
-                            <div className="c-mes">{this.state.info.identityCardCode}</div>
+                            <div className="c-info">{this.state.info.identityCardCode}</div>
                         </li>
                     </ul>
                 </div>
