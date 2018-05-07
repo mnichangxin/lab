@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+        <title>测试</title>
+    </head>
+    <body>
+        <div class="container">
+            <img id="img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFcAAABXCAIAAAD+qk47AAAFHklEQVR4nO1cTYgcRRT+epwc9iQK4mVzEuMp7FWWPXhzwR9wQQIBCQnkIMKiEMwhgkE95BaRgLCQIBvMZQPBHxCS0wbNwZNRiLkKA0nQi2t2Zrqn6z0Pb6zt7eqpreruaSG8jz30VL+qevPN9+q96prZBM3AzHKRJMmsFo+xZ0APQuaKQq9J5ycGygIA9O1ViBQtPAoMueXO5fbyyN7jar13oVoAlAVB321quIBHLfKeW+44UaER9S5UC4CyIKiIiLYQVcm4avcUXVGJIASqBUBZELQfER4luzb1EkFIjoiCagFQFgQVEVFPZiFbbM8iHxVHUf6EQLUAKAuCvYho+LgmJBCiWkJG9rgRBdUCoCwIkrYKj5BFPqR7vce5DaFaAJQFQRKit4bijHrsE7LIh+wsopKFagFQFgQV5xFRoeEiatsbtcUOQb2DQtUCoCwIfDnCImoj3Pr+N+pczzOFx1i1ACgLAp+iGj4ILSlweWnxyvk3opw7df67O3cHrT+PdY3neCpTxP0b7569fO/s5XsAiAgAERPD5Pn0mshwQiZnZmOIiJmZnnr6/o044uqhCy0sLy0+d/gFuZ5FATMb4cJSQERExvAvv/7exA0XrnGPHRStBZUDCWyvxIE1toFwIAVMXKKAmew4Hg9dN1wb19jadLc6FimQ91ZBAZcpoJZPJKvR0bpQooAMWQpuXj0N4JVjXxKzNBYpIEMHjd0Ceh7ZhygwpJeFfLBkiBlCwfcb72SjcTYa3/zqpKWAhSkGM1NVrHlk7/HHEzWdaWGqgnxirl9cA/DW+pYhTkfjgg0ZY7avnjKGXj620UsSYmbqRAsdzAHABsLXF15L0zRN03E6Yeadnd1Jlk6ydPDgb2MMM4bDUZqm25snaLpCdLEw9EP2yBYhNfmsWxIIk+GuvNy6sAoAlE6GKYBnF/DtxTeBPQOhgAruhWRB1w1PvrctHUWEyXNmMPOHl37+5OTRA+3fPndLKHiiIgKACHzwaOfEZ7ez8VD+Pnj/i9JFNh6+uv7N48ejaUS0/eWdSvSjqi6LqLIShdIAQNJLst2RtC8sHDJZRsS9HmyjXReJ2RCHSNrjYYjP3dULxeooGw2l/cx7r3/86SaAj86sSWPSSyCLwn4K5oqOIqJUIP72xz+SGiZZ+tKLhwFk47G83NoeGGOImQm8r4CeI4K00HD3AqBIgTF06YeHnx9/Xm6trhxZXTmSj1N5ef2nB0KBYWJiw+SZq16Cc3t1GBHEtkZOQJxPcuct9BOUKOjGvY5YKFIgC//6tYeyTbDVkVwwgcAAhAI2/1PV5K6lriY9q/SMHcSUAikQ/yuouUSBMdPPn4lRi4KQPFLRUi+0QmzsreWlxfzQM8xsKRAFGFktChTIgiixIBQYTv7689Gs2T0+R+XXLnLEnbuDzXMrJQokQiwFxNUU/Lix1oGHe6yElCIu6vWaH0LU6kKfxAPKgqDmtzji5og5YovNPrOMPb1cf1QLgLIgqMgRe/dqnQiH6LZhrLWexVQLgLIgmON3Xy3mV/lGRZ/nlmoBUBYE/Yb1v0eTUUknZCMcZePCM45qAVAWBL6qydetpa2BB/XW/ygbC9UCoCwI4p411Tssc7tX+NHsBw4h8MyuWgCUBUFrpzL1lBxy+lav1vLM5XZXLQDKgqC1iIiqo0LGcRFydBjij2ujWgCUBUFr/4sjBJ6zb8/sDc8aPONojtgHZQHw/0okBCGabOupaRSiEpNqAVAWBP8C2x3GgMB8TCgAAAAASUVORK5CYII=" />
+        </div>
+        <div>
+            <button id="btn" class="btn">点击下载</button>
+        </div>
+        <script>
+            var btn = document.getElementById('btn')
+            var img = document.getElementById('img')
+
+            btn.addEventListener('click', function() {
+                let canvas = document.createElement('canvas')
+                let aLink = document.createElement('a') 
+                let image = document.createElement('img')
+                
+                image.src = img.src
+
+                canvas.width = image.width
+                canvas.height = image.height
+
+                canvas.getContext('2d').drawImage(image, 0, 0)
+
+                aLink.download = 'QRCode.png'
+                aLink.href = canvas.toDataURL('image/png')
+                aLink.click()
+            })
+        </script>
+    </body>
+</html>
