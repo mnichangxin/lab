@@ -30,11 +30,11 @@ class OrderBox extends React.Component {
                                     </li>
                                     <li>
                                         <div className="c-name">订单金额：</div>
-                                        <div className="c-mes c-bold">￥{order.orderFee}</div>
+                                        <div className="c-mes c-bold">￥{order.orderFee / 100}</div>
                                     </li>
                                     <li>
                                         <div className="c-name">返佣金额：</div>
-                                        <div className="c-mes c-bold">￥{order.commissionBack}</div>
+                                        <div className="c-mes c-bold">￥{order.commissionBack / 100}</div>
                                     </li>
                                 </ul>
                             </div>

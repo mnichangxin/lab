@@ -76,14 +76,12 @@ class Invite extends React.Component {
                             } else {
                                 that.setStatus(name, value, false)
                             }
-                        } else if (json.code == 'Q00301') {
-                            that.setStatus(name, value, false)
                         } else {
-                            showToast(that, '系统错误', 800)
+                            that.setStatus(name, value, false)
                         }
                     })
                     .catch(function(err) {
-                        showToast(that, '系统错误', 800)
+                        showToast(that, '网络错误', 800)
                     })
             } else if (name == 'card') {
                 if (validateIdentity(value).bool) {
@@ -150,22 +148,8 @@ class Invite extends React.Component {
                     .then(function(json) {
                         if (json.code == 'A00000') {             
                             that.props.history.push('/person')
-                        } else if (json.code == 'Q00301') {
-                            showToast(that, '参数错误', 800)
-                        } else if (json.code == 'Q00243') {
-                            showToast(that, '该用户身份证号无效', 800)
-                        } else if (json.code == 'Q00201') {
-                            showToast(that, '邀请码无效', 800)
-                        } else if (json.code == 'Q00207') {
-                            showToast(that, '该账户已存在', 800)
-                        } else if (json.code == 'Q00206') {
-                            showToast(that, '身份证信息处理异常', 800)
-                        } else if (json.code == 'Q00239') {
-                            showToast(that, '申请加入个人联盟失败', 800)
-                        } else if (json.code == 'Q00241') {
-                            showToast(that, '更新代理商人数失败', 800)
                         } else {
-                            showToast(that, '系统错误', 800)
+                            showToast(that, json.message, 800)
                         }
                     })
                     .catch(function(err) {

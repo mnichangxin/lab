@@ -29,6 +29,7 @@ class Choose extends React.Component {
 
         this.handleSelect = this.handleSelect.bind(this)
         this.handleBind = this.handleBind.bind(this)
+        this.isBindPhone = this.isBindPhone.bind(this)
     }
 
     // 处理选择
@@ -66,19 +67,19 @@ class Choose extends React.Component {
                         if (json.code == 'A00000') {
                             if (json.data) {
                                 // 申请通过 -> 个人页
-                                that.props.history.push('/person')
+                                that.isBindPhone(() => {
+                                    that.props.history.push('/person')
+                                })
                             } else {
                                 // 未通过-> 申请页
                                 that.props.history.push('/invite')
                             }
-                        } else if (json.code == 'Q00301') {
-                            showToast(that, '系统错误', 800)
                         } else {
-                            showToast(that, '系统错误', 800)
+                            showToast(that, json.message, 800)
                         }
                     })
                     .catch(function(err) {
-                        showToast(that, '系统错误', 800)
+                        showToast(that, '网络错误', 800)
                     })
                 break
         }    
@@ -93,6 +94,34 @@ class Choose extends React.Component {
         window.location.href = 'https://m.iqiyi.com/m5/security/home.html'
     }
 
+    isBindPhone(callback) {
+        let that = this
+
+        // 判断绑定手机号
+        fetch('https://passport.iqiyi.com/apis/user/info.action?authcookie=' + getCookie('P00001'))
+            .then(function(res) {
+                return res.json()
+            })
+            .then(function(json) {
+                if (json.code == 'A00000') {
+                    if (!json.data.userinfo.phone.length) {
+                        that.setState({
+                            bindBoxStatus: true
+                        })
+                    } else {
+                        if (callback) {
+                            callback()
+                        }
+                    }
+                } else {
+                    showToast(that, json.msg, 800)
+                }
+            })
+            .catch(function(err) {
+                showToast(that, '网络错误', 800)
+            })
+    }
+
     componentDidMount() {
         let that = this
 
@@ -105,21 +134,7 @@ class Choose extends React.Component {
             window.location.href = 'https://m.iqiyi.com/user.html#baseLogin'
         }
 
-        // 判断绑定手机号
-        fetch('https://passport.iqiyi.com/apis/user/info.action?authcookie=' + getCookie('P00001'))
-            .then(function(res) {
-                return res.json()
-            })
-            .then(function(json) {
-                if (!json.data.userinfo.phone.length) {
-                    that.setState({
-                        bindBoxStatus: true
-                    })
-                }
-            })
-            .catch(function(err) {
-                showToast(that, '系统错误', 800)
-            })
+        this.isBindPhone()
     }
 
     render() {
@@ -150,7 +165,7 @@ class Choose extends React.Component {
                 </section>
                 <div className={this.state.bindBoxStatus ? 'cover' : 'cover hide'}>
                     <div className="bind-phone">
-                        <p className="c-info">您尚未绑定手机号，无法<br />申请加盟，请到个人中心绑定</p>
+                        <p className="c-info">您尚未绑定手机号，无法查看<br />加盟信息，请到安全中心绑定</p>
                         <div className="btn-box" onClick={this.handleBind}>去绑定</div>
                     </div>
                 </div>

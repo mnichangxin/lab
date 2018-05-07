@@ -24,6 +24,8 @@ class PersonInfo extends React.Component {
                 toastText: ''
             }
         }
+
+        this.goBack = this.goBack.bind(this)
     }
 
     identityEncrypt(identityCardCode) {
@@ -35,6 +37,11 @@ class PersonInfo extends React.Component {
             foot = identityCardCode.slice(-3)
 
         return head + 'xxxxxxxxxxxx' + foot
+    }
+
+    // 返回
+    goBack () {
+        this.props.history.push('/Person')
     }
 
     componentDidMount() {
@@ -58,14 +65,12 @@ class PersonInfo extends React.Component {
                             identityCardCode: that.identityEncrypt(json.data.identityCardCode)
                         }
                     })
-                } else if (json.code == 'Q00301') {
-                    showToast(that, '参数错误', 800)
                 } else {
-                    showToast(that, '系统错误', 800)
+                    showToast(that, json.message, 800)
                 }
             })
             .catch(function(err) {
-                showToast(that, '系统错误', 800)
+                showToast(that, '网络错误', 800)
             }) 
     }
 
@@ -75,7 +80,7 @@ class PersonInfo extends React.Component {
                 <div className="m-box m-box-top m-box-top-green">
                     <div className="m-box-items m-box-items-full">
                         <section className="m-topSite m-borderB">
-                            <a className="c-goback" onClick={()=>this.props.history.goBack()}><i className="arrow"></i></a>
+                            <a className="c-goback" onClick={this.goBack}><i className="arrow"></i></a>
                             <div className="c-content">个人信息</div>
                         </section>
                     </div>
@@ -96,7 +101,7 @@ class PersonInfo extends React.Component {
                         </li>
                         <li>
                             <div className="c-name">合作状态：</div>
-                            <div className="c-info">{this.state.info.cooperateStatus == 1 ? '有效' : '无效'}</div>
+                            <div className="c-info">{this.state.info.cooperateStatus == '' ? '' : (this.state.info.cooperateStatus == 1 ? '有效' : '无效')}</div>
                         </li>
 
                         <li>
