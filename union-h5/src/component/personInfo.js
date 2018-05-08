@@ -85,7 +85,7 @@ class PersonInfo extends React.Component {
                         </section>
                     </div>
                 </div>
-                <div className="mes-box">
+                <div className="mes-box tip-margin">
                     <ul className="mes-list">
                         <li>
                             <div className="c-name">姓名：</div>

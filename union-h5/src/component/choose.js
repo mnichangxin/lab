@@ -73,7 +73,9 @@ class Choose extends React.Component {
                                 })
                             } else {
                                 // 未通过-> 申请页
-                                that.props.history.push('/invite')
+                                that.isBindPhone(() => {
+                                    that.props.history.push('/invite')
+                                })
                             }
                         } else {
                             showToast(that, json.message, 800)
@@ -166,7 +168,7 @@ class Choose extends React.Component {
                 </section>
                 <div className={this.state.bindBoxStatus ? 'cover' : 'cover hide'}>
                     <div className="bind-phone">
-                        <p className="c-info">您尚未绑定手机号，无法查看<br />加盟信息，请到安全中心绑定</p>
+                        <p className="c-info">您尚未绑定手机号，<br />请到安全中心绑定</p>
                         <div className="btn-box" onClick={this.handleBind}>去绑定</div>
                     </div>
                 </div>

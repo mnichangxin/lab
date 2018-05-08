@@ -15,7 +15,7 @@ class App extends React.Component {
     render() {
         return (
             <Router>
-                <div style={{height: '100%'}}>
+                <div style={{height: '100%', background: '#f8f8f8'}}>
                     <Route path="/" exact component={Login}></Route>
                     <Route path="/choose" component={Choose}></Route>
                     <Route path="/invite" component={Invite}></Route>

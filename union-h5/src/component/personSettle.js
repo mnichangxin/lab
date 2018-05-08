@@ -349,9 +349,13 @@ class PersonSettle extends React.Component {
                     loadNone: true,
                     loadInfo: '暂无更多'
                 })
+            } else {
+                this.setState({
+                    loadNone: false
+                })
             }
         }, 500)
-    
+
         // 加载更多
         const scorllLoad = () => {
             let top = container.getBoundingClientRect().top
@@ -416,7 +420,7 @@ class PersonSettle extends React.Component {
                 </div>
                 <FloatBox apply_box_status={this.state.apply_box_status} undo_box_status={this.state.undo_box_status} apply_box={this.state.apply_box} handleSubmit={this.handleSubmit} handleCancel={this.handleCancel} handleOndo={this.handleOndo} handleNoSubmit={this.handleNoSubmit} />
                 <Toast toastStatus={this.state.toast.toastStatus} toastText={this.state.toast.toastText} />
-                <section className={this.state.loadNone ? 'm-null-tip hide' : 'm-null-tip'} ref="container" >{this.state.loadInfo}</section>
+                <section className={this.state.loadNone ? 'm-null-tip hide' : 'm-null-tip'} ref="container" >暂无更多</section>
                 <section className={this.state.loadNone ? 'm-noInfo-tip tip-margin' : 'm-noInfo-tip tip-margin hide'} ref="container">{this.state.loadInfo}</section>                
             </div>
         )

@@ -13,7 +13,7 @@ class OrderBox extends React.Component {
             this.props.orders.map((order, index) => {
                 let orderDate = date2Stamp(order.orderDate)
 
-                if (orderDate >= date2Stamp(this.props.startDate) && orderDate <= date2Stamp(this.props.endDate)) {
+                if (orderDate >= date2Stamp(this.props.startDate) && orderDate <= date2Stamp(this.props.endDate) + 86400000) {
                     return (
                         <div key={index}>
                             <div className="m-content">

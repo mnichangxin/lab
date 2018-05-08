@@ -34,7 +34,9 @@ class PersonIndex extends React.Component {
 
     // 退出登录
     handleQuit() {
-        window.location.href = 'https://passport.iqiyi.com/user/logout.php?authcookie=' + getCookie('P00001') + '&agenttype=5&url=' + encodeURIComponent(location.href.split('/person')[0])
+        this.props.history.push('/')
+
+        window.location.href = 'https://passport.iqiyi.com/user/logout.php?authcookie=' + getCookie('P00001') + '&agenttype=5&url=' + encodeURIComponent(location.href)
     }
 
     componentDidMount() {

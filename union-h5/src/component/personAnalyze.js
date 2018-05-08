@@ -25,7 +25,8 @@ class PersonAnalyze extends React.Component {
             totalPages: 1,
             pageNo: 1,
             pageSize: 5,
-            loadMore: '',
+            loadNone: false,
+            loadInfo: '',
             orders: [],
 
             toast: {
@@ -57,11 +58,11 @@ class PersonAnalyze extends React.Component {
         
         if (this.state.id == 'start') {
             this.setState({
-                startDate: stamp2Date(Date.parse(date))
+                startDate: stamp2Date(Date.parse(date)) 
             })
         } else {
             this.setState({
-                endDate: stamp2Date(Date.parse(date))
+                endDate: stamp2Date(Date.parse(date)) 
             })
         }
 
@@ -157,11 +158,18 @@ class PersonAnalyze extends React.Component {
         // 初次加载
         this.loadList()
 
-        if (this.state.orders.length < 5) {
-            this.setState({
-                loadMore: '暂无更多'
-            })
-        }
+        setTimeout(() => {
+            if (this.state.orders.length >= 5) {
+                this.setState({
+                    loadNone: true,
+                    loadInfo: '暂无更多'
+                })
+            } else {
+                this.setState({
+                    loadNone: false
+                })
+            }
+        }, 500)
 
         // 加载更多
         const scorllLoad = () => {
@@ -175,13 +183,13 @@ class PersonAnalyze extends React.Component {
                     if (this.state.pageNo > this.state.totalPages) {
                         setTimeout(() => {
                             this.setState({
-                                loadMore: '暂无更多'
+                                loadInfo: '暂无更多'
                             })
                         }, 3000)   
                         return 
                     } else {
                         this.setState({
-                            loadMore: '正在加载'
+                            loadInfo: '正在加载'
                         }, () => {
                             this.loadList()
                         })
@@ -226,7 +234,8 @@ class PersonAnalyze extends React.Component {
                     <OrderBox orders={this.state.orders} startDate={this.state.startDate} endDate={this.state.endDate} />
                 </div>
                 <Toast toastStatus={this.state.toast.toastStatus} toastText={this.state.toast.toastText} />
-                <section className="m-noInfo-tip" ref="container">{this.state.loadMore}</section>
+                <section className={this.state.loadNone ? 'm-null-tip hide' : 'm-null-tip'} ref="container" >暂无更多</section>
+                <section className={this.state.loadNone ? 'm-noInfo-tip tip-margin' : 'm-noInfo-tip tip-margin hide'} ref="container">{this.state.loadInfo}</section>    
                 <DatePicker
                         theme={this.state.theme}
                         value={this.state.time}
