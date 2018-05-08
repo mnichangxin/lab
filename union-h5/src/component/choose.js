@@ -45,7 +45,7 @@ class Choose extends React.Component {
                     }
                 }, () => {
                     this.isBindPhone(() => {
-                        window.location.href = 'https://www.iqiyi.com/common/qimeng/main.html'
+                        window.location.href = '//www.iqiyi.com/common/qimeng/main.html'
                     })
                 })
                 break
@@ -58,7 +58,7 @@ class Choose extends React.Component {
                 })
                 
                 // 申请通过/未通过 跳转逻辑
-                fetch('http://qm.vip.iqiyi.com/api/personUnionService/verifyExistsPerson.do?P00001=' + this.state.P00001, {
+                fetch('//qm.vip.iqiyi.com/api/personUnionService/verifyExistsPerson.do?P00001=' + this.state.P00001, {
                         credentials: 'include'
                     })
                     .then(function(res) {
@@ -94,14 +94,14 @@ class Choose extends React.Component {
             bindBoxStatus: false
         })
          
-        window.location.href = 'https://m.iqiyi.com/m5/security/home.html'
+        window.location.href = '//m.iqiyi.com/m5/security/home.html'
     }
 
     isBindPhone(callback) {
         let that = this
 
         // 判断绑定手机号
-        fetch('https://passport.iqiyi.com/apis/user/info.action?authcookie=' + getCookie('P00001'))
+        fetch('//passport.iqiyi.com/apis/user/info.action?authcookie=' + getCookie('P00001'))
             .then(function(res) {
                 return res.json()
             })
@@ -134,7 +134,7 @@ class Choose extends React.Component {
                 P00001: getCookie('P00001')
             })
         } else {
-            window.location.href = 'https://m.iqiyi.com/user.html#baseLogin'
+            window.location.href = '//m.iqiyi.com/user.html#baseLogin'
         }
 
         this.isBindPhone()
@@ -144,25 +144,25 @@ class Choose extends React.Component {
         return (
             <div className={this.state.P00001 ? 'entry-box' : 'entry-box hide'}>
                 <div className="c-top">
-                    <img src="http://www.qiyipic.com/common/fix/h5-union/h5-union-logo.png" />
+                    <img src="//www.qiyipic.com/common/fix/h5-union/h5-union-logo.png" />
                 </div>
                 <section className="m-choose">
                     <div className={this.state.choose.enterprise} onClick={(e) => this.handleSelect('enterprise', e)}>
                         <div className="c-pic c-enterprise-pic">
-                            <img src="http://www.qiyipic.com/common/fix/h5-persional-union/h5-union-persional.png" />
+                            <img src="//www.qiyipic.com/common/fix/h5-persional-union/h5-union-persional.png" />
                         </div>
                         <p className="c-title">企业店员</p>
                         <div className="choose-btn">
-                            <img src="http://www.qiyipic.com/common/fix/h5-union/h5-union-already.png"/>
+                            <img src="//www.qiyipic.com/common/fix/h5-union/h5-union-already.png"/>
                         </div>
                     </div>
                     <div className={this.state.choose.personal} onClick={(e) => this.handleSelect('personal', e)}>
                         <div className="c-pic">
-                            <img src="http://www.qiyipic.com/common/fix/h5-persional-union/h5-union-enterprise.png" />
+                            <img src="//www.qiyipic.com/common/fix/h5-persional-union/h5-union-enterprise.png" />
                         </div>
                         <p className="c-title">个人联盟</p>
                         <div className="choose-btn">
-                            <img src="http://www.qiyipic.com/common/fix/h5-union/h5-union-already.png"/>
+                            <img src="//www.qiyipic.com/common/fix/h5-union/h5-union-already.png"/>
                         </div>
                     </div>
                 </section>

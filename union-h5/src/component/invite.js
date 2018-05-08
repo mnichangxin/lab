@@ -63,7 +63,7 @@ class Invite extends React.Component {
                     that.setStatus(name, value, false)
                 }
             } else if (name == 'code') {
-                fetch('http://qm.vip.iqiyi.com/api/personUnionService/verifyCode.do?inviteCode=' + value + '&P00001=' + getCookie('P00001'), {
+                fetch('//qm.vip.iqiyi.com/api/personUnionService/verifyCode.do?inviteCode=' + value + '&P00001=' + getCookie('P00001'), {
                         credentials: 'include'
                     })
                     .then(function(res) {
@@ -133,7 +133,7 @@ class Invite extends React.Component {
                     card = this.state.field.card 
 
                 if (name.status && code.status && card.status) {
-                    fetch('http://qm.vip.iqiyi.com/api/personUnionService/apply.do?P00001=' + getCookie('P00001'), {
+                    fetch('//qm.vip.iqiyi.com/api/personUnionService/apply.do?P00001=' + getCookie('P00001'), {
                         credentials: 'include',
                         method: 'POST',
                         body: JSON.stringify({
@@ -219,12 +219,12 @@ class Invite extends React.Component {
                     </ul>
                     <div className="agree-read">
                         <div className="choose-btn" onClick={this.handleChoose}>
-                            <img src={this.state.radioStatus ? 'http://www.qiyipic.com/common/fix/h5-union/h5-union-already.png' : 'http://www.qiyipic.com/common/fix/h5-union/h5-union-null.png'} />
+                            <img src={this.state.radioStatus ? '//www.qiyipic.com/common/fix/h5-union/h5-union-already.png' : '//www.qiyipic.com/common/fix/h5-union/h5-union-null.png'} />
                         </div>
                         &nbsp;&nbsp;我已阅读并同意
-                        <a href="http://www.iqiyi.com/common/qimeng/protocol.html">《奇艺盟服务协议》</a>
+                        <a href="//www.iqiyi.com/common/qimeng/protocol.html">《奇艺盟服务协议》</a>
                         <br />
-                        <a href="http://www.iqiyi.com/common/qimeng/commission.html" className="agreement">《奇艺盟会员返佣政策》</a>
+                        <a href="//www.iqiyi.com/common/qimeng/commission.html" className="agreement">《奇艺盟会员返佣政策》</a>
                     </div>
                     
                     <div className="m-btn">

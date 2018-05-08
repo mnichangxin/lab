@@ -166,7 +166,7 @@ class PersonSettle extends React.Component {
     handleApply() {
         let that = this
         
-        fetch('http://qm.vip.iqiyi.com/api/personSettlementApplyService/show.do?P00001=' + getCookie('P00001'), {
+        fetch('//qm.vip.iqiyi.com/api/personSettlementApplyService/show.do?P00001=' + getCookie('P00001'), {
                 credentials: 'include'
             })
             .then(function(res) {
@@ -197,7 +197,7 @@ class PersonSettle extends React.Component {
     handleSubmit() {
         let that = this
 
-        fetch('http://qm.vip.iqiyi.com/api/personSettlementApplyService/apply.do?P00001=' + getCookie('P00001') + '&applyPeriodStart=' + this.state.apply_box.applyPeriodStart + '&applyPeriodEnd=' + this.state.apply_box.applyPeriodEnd, {
+        fetch('//qm.vip.iqiyi.com/api/personSettlementApplyService/apply.do?P00001=' + getCookie('P00001') + '&applyPeriodStart=' + this.state.apply_box.applyPeriodStart + '&applyPeriodEnd=' + this.state.apply_box.applyPeriodEnd, {
                 credentials: 'include'
             })
             .then(function(res) {
@@ -211,7 +211,7 @@ class PersonSettle extends React.Component {
                 if (json.code == 'A00000') {
                     showToast(that, '结算成功', 800)
                     
-                    fetch('http://qm.vip.iqiyi.com/api/personSettlementApplyService/page.do?pageNo=' + 1 + '&pageSize=' + 1, {
+                    fetch('//qm.vip.iqiyi.com/api/personSettlementApplyService/page.do?pageNo=' + 1 + '&pageSize=' + 1, {
                         credentials: 'include'
                     })
                     .then(function(res) {
@@ -252,7 +252,7 @@ class PersonSettle extends React.Component {
     handleNoSubmit() {
         let that = this
         
-        fetch('http://qm.vip.iqiyi.com/api/personSettlementApplyService/withdraw.do?applyCode=' + this.state.applyCode, {
+        fetch('//qm.vip.iqiyi.com/api/personSettlementApplyService/withdraw.do?applyCode=' + this.state.applyCode, {
                 credentials: 'include'
             })
             .then(function(res) {
@@ -311,7 +311,7 @@ class PersonSettle extends React.Component {
     loadList() {
         let that = this
 
-        fetch('http://qm.vip.iqiyi.com/api/personSettlementApplyService/page.do?pageNo=' + this.state.pageNo + '&pageSize=' + this.state.pageSize, {
+        fetch('//qm.vip.iqiyi.com/api/personSettlementApplyService/page.do?pageNo=' + this.state.pageNo + '&pageSize=' + this.state.pageSize, {
                 credentials: 'include'
             })
             .then(function(res) {

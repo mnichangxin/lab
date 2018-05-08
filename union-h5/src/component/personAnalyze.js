@@ -82,7 +82,7 @@ class PersonAnalyze extends React.Component {
         let that = this
 
         // 总返佣金额
-        fetch('http://qm.vip.iqiyi.com/api/personPerformanceService/sumBounus.do?P00001=' + getCookie('P00001') + '&settlePeriodStart=' + startDate + '&settlePeriodEnd=' + endDate, {
+        fetch('//qm.vip.iqiyi.com/api/personPerformanceService/sumBounus.do?P00001=' + getCookie('P00001') + '&settlePeriodStart=' + startDate + '&settlePeriodEnd=' + endDate, {
                 credentials: 'include'
             })
             .then(function(res) {
@@ -106,7 +106,7 @@ class PersonAnalyze extends React.Component {
     loadList() {
         let that = this
 
-        fetch('http://qm.vip.iqiyi.com/api/personPerformanceService/page.do?pageNo=' + this.state.pageNo + '&pageSize=' + this.state.pageSize, {
+        fetch('//qm.vip.iqiyi.com/api/personPerformanceService/page.do?pageNo=' + this.state.pageNo + '&pageSize=' + this.state.pageSize, {
                 credentials: 'include'
             })
             .then(function(res) {

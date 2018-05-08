@@ -36,7 +36,7 @@ class PersonIndex extends React.Component {
     handleQuit() {
         this.props.history.push('/')
 
-        window.location.href = 'https://passport.iqiyi.com/user/logout.php?authcookie=' + getCookie('P00001') + '&agenttype=5&url=' + encodeURIComponent(location.href)
+        window.location.href = '//passport.iqiyi.com/user/logout.php?authcookie=' + getCookie('P00001') + '&agenttype=5&url=' + encodeURIComponent(location.href)
     }
 
     componentDidMount() {
@@ -47,7 +47,7 @@ class PersonIndex extends React.Component {
         })
 
         // 二维码
-        fetch('http://qm.vip.iqiyi.com/api/personUnionService/getQRCode.do?width=100&P00001=' + getCookie('P00001'), {
+        fetch('//qm.vip.iqiyi.com/api/personUnionService/getQRCode.do?width=100&P00001=' + getCookie('P00001'), {
                 credentials: 'include'
             })
             .then(function(res) {
@@ -67,7 +67,7 @@ class PersonIndex extends React.Component {
             })
 
         // 我的邀请码
-        fetch('http://qm.vip.iqiyi.com/api/personUnionService/getInviteCode.do?P00001=' + getCookie('P00001'), {
+        fetch('//qm.vip.iqiyi.com/api/personUnionService/getInviteCode.do?P00001=' + getCookie('P00001'), {
                 credentials: 'include'
             })
             .then(function(res) {
@@ -87,7 +87,7 @@ class PersonIndex extends React.Component {
             })
 
         // 今日入账
-        fetch('http://qm.vip.iqiyi.com/api/personSettlementApplyService/todayAmount.do?P00001=' + getCookie('P00001'), {
+        fetch('//qm.vip.iqiyi.com/api/personSettlementApplyService/todayAmount.do?P00001=' + getCookie('P00001'), {
                 credentials: 'include'
             })
             .then(function(res) {
@@ -107,7 +107,7 @@ class PersonIndex extends React.Component {
             })
 
         // 推广动态
-        fetch('http://qm.vip.iqiyi.com/api/personUnionService/spreadOrder.do?P00001=' + getCookie('P00001'), {
+        fetch('//qm.vip.iqiyi.com/api/personUnionService/spreadOrder.do?P00001=' + getCookie('P00001'), {
                 credentials: 'include'
             })
             .then(function(res) {
@@ -142,13 +142,13 @@ class PersonIndex extends React.Component {
             <div>
                 <div className="own-header">
                     <div className="header-pic">
-                        <img src="http://www.qiyipic.com/common/fix/h5-union/qimeng_logo@3x.png" />
+                        <img src="//www.qiyipic.com/common/fix/h5-union/qimeng_logo@3x.png" />
                     </div>
                     <a className="header-quit" onClick={this.handleQuit}>退出登录</a>
                 </div>
                 <div className="own-box">
                     <div className="own-banner">
-                        <img src="http://www.qiyipic.com/common/fix/h5-union/h5-union-banner.png" />
+                        <img src="//www.qiyipic.com/common/fix/h5-union/h5-union-banner.png" />
                         <div className="code-card">
                             <div className="c-code">
                                 <img src={'data:image/png;base64,' + this.state.qrCode} ref="image" />
@@ -163,7 +163,7 @@ class PersonIndex extends React.Component {
                 <div className="mes-box">
                     <div className="mes-title">
                         <div className="title-pic">
-                            <img src="http://www.qiyipic.com/common/fix/h5-persional-union/h5-union-money.png"/>
+                            <img src="//www.qiyipic.com/common/fix/h5-persional-union/h5-union-money.png"/>
                         </div>
                         <p className="title-word">今日入账</p>
                     </div>
@@ -177,7 +177,7 @@ class PersonIndex extends React.Component {
                 <div className="mes-box">
                     <div className="mes-title">
                         <div className="title-pic">
-                            <img src="http://www.qiyipic.com/common/fix/h5-union/h5-union-spread.png"/>
+                            <img src="//www.qiyipic.com/common/fix/h5-union/h5-union-spread.png"/>
                         </div>
                         <p className="title-word">推广动态</p>
                     </div>

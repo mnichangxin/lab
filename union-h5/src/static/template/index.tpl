@@ -4,7 +4,7 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<title>奇艺盟</title>
-		<link rel="stylesheet" type="text/css" href="http://static.iqiyi.com/css/20180408/h5-union.css" />
+		<link rel="stylesheet" type="text/css" href="//static.iqiyi.com/css/20180408/h5-union.css" />
 		<style>
 			html, body, #app {
 				height: 100%;
