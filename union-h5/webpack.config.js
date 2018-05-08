@@ -1,5 +1,7 @@
 const path = require('path')
+
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 module.exports = {
     mode: 'development',
@@ -33,8 +35,19 @@ module.exports = {
             }
         ]
     },
-    plugins: [new HtmlWebpackPlugin({
-        filename: 'index.html',
-        template: './src/static/template/index.tpl'
-    })]
+    plugins: [
+        new HtmlWebpackPlugin({
+            filename: 'index.html',
+            template: './src/static/template/index.tpl'
+        }),
+        new UglifyJsPlugin({
+            uglifyOptions: {
+                warnings: false, 
+                output: {
+                    beautify: false,
+                    comments: false
+                }         
+            }
+        })
+    ]
 }

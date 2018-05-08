@@ -43,10 +43,11 @@ class Choose extends React.Component {
                         enterprise: 'enterprise-box enterprise-box choosed',
                         personal: 'enterprise-box'
                     }
+                }, () => {
+                    this.isBindPhone(() => {
+                        window.location.href = 'https://www.iqiyi.com/common/qimeng/main.html'
+                    })
                 })
-                setTimeout(() => {
-                    window.location.href = 'https://www.iqiyi.com/common/qimeng/main.html'
-                }, 100)
                 break
             case 'personal':
                 this.setState({

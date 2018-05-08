@@ -27,16 +27,16 @@ class FloatBox extends React.Component {
                     </div>
                     <p className="c-mes">您的审核预计在5-7个工作日完成</p>
                     <div className="commit">
-                        <Span text="取消" handleCancel={this.props.handleCancel} />
-                        <Span text="提交" handleCancel={this.props.handleSubmit} />
+                        <span className="c-mark c-normal" onClick={this.props.handleCancel}>取消</span>
+                        <span className="c-mark" onClick={this.props.handleSubmit}>提交</span>
                     </div>
                 </div>
                 <div className={this.props.undo_box_status ? 'settle-accounts' : 'settle-accounts hide'}>
                     <div className="c-title">撤销申请</div>
                     <p className="c-word">是否确认撤销此申请， <br />撤销后需要重新提交结算申请</p>
                     <div className="commit">
-                        <Span text="取消" handleCancel={this.props.handleCancel} />
-                        <Span text="确认" handleCancel={this.props.handleNoSubmit} />
+                        <span className="c-mark c-normal" onClick={this.props.handleCancel}>取消</span>
+                        <span className="c-mark" onClick={this.props.handleNoSubmit}>确认</span>
                     </div>
                 </div>
             </div>
@@ -44,37 +44,4 @@ class FloatBox extends React.Component {
     }
 }
 
-class Span extends React.Component {
-    constructor(porps) {
-        super(porps) 
-        
-        this.state = {
-            isDown: false
-        }
-
-        this.handleOnTouchStart = this.handleOnTouchStart.bind(this)
-        this.handleOnTouchEnd = this.handleOnTouchEnd.bind(this)
-    }
-
-    handleOnTouchStart() {
-        this.setState({
-            isDown: true
-        })
-    }
-
-    handleOnTouchEnd() {
-        this.setState({
-            isDown: false
-        })
-
-        this.props.handleCancel()
-    }
-
-    render() {
-        return (
-            <span className="c-mark" className={this.state.isDown ? 'c-mark c-normal' : 'c-mark'} onTouchStart={this.handleOnTouchStart} onTouchEnd={this.handleOnTouchEnd}>{this.props.text}</span>
-        )
-    }
-}
-
- export {FloatBox}
+export {FloatBox}
