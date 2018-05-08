@@ -72,7 +72,7 @@ class Choose extends React.Component {
                                     that.props.history.push('/person')
                                 })
                             } else {
-                                // 未通过-> 申请页
+                                // 未通过 -> 申请页
                                 that.isBindPhone(() => {
                                     that.props.history.push('/invite')
                                 })
