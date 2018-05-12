@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>音频可视化</title>
+        <link rel="stylesheet" href="./css/index.css" />
+    </head>
+    <body>
+        <div class="container">
+            <nav class="menu">
+                <div class="btn">文件</div>
+                <div class="btn">自动排序</div>
+                <div class="btn">导入音频</div>
+                <div class="btn">导出音频</div>
+                <div class="btn">系统设置</div>
+            </nav>
+            <div class="main">
+                <section class="aside">
+                    <div class="tool">
+                        <div class="btn">排序</div>
+                        <div class="btn">过滤</div>
+                        <div class="btn">搜索</div>
+                    </div>
+                    <form id="upload-form" action="服务器路径" method="post" enctype="multipart/form-data" >
+                        <input type="file" name="upload"/>
+                        <input type="submit" value="上传" class="upload" />
+                    </form>
+                    <ul class="list">
+                        <li>文件1</li>
+                        <li>文件2</li>
+                        <li>文件3</li>
+                    </ul>
+                </section>
+                <section class="right">
+                    <div class="tool">
+                        <div class="btn">显示音频波形</div>
+                        <div class="btn">显示文字内容</div>
+                        <div class="btn">剪切工具</div>
+                    </div>
+                    <div class="show"></div>
+                </section>
+            </div>
+        </div>
+        <script type="text/javascript" src="./js/index.js"></script>
+    </body>
+</html>
