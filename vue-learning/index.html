@@ -6,16 +6,15 @@
     </head>
     <body>
         <div id="app">
-            {{ message }}
+            <!-- 1 -->
+            <p>{{ rawHtml }}</p>
+            <p v-html="rawHtml">{{ rawHtml }}</p>
+            <!-- 2 -->
+            <p>Original message: "{{ message }}"</p>
+            <p>Computed reversed message: "{{ reversedMessage }}"</p>
+            <!-- 3 -->
         </div>
         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-        <script>
-            var app = new Vue({
-                el: '#app',
-                data: {
-                    message: 'Hello Vue!'
-                }
-            })
-        </script>
+        <script src="./index.js"></script>
     </body>
 </html>
