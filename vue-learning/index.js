@@ -1,12 +1,20 @@
 var app = new Vue({
     el: '#app',
     data: {
-        rawHtml: '<span>This is a rawHtml</span>',
-        message: 'Hello'
+        list: [],
+        item: ''
     },
     computed: {
-        reversedMessage: function () {
-            return this.message.split('').reverse().join('')
+        
+    },
+    methods: {
+        add: function() {
+            this.list.push(this.item)
+        },
+        remove: function(event) {
+            var index = this.list.indexOf(event.target)
+
+            this.list.splice(index, 1)
         }
     }
 })

@@ -6,13 +6,17 @@
     </head>
     <body>
         <div id="app">
-            <!-- 1 -->
-            <p>{{ rawHtml }}</p>
-            <p v-html="rawHtml">{{ rawHtml }}</p>
-            <!-- 2 -->
-            <p>Original message: "{{ message }}"</p>
-            <p>Computed reversed message: "{{ reversedMessage }}"</p>
-            <!-- 3 -->
+            <p>
+                <label>请输入要添加的项：</label>
+                <input type="text" v-model="item" />
+                <button v-on:click="add">添加</button>
+            </p>
+            <ul>
+                <li v-for="(value, index) in list" :key="index">
+                    {{ value }}
+                    &nbsp;&nbsp; <button v-on:click="remove">删除</button>
+                </li>
+            </ul>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
         <script src="./index.js"></script>
