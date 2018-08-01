@@ -17,6 +17,16 @@
                     &nbsp;&nbsp; <button v-on:click="remove">删除</button>
                 </li>
             </ul>
+            <p>
+                <button-container></button-container>
+            </p>
+            <blog-post title="title 1"></blog-post>
+            <blog-post title="title 2"></blog-post>
+            <blog-post title="title 3"></blog-post>
+            <alert>
+                <p>What this?</p>
+                <slot>What this?</slot>
+            </alert>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
         <script src="./index.js"></script>
