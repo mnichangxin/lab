@@ -18,18 +18,31 @@ module.exports = {
                 ]
             },
             {
-                test: /\.vue$/,
-                loader: 'vue-loader'
+                test: /\.js$/,
+                loader: 'babel-loader',
+                exclude: /node_modules/
             },
             {
-                test: /\.js$/,
+                test: /\.(gif|jpg|png|woff|svg|eot|ttf)\??.*$/,
+                loader: 'url-loader?limit=1024'
+            },
+            {
+                test: /iview\/.*?js$/,
                 loader: 'babel-loader'
+            },
+            {
+                test: /\.vue$/,
+                loader: 'vue-loader'
             }
         ]
     },
+    devServer: {
+        contentBase: '/',
+        publicPath: '/dist/'
+    },
     resolve: {
         alias: {
-            vue$: 'vue/dist/vue.common.js'
+            vue: 'vue/dist/vue.esm.js'
         }
     },
     plugins: [
