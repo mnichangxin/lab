@@ -4,10 +4,13 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin')
 module.exports = {
     mode: 'development',
     entry: './src/main.js',
+    
+    // 生产环境配置
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'bundle.js'
     },
+
     module: {
         rules: [
             {
@@ -24,7 +27,7 @@ module.exports = {
             },
             {
                 test: /\.(gif|jpg|png|woff|svg|eot|ttf)\??.*$/,
-                loader: 'url-loader?limit=1024'
+                loader: 'url-loader?limit=50000'
             },
             {
                 test: /iview\/.*?js$/,
@@ -36,10 +39,13 @@ module.exports = {
             }
         ]
     },
-    devServer: {
-        contentBase: '/',
+
+    // 开发环境配置
+    devServer: { 
+        contentBase: path.resolve(__dirname, 'public'),
         publicPath: '/dist/'
     },
+    
     resolve: {
         alias: {
             vue: 'vue/dist/vue.esm.js'
