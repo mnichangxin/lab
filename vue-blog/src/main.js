@@ -1,10 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import iview from 'iview'
-import 'iview/dist/styles/iview.css'
+import Container from './components/Container.vue'
 
-import BlogContainer from './components/BlogContainer.vue'
+import './assets/css/reset.css'
 
 // 引入插件
 Vue.use(VueRouter)
@@ -26,5 +25,5 @@ new Vue({
             // }
         ]
     }),
-    render: h => h(BlogContainer)
+    render: h => h(Container)
 })
