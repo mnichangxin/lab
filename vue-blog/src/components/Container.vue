@@ -23,5 +23,6 @@
 <style>
     .blog-container {
         height: 100%;
+        background-color: #e0e0e0;
     }
 </style>

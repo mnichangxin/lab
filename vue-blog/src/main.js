@@ -7,7 +7,6 @@ import './assets/css/reset.css'
 
 // 引入插件
 Vue.use(VueRouter)
-Vue.use(iview)
 
 // 实例化
 new Vue({

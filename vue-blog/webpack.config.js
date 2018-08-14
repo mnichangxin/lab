@@ -27,7 +27,7 @@ module.exports = {
             },
             {
                 test: /\.(gif|jpg|png|woff|svg|eot|ttf)\??.*$/,
-                loader: 'url-loader?limit=50000'
+                loader: 'url-loader?limit=1000000'
             },
             {
                 test: /iview\/.*?js$/,

@@ -22,8 +22,10 @@
 
 <style>
     .aside {
+        float: left;
         width: 300px;
         height: 100%;
-        box-shadow: 1px 5px 0 #ccc;
+        box-shadow: 0px 8px 0 #e6e6e6fd;
+        background-color: #fff;
     }
 </style>

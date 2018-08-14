@@ -13,5 +13,7 @@
 </script>
 
 <style>
-    
+    .article {
+        float: left;
+    }
 </style>
