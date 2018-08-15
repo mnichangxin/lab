@@ -45,8 +45,10 @@
         height: 100px;
         margin-left: -50px;
         margin-bottom: -50px;
+        padding: 10px;
+        box-sizing: border-box;
         border-radius: 50%;
-        
+        background-color: #4292c7;
     }
     .avatar:hover {
         animation: rotation 2s linear infinite;
