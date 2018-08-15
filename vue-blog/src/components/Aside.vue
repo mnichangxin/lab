@@ -22,7 +22,9 @@
 
 <style>
     .aside {
-        float: left;
+        position: absolute;
+        left: 0;
+        top: 0;
         width: 300px;
         height: 100%;
         box-shadow: 0px 8px 0 #e6e6e6fd;

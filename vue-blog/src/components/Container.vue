@@ -3,26 +3,29 @@
 <template>
     <div class="blog-container">
         <Aside></Aside>
-        <Article></Article>
+        <MainSection></MainSection>
     </div>
 </template>
 
 <script>
     import Aside from './Aside.vue'
-    import Article from './Article.vue'
+    import MainSection from './MainSection.vue'
 
     export default {
         name: 'BlogContainer',
         components: {
             Aside,
-            Article
+            MainSection
         }
     }
 </script>
 
 <style>
     .blog-container {
+        position: relative;
+        padding-left: 300px;
         height: 100%;
         background-color: #e0e0e0;
+        overflow: hidden;
     }
 </style>
