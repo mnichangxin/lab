@@ -142,7 +142,7 @@ eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\n//\n//\n//\n//\n//\n//\n//\n//\n\nexports.default = {\n    name: 'AsideCategory',\n    data: function data() {\n        return {\n            category: ['主页', '前端', '后端', '算法']\n        };\n    }\n};\n\n//# sourceURL=webpack:///./src/components/AsideCategory.vue?./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options");
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\n//\n//\n//\n//\n//\n//\n//\n//\n\nexports.default = {\n    name: 'AsideCategory',\n    data: function data() {\n        return {\n            category: ['主页', '前端', '后端', 'Android', 'IOS', '算法']\n        };\n    }\n};\n\n//# sourceURL=webpack:///./src/components/AsideCategory.vue?./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options");
 
 /***/ }),
 
@@ -258,7 +258,7 @@ eval("exports = module.exports = __webpack_require__(/*! ../../node_modules/css-
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader/lib/css-base.js */ \"./node_modules/css-loader/lib/css-base.js\")(false);\n// imports\n\n\n// module\nexports.push([module.i, \"\\n.aside-category {\\n    margin-top: 30px;\\n}\\n.aside-category-item {\\n    padding: 5px 0;\\n    text-align: center;\\n    cursor: pointer;\\n}\\n\", \"\"]);\n\n// exports\n\n\n//# sourceURL=webpack:///./src/components/AsideCategory.vue?./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib??vue-loader-options");
+eval("exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader/lib/css-base.js */ \"./node_modules/css-loader/lib/css-base.js\")(false);\n// imports\n\n\n// module\nexports.push([module.i, \"\\n.aside-category {\\n    margin-top: 30px;\\n    padding: 5px 0;\\n    border: 5px solid #444;\\n}\\n.aside-category-item {\\n    padding: 5px 0;\\n    color: #444;\\n    text-align: center;\\n    cursor: pointer;\\n}\\n.aside-category-item:hover {\\n    color: #ffffff;\\n    background-color: #444;\\n    transition: .2s ease;\\n}\\n\", \"\"]);\n\n// exports\n\n\n//# sourceURL=webpack:///./src/components/AsideCategory.vue?./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib??vue-loader-options");
 
 /***/ }),
 
@@ -291,7 +291,7 @@ eval("exports = module.exports = __webpack_require__(/*! ../../node_modules/css-
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader/lib/css-base.js */ \"./node_modules/css-loader/lib/css-base.js\")(false);\n// imports\n\n\n// module\nexports.push([module.i, \"\\n@keyframes rotation{\\nfrom {\\n        transform: rotate(0deg);\\n}\\nto {\\n        transform: rotate(360deg);\\n}\\n}\\n.aside-top {\\n    position: relative;\\n    z-index: 0;\\n    height: 25%;\\n    background-color: #444444;\\n}\\n.avatar {\\n    position: absolute;\\n    z-index: 100;\\n    left: 50%;\\n    bottom: 0;\\n    width: 100px;\\n    height: 100px;\\n    margin-left: -50px;\\n    margin-bottom: -50px;\\n    border-radius: 50%;\\n}\\n.avatar:hover {\\n    animation: rotation 2s linear infinite;\\n}\\n.avatar-img {\\n    width: 100%;\\n    height: 100%;\\n}\\n\", \"\"]);\n\n// exports\n\n\n//# sourceURL=webpack:///./src/components/AsideTop.vue?./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib??vue-loader-options");
+eval("exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader/lib/css-base.js */ \"./node_modules/css-loader/lib/css-base.js\")(false);\n// imports\n\n\n// module\nexports.push([module.i, \"\\n@keyframes rotation{\\nfrom {\\n        transform: rotate(0deg);\\n}\\nto {\\n        transform: rotate(360deg);\\n}\\n}\\n.aside-top {\\n    position: relative;\\n    z-index: 0;\\n    height: 25%;\\n    background-color: #444444;\\n}\\n.avatar {\\n    position: absolute;\\n    z-index: 100;\\n    left: 50%;\\n    bottom: 0;\\n    width: 100px;\\n    height: 100px;\\n    margin-left: -50px;\\n    margin-bottom: -50px;\\n    padding: 10px;\\n    box-sizing: border-box;\\n    border-radius: 50%;\\n    background-color: #4292c7;\\n}\\n.avatar:hover {\\n    animation: rotation 2s linear infinite;\\n}\\n.avatar-img {\\n    width: 100%;\\n    height: 100%;\\n}\\n\", \"\"]);\n\n// exports\n\n\n//# sourceURL=webpack:///./src/components/AsideTop.vue?./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/vue-loader/lib??vue-loader-options");
 
 /***/ }),
 
