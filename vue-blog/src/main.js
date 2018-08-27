@@ -14,14 +14,14 @@ new Vue({
     router: new VueRouter({
         // 路由配置
         routes: [
-            // {
-            //     path: '/home',
-            //     component: Home
-            // },
-            // {
-            //     path: '/about',
-            //     component: About
-            // }
+            {
+                path: '/home',
+                component: Home
+            },
+            {
+                path: '/about',
+                component: About
+            }
         ]
     }),
     render: h => h(Container)
