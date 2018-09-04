@@ -33,7 +33,6 @@ function compile(node, vm) {
                     vm[name] = e.target.value
                 })
 
-                // node.value = vm[name]
                 new Watcher(vm, node, name)
             }
         }
@@ -44,7 +43,6 @@ function compile(node, vm) {
         if (reg.test(node.nodeValue)) {
             var name = RegExp.$1.trim()
             
-            // node.nodeValue = vm[name]
             new Watcher(vm, node, name)
         }
     }
@@ -69,8 +67,6 @@ function defineReactive(obj, key, value) {
                 value = newValue
 
                 dep.notify()
-
-                console.log('newValue: ' + newValue)
             }
         }
     })
