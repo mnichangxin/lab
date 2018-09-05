@@ -48,37 +48,6 @@ function compile(node, vm) {
     }
 }
 
-//  定义通知
-function defineReactive(obj, key, value) {
-    var dep = new Dep()
-
-    Object.defineProperty(obj, key, {
-        get: function() {
-            if (Dep.target) {
-                dep.addSub(Dep.target)
-            }
-
-            return value
-        },
-        set: function(newValue) {
-            if (newValue === value) {
-                return
-            } else {
-                value = newValue
-
-                dep.notify()
-            }
-        }
-    })
-}
-
-// 订阅通知
-function observe(obj, vm) {
-    Object.keys(obj).forEach(function(key) {
-        defineReactive(vm, key, obj[key])
-    })
-}
-
 // 主题
 function Dep() {
     // 订阅者集合
@@ -121,6 +90,37 @@ Watcher.prototype = {
     }
 }
 
+//  定义通知
+function defineReactive(obj, key, value) {
+    var dep = new Dep()
+
+    Object.defineProperty(obj, key, {
+        get: function () {
+            if (Dep.target) {
+                dep.addSub(Dep.target)
+            }
+
+            return value
+        },
+        set: function (newValue) {
+            if (newValue === value) {
+                return
+            } else {
+                value = newValue
+
+                dep.notify()
+            }
+        }
+    })
+}
+
+// 订阅通知
+function observe(obj, vm) {
+    Object.keys(obj).forEach(function (key) {
+        defineReactive(vm, key, obj[key])
+    })
+}
+
 // Vue 对象
 function Vue(options) {
     this.data = options.data
@@ -137,6 +137,6 @@ function Vue(options) {
 var vm = new Vue({
     el: 'app',
     data: {
-        text: 'Hello World'
+        text: 'init value'
     }
 })
