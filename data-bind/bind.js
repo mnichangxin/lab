@@ -58,7 +58,7 @@ Dep.prototype = {
     addSub: function(sub) {
         this.subs.push(sub)
     },
-    // 发布订阅
+    // 发布通知
     notify: function() {
         this.subs.forEach(function(sub) {
             sub.update()
@@ -97,7 +97,7 @@ function defineReactive(obj, key, value) {
     Object.defineProperty(obj, key, {
         get: function () {
             if (Dep.target) {
-                dep.addSub(Dep.target)
+                dep.addSub(Dep.target) // 添加订阅者
             }
 
             return value
@@ -108,7 +108,7 @@ function defineReactive(obj, key, value) {
             } else {
                 value = newValue
 
-                dep.notify()
+                dep.notify() // 通知订阅者更新
             }
         }
     })
