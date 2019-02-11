@@ -126,8 +126,6 @@ class Choose extends React.Component {
     }
 
     componentDidMount() {
-        let that = this
-
         // 判断登录
         if (isLogin()) {
             this.setState({
