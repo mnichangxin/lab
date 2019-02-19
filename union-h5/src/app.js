@@ -3,12 +3,12 @@ import ReactDOM from 'react-dom'
 import {HashRouter as Router, Route} from 'react-router-dom'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
-import rootReducer from './src/reducers/rootReducer'
+import rootReducer from './reducers/rootReducer'
 
-import {Login} from './src/component/login'
-import {Choose} from './src/component/choose'
-import {Invite} from './src/component/invite'
-import {Person} from './src/component/person'
+import {Login} from './component/login'
+import {Choose} from './component/choose'
+import {Invite} from './component/invite'
+import {Person} from './component/person'
 
 const store = createStore(rootReducer)
 
