@@ -19,7 +19,7 @@ class App extends React.Component {
 
     render() {
         return (
-            // <Provider store={store}>
+            <Provider store={store}>
                 <Router>
                     <div style={{ height: '100%', background: '#f8f8f8' }}>
                         <Route path="/" exact component={Login}></Route>
@@ -28,7 +28,7 @@ class App extends React.Component {
                         <Route path="/person" component={Person}></Route>
                     </div>
                 </Router>
-            // </Provider> 
+            </Provider>
         )
     }
 }
