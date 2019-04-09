@@ -4,7 +4,7 @@
     <title>angular demo</title>
   </head>
   <body>
-    <div ng-controller="InvoiceController as invoice">
+    <div ng-controller="InvoiceController as invoice" ng-init="qty=1;cost=2">
       <b>订单:</b>
       <div>
         数量: <input type="number" ng-model="invoice.qty" required >
